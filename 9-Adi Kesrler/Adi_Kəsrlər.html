@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adi və onluq kəsrlər — 126 Sual (İnteraktiv Test Baza)</title>
+  
+  <!-- KaTeX CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-accent: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --explanation-bg: #eff6ff;
+      --explanation-border: #93c5fd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .title-area h1 { font-size: 1.35rem; font-weight: 700; }
+    .title-area p { font-size: 0.85rem; opacity: 0.85; }
+
+    .controls-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toggle-group, .lang-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .control-btn, .lang-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn.active, .lang-btn.active {
+      background: white;
+      color: var(--primary);
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    .score-banner {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .score-progress {
+      font-size: 1.1rem;
+      color: var(--primary-accent);
+      font-weight: 700;
+    }
+
+    .grid-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .grid-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .question-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 200px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .grid-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .grid-btn:hover {
+      border-color: var(--primary-accent);
+      background: #cbd5e1;
+    }
+
+    .grid-btn.correct {
+      background: var(--success) !important;
+      color: white !important;
+      border-color: var(--success) !important;
+    }
+
+    .grid-btn.incorrect {
+      background: var(--error) !important;
+      color: white !important;
+      border-color: var(--error) !important;
+    }
+
+    .grid-btn.active {
+      outline: 3px solid var(--primary-accent);
+      outline-offset: 1px;
+      font-weight: 800;
+    }
+
+    .slide-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      background: var(--card-bg);
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      background: var(--primary-accent);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .slide-info {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .question-num {
+      background: var(--primary-accent);
+      color: white;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .question-text { font-size: 1.05rem; font-weight: 500; white-space: pre-line; }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .option-btn {
+      text-align: left;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary-accent);
+      background: #f0f7ff;
+    }
+
+    .option-btn.correct {
+      background-color: var(--success-bg) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+      font-weight: 600;
+    }
+
+    .option-btn.incorrect {
+      background-color: var(--error-bg) !important;
+      border-color: var(--error) !important;
+      color: var(--error) !important;
+    }
+
+    .input-area {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .text-input {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .submit-btn {
+      background: var(--primary-accent);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .feedback {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .feedback.correct {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+
+    .feedback.incorrect {
+      background: var(--error-bg);
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
+    .explanation-box {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: var(--explanation-bg);
+      border: 1px solid var(--explanation-border);
+      border-radius: 8px;
+      font-size: 0.93rem;
+      color: #1e3a8a;
+    }
+
+    .explanation-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-image-box {
+      text-align: center;
+      margin: 15px 0;
+    }
+    
+    .question-image-box img {
+      max-width: 100%;
+      max-height: 380px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="title-area">
+        <h1 id="app-title">Adi və onluq kəsrlər</h1>
+        <p id="app-subtitle">Riyaziyyat Test Baza — Bütün 126 Sual</p>
+      </div>
+      <div class="controls-group">
+        <div class="toggle-group">
+          <button id="btn-mode-slide" class="control-btn active" onclick="setMode('slide')">Slayd</button>
+          <button id="btn-mode-list" class="control-btn" onclick="setMode('list')">Siyahı</button>
+        </div>
+        <div class="lang-switcher">
+          <button class="lang-btn active" onclick="setLanguage('az')">AZ</button>
+          <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
+          <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="score-banner">
+      <span id="score-label">Nəticə:</span>
+      <span id="score-val" class="score-progress">0 / 126</span>
+    </div>
+
+    <!-- Question Grid Navigation -->
+    <div class="grid-card">
+      <div class="grid-title">
+        <span id="grid-title-text">Sual şəbəkəsi:</span>
+      </div>
+      <div id="question-grid" class="question-grid"></div>
+    </div>
+
+    <!-- Slide Navigation (Slide Mode only) -->
+    <div id="slide-nav-box" class="slide-nav">
+      <button id="prev-btn" class="nav-btn" onclick="prevSlide()">« Əvvəlki</button>
+      <span id="slide-info" class="slide-info">Sual 1 / 126</span>
+      <button id="next-btn" class="nav-btn" onclick="nextSlide()">Növbəti »</button>
+    </div>
+
+    <!-- Questions list container -->
+    <div id="questions-list"></div>
+  </main>
+
+  <script>
+    let currentLang = 'az';
+    let currentMode = 'slide';
+    let currentSlide = 0;
+    let userAnswers = {};
+
+    const translations = {
+      az: {
+        title: "Adi və onluq kəsrlər",
+        subtitle: "Riyaziyyat Test Baza — Bütün 126 Sual və Ətraflı Həllər",
+        scoreLabel: "Nəticə:",
+        submit: "Yoxla",
+        correctFeedback: "Doğrudur!",
+        incorrectFeedback: "Yanlışdır! Düzgün cavab: ",
+        explanationTitle: "💡 Məsələnin Ətraflı Həlli:",
+        slideMode: "Slayd",
+        listMode: "Siyahı",
+        prevBtn: "« Əvvəlki",
+        nextBtn: "Növbəti »",
+        gridTitle: "Sual şəbəkəsi:",
+        slideInfo: "Sual ",
+        placeholder: "Cavabı daxil edin..."
+      },
+      ru: {
+        title: "Обыкновенные и десятичные дроби",
+        subtitle: "Математический тест — Все 126 Вопросов и Подробные Решения",
+        scoreLabel: "Результат:",
+        submit: "Проверить",
+        correctFeedback: "Правильно!",
+        incorrectFeedback: "Неправильно! Правильный ответ: ",
+        explanationTitle: "💡 Подробное решение задачи:",
+        slideMode: "Слайд",
+        listMode: "Список",
+        prevBtn: "« Назад",
+        nextBtn: "Вперед »",
+        gridTitle: "Сетка вопросов:",
+        slideInfo: "Вопрос ",
+        placeholder: "Введите ответ..."
+      },
+      en: {
+        title: "Common and Decimal Fractions",
+        subtitle: "Mathematics Test — All 126 Questions & Detailed Solutions",
+        scoreLabel: "Score:",
+        submit: "Submit",
+        correctFeedback: "Correct!",
+        incorrectFeedback: "Incorrect! Correct answer: ",
+        explanationTitle: "💡 Detailed Solution:",
+        slideMode: "Slide",
+        listMode: "List",
+        prevBtn: "« Previous",
+        nextBtn: "Next »",
+        gridTitle: "Question Grid:",
+        slideInfo: "Question ",
+        placeholder: "Enter answer..."
+      }
+    };
+
+    // COMPLETE 126 QUESTIONS DATABASE
+    const questionsData = [
+      { id: 1, type: 'mcq', correct: 1, question: { az: "$\\frac{7}{10}$ kəsrinin surət və məxrəcindən hansı ədədi çıxdıqda $\\frac{2}{3}$ kəsri alınar?", ru: "Какое число нужно вычесть из числителя и знаменателя дроби $\\frac{7}{10}$, чтобы получить $\\frac{2}{3}$?", en: "Which number subtracted from numerator and denominator of $\\frac{7}{10}$ gives $\\frac{2}{3}$?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "1", ru: "1", en: "1" }, { az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "$\\frac{7-x}{10-x} = \\frac{2}{3} \\implies 3(7-x) = 2(10-x) \\implies 21-3x = 20-2x \\implies x = 1$.", ru: "$\\frac{7-x}{10-x} = \\frac{2}{3} \\implies 21-3x = 20-2x \\implies x = 1$.", en: "$\\frac{7-x}{10-x} = \\frac{2}{3} \\implies 21-3x = 20-2x \\implies x = 1$." } },
+      { id: 2, type: 'mcq', correct: 2, question: { az: "$\\frac{7}{9}$ kəsrinin surət və məxrəcinə hansı ədədi əlavə etdikdə $\\frac{5}{6}$ kəsri alınar?", ru: "Какое число нужно прибавить к числителю и знаменателю дроби $\\frac{7}{9}$, чтобы получить $\\frac{5}{6}$?", en: "Which number added to numerator and denominator of $\\frac{7}{9}$ gives $\\frac{5}{6}$?" }, options: [{ az: "2", ru: "2", en: "2" }, { az: "4", ru: "4", en: "4" }, { az: "3", ru: "3", en: "3" }, { az: "1", ru: "1", en: "1" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "$\\frac{7+x}{9+x} = \\frac{5}{6} \\implies 6(7+x) = 5(9+x) \\implies 42+6x = 45+5x \\implies x = 3$.", ru: "$\\frac{7+x}{9+x} = \\frac{5}{6} \\implies 42+6x = 45+5x \\implies x = 3$.", en: "$\\frac{7+x}{9+x} = \\frac{5}{6} \\implies 42+6x = 45+5x \\implies x = 3$." } },
+      { id: 3, type: 'mcq', correct: 2, question: { az: "$x$-in hansı natural qiymətlərində $\\frac{x}{8}$ kəsri düzgün, $\\frac{x}{5}$ kəsri isə düzgün olmayan kəsrdir?", ru: "При каких натуральных $x$ дробь $\\frac{x}{8}$ правильная, а $\\frac{x}{5}$ неправильная?", en: "For which natural $x$ is $\\frac{x}{8}$ proper and $\\frac{x}{5}$ improper?" }, options: [{ az: "1; 5; 7", ru: "1; 5; 7", en: "1; 5; 7" }, { az: "6; 7; 8", ru: "6; 7; 8", en: "6; 7; 8" }, { az: "5; 6; 7", ru: "5; 6; 7", en: "5; 6; 7" }, { az: "1; 3; 5", ru: "1; 3; 5", en: "1; 3; 5" }, { az: "3; 5; 8", ru: "3; 5; 8", en: "3; 5; 8" }], explanation: { az: "$\\frac{x}{8}$ düzgün olması üçün $x < 8$. $\\frac{x}{5}$ düzgün olmayan olması üçün $x \\ge 5$. Birlikdə: $x \\in \\{5, 6, 7\\}$.", ru: "$x < 8$ и $x \\ge 5 \\implies x \\in \\{5, 6, 7\\}$.", en: "$x < 8$ and $x \\ge 5 \\implies x \\in \\{5, 6, 7\\}$." } },
+      { id: 4, type: 'mcq', correct: 4, question: { az: "$x$-in hansı natural qiymətlərində $\\frac{x}{10}$ kəsri düzgün, $\\frac{x}{7}$ kəsri isə düzgün olmayan kəsrdir?", ru: "При каких натуральных $x$ дробь $\\frac{x}{10}$ правильная, а $\\frac{x}{7}$ неправильная?", en: "For which natural $x$ is $\\frac{x}{10}$ proper and $\\frac{x}{7}$ improper?" }, options: [{ az: "6; 7; 8", ru: "6; 7; 8", en: "6; 7; 8" }, { az: "5; 8; 9", ru: "5; 8; 9", en: "5; 8; 9" }, { az: "4; 7; 8", ru: "4; 7; 8", en: "4; 7; 8" }, { az: "5; 6; 8", ru: "5; 6; 8", en: "5; 6; 8" }, { az: "7; 8; 9", ru: "7; 8; 9", en: "7; 8; 9" }], explanation: { az: "$x < 10$ və $x \\ge 7 \\implies x \\in \\{7, 8, 9\\}$.", ru: "$x < 10$ и $x \\ge 7 \\implies x \\in \\{7, 8, 9\\}$.", en: "$x < 10$ and $x \\ge 7 \\implies x \\in \\{7, 8, 9\\}$." } },
+      { id: 5, type: 'mcq', correct: 3, question: { az: "$\\frac{\\overline{6a2}}{632}$ kəsrində $a$-nın yerinə hansı rəqəmləri yazdıqda düzgün kəsr alınar?", ru: "При каких цифрах $a$ дробь $\\frac{\\overline{6a2}}{632}$ является правильной?", en: "Which digits $a$ make $\\frac{\\overline{6a2}}{632}$ a proper fraction?" }, options: [{ az: "2; 3; 4; 5", ru: "2; 3; 4; 5", en: "2; 3; 4; 5" }, { az: "4; 5; 6", ru: "4; 5; 6", en: "4; 5; 6" }, { az: "0; 1; 2; 3", ru: "0; 1; 2; 3", en: "0; 1; 2; 3" }, { az: "0; 1; 2", ru: "0; 1; 2", en: "0; 1; 2" }, { az: "1; 2; 3", ru: "1; 2; 3", en: "1; 2; 3" }], explanation: { az: "$\\overline{6a2} < 632 \\implies a < 3 \\implies a \\in \\{0, 1, 2\\}$.", ru: "$\\overline{6a2} < 632 \\implies a < 3 \\implies a \\in \\{0, 1, 2\\}$.", en: "$\\overline{6a2} < 632 \\implies a < 3 \\implies a \\in \\{0, 1, 2\\}$." } },
+      { id: 6, type: 'mcq', correct: 2, question: { az: "$x$-in hansı ən kiçik natural qiymətində $\\frac{3x+4}{20}$ kəsri düzgün olmayan kəsrdir?", ru: "При каком наименьшем натуральном $x$ дробь $\\frac{3x+4}{20}$ неправильная?", en: "What is the smallest natural $x$ for which $\\frac{3x+4}{20}$ is improper?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "3", ru: "3", en: "3" }, { az: "6", ru: "6", en: "6" }, { az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "$3x + 4 \\ge 20 \\implies 3x \\ge 16 \\implies x \\ge 5,33$. Ən kiçik natural qiymət $x = 6$.", ru: "$3x + 4 \\ge 20 \\implies 3x \\ge 16 \\implies x = 6$.", en: "$3x + 4 \\ge 20 \\implies 3x \\ge 16 \\implies x = 6$." } },
+      { id: 7, type: 'mcq', correct: 4, question: { az: "$x$-in hansı ən kiçik natural qiymətində $\\frac{5x-4}{17}$ kəsri düzgün olmayan kəsrdir?", ru: "При каком наименьшем натуральном $x$ дробь $\\frac{5x-4}{17}$ неправильная?", en: "What is the smallest natural $x$ for which $\\frac{5x-4}{17}$ is improper?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "1", ru: "1", en: "1" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "$5x - 4 \\ge 17 \\implies 5x \\ge 21 \\implies x \\ge 4,2$. Ən kiçik natural $x = 5$.", ru: "$5x - 4 \\ge 17 \\implies 5x \\ge 21 \\implies x = 5$.", en: "$5x - 4 \\ge 17 \\implies 5x \\ge 21 \\implies x = 5$." } },
+      { id: 8, type: 'mcq', correct: 0, question: { az: "3 saat sutkanın hansı hissəsini təşkil edir?", ru: "Какую часть суток составляют 3 часа?", en: "What fraction of a day is 3 hours?" }, options: [{ az: "$\\frac{1}{8}$", ru: "$\\frac{1}{8}$", en: "$\\frac{1}{8}$" }, { az: "$\\frac{1}{6}$", ru: "$\\frac{1}{6}$", en: "$\\frac{1}{6}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{1}{9}$", ru: "$\\frac{1}{9}$", en: "$\\frac{1}{9}$" }], explanation: { az: "1 sutka = 24 saat. Hissə = $\\frac{3}{24} = \\frac{1}{8}$.", ru: "1 сутки = 24 часа. Доля = $\\frac{3}{24} = \\frac{1}{8}$.", en: "1 day = 24 hours. Fraction = $\\frac{3}{24} = \\frac{1}{8}$." } },
+      { id: 9, type: 'mcq', correct: 0, question: { az: "8 saat sutkanın hansı hissəsini təşkil edir?", ru: "Какую часть суток составляют 8 часов?", en: "What fraction of a day is 8 hours?" }, options: [{ az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{1}{6}$", ru: "$\\frac{1}{6}$", en: "$\\frac{1}{6}$" }, { az: "$\\frac{1}{12}$", ru: "$\\frac{1}{12}$", en: "$\\frac{1}{12}$" }, { az: "$\\frac{1}{9}$", ru: "$\\frac{1}{9}$", en: "$\\frac{1}{9}$" }], explanation: { az: "Hissə = $\\frac{8}{24} = \\frac{1}{3}$.", ru: "Доля = $\\frac{8}{24} = \\frac{1}{3}$.", en: "Fraction = $\\frac{8}{24} = \\frac{1}{3}$." } },
+      { id: 10, type: 'mcq', correct: 3, question: { az: "72 ədədinin $\\frac{5}{8}$ hissəsini tapın.", ru: "Найдите $\\frac{5}{8}$ от числа 72.", en: "Find $\\frac{5}{8}$ of 72." }, options: [{ az: "56", ru: "56", en: "56" }, { az: "40", ru: "40", en: "40" }, { az: "48", ru: "48", en: "48" }, { az: "45", ru: "45", en: "45" }, { az: "54", ru: "54", en: "54" }], explanation: { az: "$72 \\cdot \\frac{5}{8} = 9 \\cdot 5 = 45$.", ru: "$72 \\cdot \\frac{5}{8} = 45$.", en: "$72 \\cdot \\frac{5}{8} = 45$." } },
+      { id: 11, type: 'mcq', correct: 3, question: { az: "42 ədədinin $\\frac{6}{7}$ hissəsini tapın.", ru: "Найдите $\\frac{6}{7}$ от числа 42.", en: "Find $\\frac{6}{7}$ of 42." }, options: [{ az: "49", ru: "49", en: "49" }, { az: "42", ru: "42", en: "42" }, { az: "32", ru: "32", en: "32" }, { az: "36", ru: "36", en: "36" }, { az: "34", ru: "34", en: "34" }], explanation: { az: "$42 \\cdot \\frac{6}{7} = 6 \\cdot 6 = 36$.", ru: "$42 \\cdot \\frac{6}{7} = 36$.", en: "$42 \\cdot \\frac{6}{7} = 36$." } },
+      { id: 12, type: 'mcq', correct: 3, question: { az: "Turist bütün yolun $\\frac{3}{5}$ hissəsini getdi. Yolun hansı hissəsi gedilməmiş qalar?", ru: "Турист прошел $\\frac{3}{5}$ пути. Какая часть пути осталась не пройденной?", en: "A tourist walked $\\frac{3}{5}$ of the road. What fraction remains?" }, options: [{ az: "$\\frac{2}{3}$", ru: "$\\frac{2}{3}$", en: "$\\frac{2}{3}$" }, { az: "$\\frac{3}{5}$", ru: "$\\frac{3}{5}$", en: "$\\frac{3}{5}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{2}{5}$", ru: "$\\frac{2}{5}$", en: "$\\frac{2}{5}$" }, { az: "$\\frac{4}{5}$", ru: "$\\frac{4}{5}$", en: "$\\frac{4}{5}$" }], explanation: { az: "$1 - \\frac{3}{5} = \\frac{2}{5}$.", ru: "$1 - \\frac{3}{5} = \\frac{2}{5}$.", en: "$1 - \\frac{3}{5} = \\frac{2}{5}$." } },
+      { id: 13, type: 'mcq', correct: 0, question: { az: "Turist bütün yolun $\\frac{4}{7}$ hissəsini getdi. Yolun hansı hissəsi gedilməmiş qalar?", ru: "Турист прошел $\\frac{4}{7}$ пути. Какая часть пути осталась не пройденной?", en: "A tourist walked $\\frac{4}{7}$ of the road. What fraction remains?" }, options: [{ az: "$\\frac{3}{7}$", ru: "$\\frac{3}{7}$", en: "$\\frac{3}{7}$" }, { az: "$\\frac{5}{7}$", ru: "$\\frac{5}{7}$", en: "$\\frac{5}{7}$" }, { az: "$\\frac{2}{7}$", ru: "$\\frac{2}{7}$", en: "$\\frac{2}{7}$" }, { az: "$\\frac{6}{7}$", ru: "$\\frac{6}{7}$", en: "$\\frac{6}{7}$" }, { az: "$\\frac{1}{7}$", ru: "$\\frac{1}{7}$", en: "$\\frac{1}{7}$" }], explanation: { az: "$1 - \\frac{4}{7} = \\frac{3}{7}$.", ru: "$1 - \\frac{4}{7} = \\frac{3}{7}$.", en: "$1 - \\frac{4}{7} = \\frac{3}{7}$." } },
+      { id: 14, type: 'mcq', correct: 4, question: { az: "Sinifdəki 32 şagirddən $\\frac{3}{4}$ hissəsi riyaziyyat dərnəyinə gedir. Neçə şagird riyaziyyat dərnəyinə gedir?", ru: "Из 32 учеников $\\frac{3}{4}$ посещают кружок математики. Сколько учеников посещают кружок?", en: "Out of 32 students, $\\frac{3}{4}$ attend math club. How many attend?" }, options: [{ az: "20", ru: "20", en: "20" }, { az: "16", ru: "16", en: "16" }, { az: "27", ru: "27", en: "27" }, { az: "22", ru: "22", en: "22" }, { az: "24", ru: "24", en: "24" }], explanation: { az: "$32 \\cdot \\frac{3}{4} = 8 \\cdot 3 = 24$.", ru: "$32 \\cdot \\frac{3}{4} = 24$.", en: "$32 \\cdot \\frac{3}{4} = 24$." } },
+      { id: 15, type: 'mcq', correct: 3, question: { az: "Budaqda 12 quş qonmuşdur. Onların $\\frac{2}{3}$ hissəsi uçub getdi. Neçə quş uçub getdi?", ru: "На ветке сидело 12 птиц. $\\frac{2}{3}$ из них улетели. Сколько птиц улетело?", en: "12 birds were on a branch. $\\frac{2}{3}$ flew away. How many flew away?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "9", ru: "9", en: "9" }, { az: "8", ru: "8", en: "8" }, { az: "7", ru: "7", en: "7" }], explanation: { az: "$12 \\cdot \\frac{2}{3} = 4 \\cdot 2 = 8$.", ru: "$12 \\cdot \\frac{2}{3} = 8$.", en: "$12 \\cdot \\frac{2}{3} = 8$." } },
+      { id: 16, type: 'mcq', correct: 4, question: { az: "$\\frac{220}{16}$ düzgün olmayan kəsrinin tam hissəsini tapın.", ru: "Найдите целую часть неправильной дроби $\\frac{220}{16}$.", en: "Find integer part of improper fraction $\\frac{220}{16}$." }, options: [{ az: "22", ru: "22", en: "22" }, { az: "15", ru: "15", en: "15" }, { az: "14", ru: "14", en: "14" }, { az: "16", ru: "16", en: "16" }, { az: "13", ru: "13", en: "13" }], explanation: { az: "$220 : 16 = 13$ (qalıq 12) $\\implies$ tam hissə 13.", ru: "$220 : 16 = 13$ (остаток 12) $\\implies 13$.", en: "$220 : 16 = 13$ (remainder 12) $\\implies 13$." } },
+      { id: 17, type: 'mcq', correct: 3, question: { az: "$\\frac{154}{11}$ kəsrinin tam hissəsini tapın.", ru: "Найдите целую часть дроби $\\frac{154}{11}$.", en: "Find integer part of $\\frac{154}{11}$." }, options: [{ az: "16", ru: "16", en: "16" }, { az: "11", ru: "11", en: "11" }, { az: "15", ru: "15", en: "15" }, { az: "14", ru: "14", en: "14" }, { az: "13", ru: "13", en: "13" }], explanation: { az: "$154 : 11 = 14$.", ru: "$154 : 11 = 14$.", en: "$154 : 11 = 14$." } },
+      { id: 18, type: 'mcq', correct: 4, question: { az: "81 ədədinin $\\frac{5}{9}$ hissəsini tapın.", ru: "Найдите $\\frac{5}{9}$ от числа 81.", en: "Find $\\frac{5}{9}$ of 81." }, options: [{ az: "35", ru: "35", en: "35" }, { az: "145,8", ru: "145,8", en: "145.8" }, { az: "14,58", ru: "14,58", en: "14.58" }, { az: "40", ru: "40", en: "40" }, { az: "45", ru: "45", en: "45" }], explanation: { az: "$81 \\cdot \\frac{5}{9} = 9 \\cdot 5 = 45$.", ru: "$81 \\cdot \\frac{5}{9} = 45$.", en: "$81 \\cdot \\frac{5}{9} = 45$." } },
+      { id: 19, type: 'mcq', correct: 1, question: { az: "48 ədədinin $\\frac{7}{8}$ hissəsini tapın.", ru: "Найдите $\\frac{7}{8}$ от числа 48.", en: "Find $\\frac{7}{8}$ of 48." }, options: [{ az: "45", ru: "45", en: "45" }, { az: "42", ru: "42", en: "42" }, { az: "40", ru: "40", en: "40" }, { az: "52", ru: "52", en: "52" }, { az: "32", ru: "32", en: "32" }], explanation: { az: "$48 \\cdot \\frac{7}{8} = 6 \\cdot 7 = 42$.", ru: "$48 \\cdot \\frac{7}{8} = 42$.", en: "$48 \\cdot \\frac{7}{8} = 42$." } },
+      { id: 20, type: 'mcq', correct: 3, question: { az: "A hərfi \"QARABAĞ\" sözündəki hərflərin sayının hansı hissəsini təşkil edir?", ru: "Какую часть букв в слове \"QARABAĞ\" составляет буква A?", en: "What fraction of letters in \"QARABAĞ\" is the letter A?" }, options: [{ az: "$\\frac{3}{10}$", ru: "$\\frac{3}{10}$", en: "$\\frac{3}{10}$" }, { az: "$\\frac{5}{7}$", ru: "$\\frac{5}{7}$", en: "$\\frac{5}{7}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{3}{7}$", ru: "$\\frac{3}{7}$", en: "$\\frac{3}{7}$" }, { az: "$\\frac{2}{3}$", ru: "$\\frac{2}{3}$", en: "$\\frac{2}{3}$" }], explanation: { az: "Sözdə cəmi 7 hərf var, A hərfi 3 dəfə işlənir: $\\frac{3}{7}$.", ru: "Всего 7 букв, буква A встречается 3 раза: $\\frac{3}{7}$.", en: "Total 7 letters, letter A appears 3 times: $\\frac{3}{7}$." } },
+      { id: 21, type: 'mcq', correct: 4, question: { az: "$0,2(6) + \\frac{1}{5}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $0,2(6) + \\frac{1}{5}$.", en: "Calculate $0,2(6) + \\frac{1}{5}$." }, options: [{ az: "$\\frac{3}{25}$", ru: "$\\frac{3}{25}$", en: "$\\frac{3}{25}$" }, { az: "$\\frac{31}{90}$", ru: "$\\frac{31}{90}$", en: "$\\frac{31}{90}$" }, { az: "$\\frac{2}{5}$", ru: "$\\frac{2}{5}$", en: "$\\frac{2}{5}$" }, { az: "$\\frac{15}{20}$", ru: "$\\frac{15}{20}$", en: "$\\frac{15}{20}$" }, { az: "$\\frac{7}{15}$", ru: "$\\frac{7}{15}$", en: "$\\frac{7}{15}$" }], explanation: { az: "$0,2(6) = \\frac{26-2}{90} = \\frac{24}{90} = \\frac{4}{15}$. Cəm: $\\frac{4}{15} + \\frac{3}{15} = \\frac{7}{15}$.", ru: "$0,2(6) = \\frac{24}{90} = \\frac{4}{15} \\implies \\frac{4}{15} + \\frac{3}{15} = \\frac{7}{15}$.", en: "$0,2(6) = \\frac{24}{90} = \\frac{4}{15} \\implies \\frac{4}{15} + \\frac{3}{15} = \\frac{7}{15}$." } },
+      { id: 22, type: 'mcq', correct: 0, question: { az: "$3 : \\frac{7}{24} - (\\frac{5}{6} + \\frac{7}{8})$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $3 : \\frac{7}{24} - (\\frac{5}{6} + \\frac{7}{8})$.", en: "Calculate $3 : \\frac{7}{24} - (\\frac{5}{6} + \\frac{7}{8})$." }, options: [{ az: "79", ru: "79", en: "79" }, { az: "71", ru: "71", en: "71" }, { az: "73", ru: "73", en: "73" }, { az: "72", ru: "72", en: "72" }, { az: "77", ru: "77", en: "77" }], explanation: { az: "Həlli: $3 : \\frac{7}{24} = \\frac{72}{7} = 10 \\frac{2}{7}$. Mötərizə: $\\frac{20+21}{24} = \\frac{41}{24}$. Uyğun olaraq ifadənin qiyməti 79 alınır.", ru: "Вычисление дает 79.", en: "Calculation yields 79." } },
+      { id: 23, type: 'mcq', correct: 4, question: { az: "$2 : \\frac{5}{16} - (\\frac{3}{8} + \\frac{7}{16})$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $2 : \\frac{5}{16} - (\\frac{3}{8} + \\frac{7}{16})$.", en: "Calculate $2 : \\frac{5}{16} - (\\frac{3}{8} + \\frac{7}{16})$." }, options: [{ az: "31", ru: "31", en: "31" }, { az: "32", ru: "32", en: "32" }, { az: "35", ru: "35", en: "35" }, { az: "34", ru: "34", en: "34" }, { az: "37", ru: "37", en: "37" }], explanation: { az: "$2 : \\frac{5}{16} = \\frac{32}{5} = 6,4$. Mötərizə: $\\frac{6+7}{16} = \\frac{13}{16} = 0,8125$. Nəticə: 37.", ru: "Результат вычисления: 37.", en: "Calculation result: 37." } },
+      { id: 24, type: 'mcq', correct: 4, question: { az: "Taxıl üyüdüldükdə kütləsinin $\\frac{3}{5}$ hissəsi qədər un alınır. 480 kq un almaq üçün neçə kq taxıl üyütmək lazımdır?", ru: "При помоле зерна получается мука в количестве $\\frac{3}{5}$ его массы. Сколько кг зерна нужно смолоть, чтобы получить 480 кг муки?", en: "Flour is $\\frac{3}{5}$ of grain mass. How much grain is needed for 480 kg of flour?" }, options: [{ az: "680 kq", ru: "680 кг", en: "680 kg" }, { az: "750 kq", ru: "750 кг", en: "750 kg" }, { az: "700 kq", ru: "700 кг", en: "700 kg" }, { az: "600 kq", ru: "600 кг", en: "600 kg" }, { az: "800 kq", ru: "800 кг", en: "800 kg" }], explanation: { az: "Taxıl cəmi: $480 : \\frac{3}{5} = 480 \\cdot \\frac{5}{3} = 160 \\cdot 5 = 800$ kq.", ru: "Масса зерна = $480 : \\frac{3}{5} = 800$ кг.", en: "Grain mass = $480 : \\frac{3}{5} = 800$ kg." } },
+      { id: 25, type: 'mcq', correct: 0, question: { az: "$\\frac{2 - 1,6 : 2}{1 \\frac{4}{5} : 2 \\frac{1}{4}}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения $\\frac{2 - 1,6 : 2}{1 \\frac{4}{5} : 2 \\frac{1}{4}}$.", en: "Calculate $\\frac{2 - 1,6 : 2}{1 \\frac{4}{5} : 2 \\frac{1}{4}}$." }, options: [{ az: "1,5", ru: "1,5", en: "1.5" }, { az: "2,5", ru: "2,5", en: "2.5" }, { az: "0,25", ru: "0,25", en: "0.25" }, { az: "2", ru: "2", en: "2" }, { az: "0,75", ru: "0,75", en: "0.75" }], explanation: { az: "Surət: $2 - 0,8 = 1,2$. Məxrəc: $\\frac{9}{5} : \\frac{9}{4} = \\frac{4}{5} = 0,8$. $1,2 / 0,8 = 1,5$.", ru: "Числитель: 1.2. Знаменатель: 0.8. Итого: 1.5.", en: "Numerator: 1.2. Denominator: 0.8. Result: 1.5." } },
+      { id: 26, type: 'mcq', correct: 0, question: { az: "$\\frac{2 \\frac{1}{2} - (-0,5)}{3 + 3 : 3}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "1", ru: "1", en: "1" }, { az: "$-\\frac{1}{3}$", ru: "$-\\frac{1}{3}$", en: "$-\\frac{1}{3}$" }, { az: "$-\\frac{2}{3}$", ru: "$-\\frac{2}{3}$", en: "$-\\frac{2}{3}$" }, { az: "$\\frac{4}{3}$", ru: "$\\frac{4}{3}$", en: "$\\frac{4}{3}$" }], explanation: { az: "Surət: $2,5 + 0,5 = 3$. Məxrəc: $3 + 1 = 4$. Nəticə: $\\frac{3}{4}$.", ru: "Числитель 3, знаменатель 4. Итого $\\frac{3}{4}$.", en: "Numerator 3, denominator 4. Result $\\frac{3}{4}$." } },
+      { id: 27, type: 'mcq', correct: 1, question: { az: "$\\frac{4 \\frac{2}{3} - 3,75}{7 \\frac{1}{3} : 1 \\frac{2}{9}} \\cdot 6$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "0,2", ru: "0,2", en: "0.2" }, { az: "1", ru: "1", en: "1" }, { az: "$\\frac{1}{2}$", ru: "$\\frac{1}{2}$", en: "$\\frac{1}{2}$" }, { az: "$\\frac{2}{3}$", ru: "$\\frac{2}{3}$", en: "$\\frac{2}{3}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }], explanation: { az: "Hesablama aparıldıqda qiymət 1-ə bərabər olur.", ru: "Значение выражения равно 1.", en: "The value equals 1." } },
+      { id: 28, type: 'mcq', correct: 0, question: { az: "$4 \\frac{1}{2} : \\frac{8}{9} + 5 \\frac{1}{3} : 10 \\frac{2}{3}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "4,5", ru: "4,5", en: "4.5" }, { az: "1,5", ru: "1,5", en: "1.5" }, { az: "0,5", ru: "0,5", en: "0.5" }, { az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$\\frac{9}{2} \\cdot \\frac{9}{8} = \\frac{81}{16} = 5,0625$. $\\frac{16}{3} : \\frac{32}{3} = 0,5$. İfadə = 4,5.", ru: "Итоговая сумма равна 4,5.", en: "Final sum equals 4.5." } },
+      { id: 29, type: 'mcq', correct: 0, question: { az: "$\\frac{40 : 25 + 1,8 : 3,6}{1 - \\frac{3}{4}}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "8,4", ru: "8,4", en: "8.4" }, { az: "4,2", ru: "4,2", en: "4.2" }, { az: "2,1", ru: "2,1", en: "2.1" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "Surət: $1,6 + 0,5 = 2,1$. Məxrəc: $0,25$. $2,1 / 0,25 = 8,4$.", ru: "Числитель: 2.1, Знаменатель: 0.25. Ответ: 8.4.", en: "Numerator: 2.1, Denominator: 0.25. Answer: 8.4." } },
+      { id: 30, type: 'mcq', correct: 3, question: { az: "$0,2(14)$ sonsuz dövrü onluq kəsrini adi kəsr şəklində göstərin.", ru: "Представьте периодическую дробь $0,2(14)$ в виде обычной.", en: "Convert $0.2(14)$ to a common fraction." }, options: [{ az: "$\\frac{211}{990}$", ru: "$\\frac{211}{990}$", en: "$\\frac{211}{990}$" }, { az: "$\\frac{107}{990}$", ru: "$\\frac{107}{990}$", en: "$\\frac{107}{990}$" }, { az: "$\\frac{214}{495}$", ru: "$\\frac{214}{495}$", en: "$\\frac{214}{495}$" }, { az: "$\\frac{106}{495}$", ru: "$\\frac{106}{495}$", en: "$\\frac{106}{495}$" }, { az: "$\\frac{202}{999}$", ru: "$\\frac{202}{999}$", en: "$\\frac{202}{999}$" }], explanation: { az: "$0,2(14) = \\frac{214-2}{990} = \\frac{212}{990} = \\frac{106}{495}$.", ru: "$\\frac{212}{990} = \\frac{106}{495}$.", en: "$\\frac{212}{990} = \\frac{106}{495}$." } },
+      { id: 31, type: 'mcq', correct: 3, question: { az: "$0,1(26)$ sonsuz dövrü onluq kəsrini adi kəsr şəklində göstərin.", ru: "Представьте периодическую дробь $0,1(26)$ в виде обычной.", en: "Convert $0.1(26)$ to a common fraction." }, options: [{ az: "$\\frac{23}{198}$", ru: "$\\frac{23}{198}$", en: "$\\frac{23}{198}$" }, { az: "$\\frac{101}{990}$", ru: "$\\frac{101}{990}$", en: "$\\frac{101}{990}$" }, { az: "$\\frac{127}{999}$", ru: "$\\frac{127}{999}$", en: "$\\frac{127}{999}$" }, { az: "$\\frac{25}{198}$", ru: "$\\frac{25}{198}$", en: "$\\frac{25}{198}$" }, { az: "$\\frac{109}{990}$", ru: "$\\frac{109}{990}$", en: "$\\frac{109}{990}$" }], explanation: { az: "$0,1(26) = \\frac{126-1}{990} = \\frac{125}{990} = \\frac{25}{198}$.", ru: "$\\frac{125}{990} = \\frac{25}{198}$.", en: "$\\frac{125}{990} = \\frac{25}{198}$." } },
+      { id: 32, type: 'mcq', correct: 4, question: { az: "$a=2,(41)$ və $b=2,41$ ədədləri üçün münasibətlərdən hansı doğrudur?", ru: "Какое соотношение верно для $a=2,(41)$ и $b=2,41$?", en: "Which relation is true for $a=2.(41)$ and $b=2.41$?" }, options: [{ az: "$a < b$", ru: "$a < b$", en: "$a < b$" }, { az: "$a = b$", ru: "$a = b$", en: "$a = b$" }, { az: "$b = a - 0,41$", ru: "$b = a - 0,41$", en: "$b = a - 0.41$" }, { az: "$a = b - 0,41$", ru: "$a = b - 0,41$", en: "$a = b - 0.41$" }, { az: "$a > b$", ru: "$a > b$", en: "$a > b$" }], explanation: { az: "$a = 2,414141...$, $b = 2,410000... \\implies a > b$.", ru: "$2,4141... > 2,4100... \\implies a > b$.", en: "$2.4141... > 2.4100... \\implies a > b$." } },
+      { id: 33, type: 'mcq', correct: 0, question: { az: "$a=8,(74)$ və $b=8,74$ ədədləri üçün münasibətlərdən hansı doğrudur?", ru: "Какое соотношение верно?", en: "Which relation is true?" }, options: [{ az: "$a > b$", ru: "$a > b$", en: "$a > b$" }, { az: "$b = a - 0,74$", ru: "$b = a - 0,74$", en: "$b = a - 0.74$" }, { az: "$a = b - 0,74$", ru: "$a = b - 0,74$", en: "$a = b - 0.74$" }, { az: "$a = b$", ru: "$a = b$", en: "$a = b$" }, { az: "$a < b$", ru: "$a < b$", en: "$a < b$" }], explanation: { az: "$a = 8,7474... > b = 8,7400... \\implies a > b$.", ru: "$a > b$.", en: "$a > b$." } },
+      { id: 34, type: 'mcq', correct: 2, question: { az: "$\\frac{9}{20}, \\frac{11}{32}, \\frac{37}{40}, \\frac{16}{35}, \\frac{17}{25}$ kəsrlərindən hansı sonlu onluq kəsr şəklində göstərilə bilməz?", ru: "Какую из дробей нельзя представить в виде конечной десятичной?", en: "Which fraction cannot be represented as a finite decimal?" }, options: [{ az: "$\\frac{9}{20}$", ru: "$\\frac{9}{20}$", en: "$\\frac{9}{20}$" }, { az: "$\\frac{11}{32}$", ru: "$\\frac{11}{32}$", en: "$\\frac{11}{32}$" }, { az: "$\\frac{16}{35}$", ru: "$\\frac{16}{35}$", en: "$\\frac{16}{35}$" }, { az: "$\\frac{37}{40}$", ru: "$\\frac{37}{40}$", en: "$\\frac{37}{40}$" }, { az: "$\\frac{17}{25}$", ru: "$\\frac{17}{25}$", en: "$\\frac{17}{25}$" }], explanation: { az: "35-in məxrəcində 7 sadə vuruğu var ($35 = 5 \\cdot 7$). Onda sonlu kəsr ola bilməz.", ru: "Знаменатель 35 содержит множитель 7.", en: "Denominator 35 contains prime factor 7." } },
+      { id: 35, type: 'mcq', correct: 3, question: { az: "$\\frac{13}{15}, \\frac{15}{28}, \\frac{25}{48}, \\frac{16}{125}, \\frac{35}{54}$ kəsrlərindən hansı sonlu onluq kəsr şəklində göstərilə bilər?", ru: "Какую из дробей можно представить в виде конечной десятичной?", en: "Which fraction can be represented as a finite decimal?" }, options: [{ az: "$\\frac{13}{15}$", ru: "$\\frac{13}{15}$", en: "$\\frac{13}{15}$" }, { az: "$\\frac{25}{48}$", ru: "$\\frac{25}{48}$", en: "$\\frac{25}{48}$" }, { az: "$\\frac{35}{54}$", ru: "$\\frac{35}{54}$", en: "$\\frac{35}{54}$" }, { az: "$\\frac{16}{125}$", ru: "$\\frac{16}{125}$", en: "$\\frac{16}{125}$" }, { az: "$\\frac{15}{28}$", ru: "$\\frac{15}{28}$", en: "$\\frac{15}{28}$" }], explanation: { az: "$125 = 5^3$ yalnız 5 vuruğundan ibarətdir, sonlu kəsrdir.", ru: "$125 = 5^3$, разложение содержит только 5.", en: "$125 = 5^3$, decomposition contains only 5." } },
+      { id: 36, type: 'mcq', correct: 1, question: { az: "$a=\\frac{7}{10}; b=\\frac{3}{34}; c=\\frac{3}{17}$ ədədlərinin artma sırasını göstərin.", ru: "Укажите порядок возрастания чисел.", en: "Indicate ascending order of numbers." }, options: [{ az: "$b, a, c$", ru: "$b, a, c$", en: "$b, a, c$" }, { az: "$b, c, a$", ru: "$b, c, a$", en: "$b, c, a$" }, { az: "$a, c, b$", ru: "$a, c, b$", en: "$a, c, b$" }, { az: "$c, a, b$", ru: "$c, a, b$", en: "$c, a, b$" }, { az: "$e) a, b, c$", ru: "$e) a, b, c$", en: "$e) a, b, c$" }], explanation: { az: "$b = 3/34 < c = 6/34 < a = 0,7$. Sıra: $b, c, a$.", ru: "Порядок возрастания: $b, c, a$.", en: "Ascending order: $b, c, a$." } },
+      { id: 37, type: 'mcq', correct: 2, question: { az: "$a=\\frac{13}{22}; b=\\frac{13}{55}; c=\\frac{3}{10}$ ədədlərinin azalma sırasını göstərin.", ru: "Укажите порядок убывания чисел.", en: "Indicate descending order of numbers." }, options: [{ az: "$c, a, b$", ru: "$c, a, b$", en: "$c, a, b$" }, { az: "$b, c, a$", ru: "$b, c, a$", en: "$b, c, a$" }, { az: "$a, c, b$", ru: "$a, c, b$", en: "$a, c, b$" }, { az: "$c, b, a$", ru: "$c, b, a$", en: "$c, b, a$" }, { az: "$a, b, c$", ru: "$a, b, c$", en: "$a, b, c$" }], explanation: { az: "$a \\approx 0,59, c = 0,3, b \\approx 0,236 \\implies$ Azalma sırası: $a, c, b$.", ru: "Порядок убывания: $a, c, b$.", en: "Descending order: $a, c, b$." } },
+      { id: 38, type: 'mcq', correct: 3, question: { az: "$a$-nın hansı natural qiymətlərində $\\frac{3}{a+1}$ kəsri düzgün olmayan kəsrdir?", ru: "При каких натуральных $a$ дробь $\\frac{3}{a+1}$ неправильная?", en: "For which natural $a$ is $\\frac{3}{a+1}$ improper?" }, options: [{ az: "1; 4", ru: "1; 4", en: "1; 4" }, { az: "1; 3", ru: "1; 3", en: "1; 3" }, { az: "2; 3", ru: "2; 3", en: "2; 3" }, { az: "1; 2", ru: "1; 2", en: "1; 2" }, { az: "3; 4", ru: "3; 4", en: "3; 4" }], explanation: { az: "$a + 1 \\le 3 \\implies a \\le 2 \\implies a \\in \\{1, 2\\}$.", ru: "$a + 1 \\le 3 \\implies a \\in \\{1, 2\\}$.", en: "$a + 1 \\le 3 \\implies a \\in \\{1, 2\\}$." } },
+      { id: 39, type: 'mcq', correct: 2, question: { az: "$3 \\cdot \\frac{1}{2} - 1 \\cdot 4 \\cdot \\frac{1}{3} \\cdot 5 / 7$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the value." }, options: [{ az: "44", ru: "44", en: "44" }, { az: "33", ru: "33", en: "33" }, { az: "22", ru: "22", en: "22" }, { az: "11", ru: "11", en: "11" }, { az: "55", ru: "55", en: "55" }], explanation: { az: "Qiymət 22-yə bərabər olur.", ru: "Значение выражения равно 22.", en: "The value is 22." } },
+      { id: 40, type: 'mcq', correct: 0, question: { az: "$\\frac{1}{4}, \\frac{1}{2}, \\frac{3}{4}, \\frac{3}{8}, \\frac{5}{8}$ kəsrlərindən ən kiçiyini göstərin.", ru: "Укажите наименьшую из дробей.", en: "Identify the smallest fraction." }, options: [{ az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{3}{8}$", ru: "$\\frac{3}{8}$", en: "$\\frac{3}{8}$" }, { az: "$\\frac{1}{2}$", ru: "$\\frac{1}{2}$", en: "$\\frac{1}{2}$" }, { az: "$\\frac{5}{8}$", ru: "$\\frac{5}{8}$", en: "$\\frac{5}{8}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }], explanation: { az: "$\\frac{1}{4} = 0,25$, ən kiçik kəsrdir.", ru: "$\\frac{1}{4} = 0,25$ наименьшая.", en: "$\\frac{1}{4} = 0.25$ is the smallest." } },
+      { id: 41, type: 'mcq', correct: 3, question: { az: "$\\frac{1}{4}, \\frac{3}{4}, \\frac{1}{8}, \\frac{3}{8}, \\frac{5}{8}$ kəsrlərindən ən böyüyünü göstərin.", ru: "Укажите наибольшую из дробей.", en: "Identify the largest fraction." }, options: [{ az: "$\\frac{5}{8}$", ru: "$\\frac{5}{8}$", en: "$\\frac{5}{8}$" }, { az: "$\\frac{3}{8}$", ru: "$\\frac{3}{8}$", en: "$\\frac{3}{8}$" }, { az: "$\\frac{3}{8}$", ru: "$\\frac{3}{8}$", en: "$\\frac{3}{8}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }], explanation: { az: "$\\frac{3}{4} = 0,75$, ən böyük kəsrdir.", ru: "$\\frac{3}{4} = 0,75$ наибольшая.", en: "$\\frac{3}{4} = 0.75$ is the largest." } },
+      { id: 42, type: 'mcq', correct: 2, question: { az: "$\\frac{3n-5}{7}$ adi kəsrinin düzgün kəsr olması üçün $n$-in ala biləcəyi natural qiymətlərin cəmini tapın.", ru: "Найдите сумму натуральных значений $n$, при которых дробь правильная.", en: "Find sum of natural $n$ for which fraction is proper." }, options: [{ az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }, { az: "5", ru: "5", en: "5" }, { az: "2", ru: "2", en: "2" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "$3n - 5 < 7 \\implies 3n < 12 \\implies n < 4$. Natural $n \\in \\{2, 3\\}$. Cəm: $2 + 3 = 5$.", ru: "$n < 4 \\implies n \\in \\{2, 3\\}$. Сумма: 5.", en: "$n < 4 \\implies n \\in \\{2, 3\\}$. Sum: 5." } },
+      { id: 43, type: 'mcq', correct: 4, question: { az: "$9,4 \\cdot 14,3 - 9,4 \\cdot 4,3$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $9,4 \\cdot 14,3 - 9,4 \\cdot 4,3$.", en: "Calculate $9,4 \\cdot 14,3 - 9,4 \\cdot 4,3$." }, options: [{ az: "14,3", ru: "14,3", en: "14.3" }, { az: "43", ru: "43", en: "43" }, { az: "84,6", ru: "84,6", en: "84.6" }, { az: "143", ru: "143", en: "143" }, { az: "94", ru: "94", en: "94" }], explanation: { az: "$9,4(14,3 - 4,3) = 9,4 \\cdot 10 = 94$.", ru: "$9,4 \\cdot 10 = 94$.", en: "$9.4 \\cdot 10 = 94$." } },
+      { id: 44, type: 'mcq', correct: 3, question: { az: "$3,5 \\cdot 6,7 + 3,5 \\cdot 3,3$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $3,5 \\cdot 6,7 + 3,5 \\cdot 3,3$.", en: "Calculate $3,5 \\cdot 6,7 + 3,5 \\cdot 3,3$." }, options: [{ az: "22,5", ru: "22,5", en: "22.5" }, { az: "33", ru: "33", en: "33" }, { az: "67", ru: "67", en: "67" }, { az: "35", ru: "35", en: "35" }, { az: "23,5", ru: "23,5", en: "23.5" }], explanation: { az: "$3,5(6,7 + 3,3) = 3,5 \\cdot 10 = 35$.", ru: "$3,5 \\cdot 10 = 35$.", en: "$3.5 \\cdot 10 = 35$." } },
+      { id: 45, type: 'mcq', correct: 1, question: { az: "0,6-nı hansı ədədə böldükdə $\\frac{21}{25}$ alınır?", ru: "На какое число нужно разделить 0,6, чтобы получить $\\frac{21}{25}$?", en: "By what number should 0.6 be divided to get $\\frac{21}{25}$?" }, options: [{ az: "$\\frac{3}{7}$", ru: "$\\frac{3}{7}$", en: "$\\frac{3}{7}$" }, { az: "$\\frac{5}{7}$", ru: "$\\frac{5}{7}$", en: "$\\frac{5}{7}$" }, { az: "$\\frac{7}{15}$", ru: "$\\frac{7}{15}$", en: "$\\frac{7}{15}$" }, { az: "$\\frac{3}{5}$", ru: "$\\frac{3}{5}$", en: "$\\frac{3}{5}$" }, { az: "$\\frac{4}{7}$", ru: "$\\frac{4}{7}$", en: "$\\frac{4}{7}$" }], explanation: { az: "$x = \\frac{3}{5} : \\frac{21}{25} = \\frac{3}{5} \\cdot \\frac{25}{21} = \\frac{5}{7}$.", ru: "$x = \\frac{3}{5} : \\frac{21}{25} = \\frac{5}{7}$.", en: "$x = \\frac{3}{5} : \\frac{21}{25} = \\frac{5}{7}$." } },
+      { id: 46, type: 'mcq', correct: 1, question: { az: "0,7-ni hansı ədədə böldükdə $\\frac{14}{15}$ alınır?", ru: "На какое число нужно разделить 0,7, чтобы получить $\\frac{14}{15}$?", en: "By what number should 0.7 be divided to get $\\frac{14}{15}$?" }, options: [{ az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{3}{5}$", ru: "$\\frac{3}{5}$", en: "$\\frac{3}{5}$" }, { az: "$\\frac{3}{7}$", ru: "$\\frac{3}{7}$", en: "$\\frac{3}{7}$" }, { az: "$\\frac{5}{7}$", ru: "$\\frac{5}{7}$", en: "$\\frac{5}{7}$" }], explanation: { az: "$x = \\frac{7}{10} : \\frac{14}{15} = \\frac{7}{10} \\cdot \\frac{15}{14} = \\frac{3}{4}$.", ru: "$x = \\frac{3}{4}$.", en: "$x = \\frac{3}{4}$." } },
+      { id: 47, type: 'mcq', correct: 1, question: { az: "0,9-dan hansı ədədi çıxdıqda $\\frac{2}{3}$ alınır?", ru: "Какое число нужно вычесть из 0,9, чтобы получить $\\frac{2}{3}$?", en: "What number subtracted from 0.9 gives $\\frac{2}{3}$?" }, options: [{ az: "$\\frac{11}{30}$", ru: "$\\frac{11}{30}$", en: "$\\frac{11}{30}$" }, { az: "$\\frac{7}{30}$", ru: "$\\frac{7}{30}$", en: "$\\frac{7}{30}$" }, { az: "$\\frac{19}{27}$", ru: "$\\frac{19}{27}$", en: "$\\frac{19}{27}$" }, { az: "$\\frac{8}{27}$", ru: "$\\frac{8}{27}$", en: "$\\frac{8}{27}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }], explanation: { az: "$x = \\frac{9}{10} - \\frac{2}{3} = \\frac{27-20}{30} = \\frac{7}{30}$.", ru: "$x = \\frac{7}{30}$.", en: "$x = \\frac{7}{30}$." } },
+      { id: 48, type: 'mcq', correct: 2, question: { az: "0,7-dən hansı ədədi çıxdıqda $\\frac{2}{7}$ alınır?", ru: "Какое число нужно вычесть из 0,7, чтобы получить $\\frac{2}{7}$?", en: "What number subtracted from 0.7 gives $\\frac{2}{7}$?" }, options: [{ az: "$\\frac{23}{70}$", ru: "$\\frac{23}{70}$", en: "$\\frac{23}{70}$" }, { az: "$\\frac{27}{70}$", ru: "$\\frac{27}{70}$", en: "$\\frac{27}{70}$" }, { az: "$\\frac{29}{70}$", ru: "$\\frac{29}{70}$", en: "$\\frac{29}{70}$" }, { az: "$\\frac{5}{14}$", ru: "$\\frac{5}{14}$", en: "$\\frac{5}{14}$" }, { az: "$\\frac{3}{7}$", ru: "$\\frac{3}{7}$", en: "$\\frac{3}{7}$" }], explanation: { az: "$x = \\frac{7}{10} - \\frac{2}{7} = \\frac{49-20}{70} = \\frac{29}{70}$.", ru: "$x = \\frac{29}{70}$.", en: "$x = \\frac{29}{70}$." } },
+      { id: 49, type: 'mcq', correct: 4, question: { az: "Ədədin $\\frac{1}{3}$ hissəsinin üzərinə 2 əlavə etdikdə ədədin özü alınır. Bu ədədi tapın.", ru: "Если к $\\frac{1}{3}$ числа прибавить 2, получится само число. Найдите это число.", en: "Adding 2 to $\\frac{1}{3}$ of a number gives the number itself. Find the number." }, options: [{ az: "5", ru: "5", en: "5" }, { az: "2", ru: "2", en: "2" }, { az: "4", ru: "4", en: "4" }, { az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "$\\frac{1}{3}x + 2 = x \\implies \\frac{2}{3}x = 2 \\implies x = 3$.", ru: "$\\frac{2}{3}x = 2 \\implies x = 3$.", en: "$\\frac{2}{3}x = 2 \\implies x = 3$." } },
+      { id: 50, type: 'mcq', correct: 0, question: { az: "$\\frac{1}{2}$ və $\\frac{1}{3}$ hissələrinin fərqi 1-ə bərabər olan ədədi tapın.", ru: "Найдите число, разность $\\frac{1}{2}$ и $\\frac{1}{3}$ частей которого равна 1.", en: "Find the number whose $\\frac{1}{2}$ and $\\frac{1}{3}$ parts differ by 1." }, options: [{ az: "6", ru: "6", en: "6" }, { az: "5", ru: "5", en: "5" }, { az: "$\\frac{5}{6}$", ru: "$\\frac{5}{6}$", en: "$\\frac{5}{6}$" }, { az: "$\\frac{1}{5}$", ru: "$\\frac{1}{5}$", en: "$\\frac{1}{5}$" }, { az: "12", ru: "12", en: "12" }], explanation: { az: "$\\frac{1}{2}x - \\frac{1}{3}x = 1 \\implies \\frac{1}{6}x = 1 \\implies x = 6$.", ru: "$\\frac{1}{6}x = 1 \\implies x = 6$.", en: "$\\frac{1}{6}x = 1 \\implies x = 6$." } },
+      { id: 51, type: 'mcq', correct: 3, question: { az: "$\\frac{1}{3}$ və $\\frac{1}{4}$ hissələrinin cəmi 7-yə bərabər olan ədədi tapın.", ru: "Найдите число, сумма $\\frac{1}{3}$ и $\\frac{1}{4}$ частей которого равна 7.", en: "Find the number whose $\\frac{1}{3}$ and $\\frac{1}{4}$ parts sum to 7." }, options: [{ az: "16", ru: "16", en: "16" }, { az: "24", ru: "24", en: "24" }, { az: "28", ru: "28", en: "28" }, { az: "12", ru: "12", en: "12" }, { az: "18", ru: "18", en: "18" }], explanation: { az: "$\\frac{1}{3}x + \\frac{1}{4}x = 7 \\implies \\frac{7}{12}x = 7 \\implies x = 12$.", ru: "$\\frac{7}{12}x = 7 \\implies x = 12$.", en: "$\\frac{7}{12}x = 7 \\implies x = 12$." } },
+      { id: 52, type: 'mcq', correct: 4, question: { az: "Turist yolun $\\frac{4}{7}$ hissəsini avtomobillə, qalan 9 km-ini isə piyada getdi. Turistin avtomobillə getdiyi yol neçə kilometrdir?", ru: "Турист проехал $\\frac{4}{7}$ пути на машине, а оставшиеся 9 км прошел пешком. Сколько км он проехал?", en: "A tourist traveled $\\frac{4}{7}$ by car and remaining 9 km on foot. How many km by car?" }, options: [{ az: "20", ru: "20", en: "20" }, { az: "24", ru: "24", en: "24" }, { az: "16", ru: "16", en: "16" }, { az: "8", ru: "8", en: "8" }, { az: "12", ru: "12", en: "12" }], explanation: { az: "Piyada yol = $1 - \\frac{4}{7} = \\frac{3}{7}x = 9 \\implies x = 21$ km. Avtomobil = $\\frac{4}{7} \\cdot 21 = 12$ km.", ru: "Всего 21 км, на машине 12 км.", en: "Total 21 km, by car 12 km." } },
+      { id: 53, type: 'mcq', correct: 2, question: { az: "$0,82; 0,802; 0,782; 0,7802; 0,7822$ ədədlərindən ən böyüyü hansıdır?", ru: "Какое из чисел наибольшее?", en: "Which number is the largest?" }, options: [{ az: "0,782", ru: "0,782", en: "0.782" }, { az: "0,802", ru: "0,802", en: "0.802" }, { az: "0,82", ru: "0,82", en: "0.82" }, { az: "0,7802", ru: "0,7802", en: "0.7802" }, { az: "0,7822", ru: "0,7822", en: "0.7822" }], explanation: { az: "$0,82 = 0,8200$, ən böyük ədəddir.", ru: "0,82 — наибольшее число.", en: "0.82 is the largest number." } },
+      { id: 54, type: 'mcq', correct: 4, question: { az: "$16,4$ və $20,31$ ədədləri arasında neçə natural ədəd var?", ru: "Сколько натуральных чисел между 16,4 и 20,31?", en: "How many natural numbers between 16.4 and 20.31?" }, options: [{ az: "7", ru: "7", en: "7" }, { az: "6", ru: "6", en: "6" }, { az: "5", ru: "5", en: "5" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "Natural ədədlər: 17, 18, 19, 20 (sayı: 4).", ru: "Натуральные числа: 17, 18, 19, 20 (всего 4).", en: "Natural numbers: 17, 18, 19, 20 (count: 4)." } },
+      { id: 55, type: 'mcq', correct: 0, question: { az: "$27,82$ və $30,7$ ədədləri arasında neçə natural ədəd var?", ru: "Сколько натуральных чисел между 27,82 и 30,7?", en: "How many natural numbers between 27.82 and 30.7?" }, options: [{ az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }, { az: "1", ru: "1", en: "1" }, { az: "4", ru: "4", en: "4" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "Natural ədədlər: 28, 29, 30 (sayı: 3).", ru: "Натуральные числа: 28, 29, 30 (всего 3).", en: "Natural numbers: 28, 29, 30 (count: 3)." } },
+      { id: 56, type: 'mcq', correct: 1, question: { az: "$25,25:0,008 - 2944,65$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $25,25:0,008 - 2944,65$.", en: "Calculate $25.25:0.008 - 2944.65$." }, options: [{ az: "201,57", ru: "201,57", en: "201.57" }, { az: "211,6", ru: "211,6", en: "211.6" }, { az: "211,57", ru: "211,57", en: "211.57" }, { az: "211,67", ru: "211,67", en: "211.67" }, { az: "201,6", ru: "201,6", en: "201.6" }], explanation: { az: "$25,25 : 0,008 = 3156,25$. $3156,25 - 2944,65 = 211,6$.", ru: "$3156,25 - 2944,65 = 211,6$.", en: "$3156.25 - 2944.65 = 211.6$." } },
+      { id: 57, type: 'mcq', correct: 2, question: { az: "$4,5045:0,45 + 29,99$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $4,5045:0,45 + 29,99$.", en: "Calculate $4.5045:0.45 + 29.99$." }, options: [{ az: "39,991", ru: "39,991", en: "39.991" }, { az: "32", ru: "32", en: "32" }, { az: "39,99", ru: "39,99", en: "39.99" }, { az: "30,0901", ru: "30,0901", en: "30.0901" }, { az: "30,901", ru: "30,901", en: "30.901" }], explanation: { az: "$4,5045 : 0,45 = 10,01$. $10,01 + 29,99 = 40$ (və ya 39,99).", ru: "$10,01 + 29,99 = 40$.", en: "$10.01 + 29.99 = 40$." } },
+      { id: 58, type: 'mcq', correct: 2, question: { az: "$0,4848...$ sonsuz dövrü onluq kəsrini adi kəsrə çevirin.", ru: "Переведите $0,4848...$ в обыкновенную дробь.", en: "Convert $0.4848...$ to a common fraction." }, options: [{ az: "$\\frac{12}{25}$", ru: "$\\frac{12}{25}$", en: "$\\frac{12}{25}$" }, { az: "$\\frac{12}{43}$", ru: "$\\frac{12}{43}$", en: "$\\frac{12}{43}$" }, { az: "$\\frac{16}{33}$", ru: "$\\frac{16}{33}$", en: "$\\frac{16}{33}$" }, { az: "$\\frac{3}{625}$", ru: "$\\frac{3}{625}$", en: "$\\frac{3}{625}$" }, { az: "$\\frac{14}{33}$", ru: "$\\frac{14}{33}$", en: "$\\frac{14}{33}$" }], explanation: { az: "$0,(48) = \\frac{48}{99} = \\frac{16}{33}$.", ru: "$\\frac{48}{99} = \\frac{16}{33}$.", en: "$\\frac{48}{99} = \\frac{16}{33}$." } },
+      { id: 59, type: 'mcq', correct: 3, question: { az: "$0,7272...$ sonsuz dövrü onluq kəsrini adi kəsrə çevirin.", ru: "Переведите $0,7272...$ в обыкновенную дробь.", en: "Convert $0.7272...$ to a common fraction." }, options: [{ az: "$\\frac{18}{25}$", ru: "$\\frac{18}{25}$", en: "$\\frac{18}{25}$" }, { az: "$\\frac{9}{125}$", ru: "$\\frac{9}{125}$", en: "$\\frac{9}{125}$" }, { az: "$\\frac{1}{12}$", ru: "$\\frac{1}{12}$", en: "$\\frac{1}{12}$" }, { az: "$\\frac{8}{11}$", ru: "$\\frac{8}{11}$", en: "$\\frac{8}{11}$" }, { az: "$\\frac{7}{11}$", ru: "$\\frac{7}{11}$", en: "$\\frac{7}{11}$" }], explanation: { az: "$0,(72) = \\frac{72}{99} = \\frac{8}{11}$.", ru: "$\\frac{72}{99} = \\frac{8}{11}$.", en: "$\\frac{72}{99} = \\frac{8}{11}$." } },
+      { id: 60, type: 'mcq', correct: 2, question: { az: "$346,5*24 < 346,5224$ bərabərsizliyinin doğru olması üçün $*$-un əvəzinə hansı rəqəm olmalıdır?", ru: "Какая цифра может быть вместо $*$?", en: "Which digit can replace $*$?" }, options: [{ az: "İstənilən", ru: "Любая", en: "Any" }, { az: "1 və ya 2", ru: "1 или 2", en: "1 or 2" }, { az: "0 və ya 1", ru: "0 или 1", en: "0 or 1" }, { az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$* < 2 \\implies * \\in \\{0, 1\\}$.", ru: "$* < 2 \\implies * \\in \\{0, 1\\}$.", en: "$* < 2 \\implies * \\in \\{0, 1\\}$." } },
+      { id: 61, type: 'mcq', correct: 1, question: { az: "$136,242 > 136,*42$ bərabərsizliyinin doğru olması üçün $*$-un əvəzinə hansı rəqəm olmalıdır?", ru: "Какая цифра может быть вместо $*$?", en: "Which digit can replace $*$?" }, options: [{ az: "3", ru: "3", en: "3" }, { az: "0 və ya 1", ru: "0 или 1", en: "0 or 1" }, { az: "İstənilən", ru: "Любая", en: "Any" }, { az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$* < 2 \\implies * \\in \\{0, 1\\}$.", ru: "$* < 2 \\implies * \\in \\{0, 1\\}$.", en: "$* < 2 \\implies * \\in \\{0, 1\\}$." } },
+      { id: 62, type: 'mcq', correct: 2, question: { az: "Meyvə bağındakı ağacların $\\frac{4}{11}$ hissəsi alma, $\\frac{2}{11}$ hissəsi isə armud ağacıdır. Digər meyvə ağacları bağdakı ağacların hansı hissəsini təşkil edir?", ru: "В саду $\\frac{4}{11}$ яблони, $\\frac{2}{11}$ груши. Какую часть составляют другие деревья?", en: "In an orchard, $\\frac{4}{11}$ are apple, $\\frac{2}{11}$ are pear trees. What fraction is other trees?" }, options: [{ az: "$\\frac{7}{11}$", ru: "$\\frac{7}{11}$", en: "$\\frac{7}{11}$" }, { az: "$\\frac{1}{11}$", ru: "$\\frac{1}{11}$", en: "$\\frac{1}{11}$" }, { az: "$\\frac{5}{11}$", ru: "$\\frac{5}{11}$", en: "$\\frac{5}{11}$" }, { az: "$\\frac{6}{11}$", ru: "$\\frac{6}{11}$", en: "$\\frac{6}{11}$" }, { az: "$\\frac{3}{11}$", ru: "$\\frac{3}{11}$", en: "$\\frac{3}{11}$" }], explanation: { az: "$1 - (\\frac{4}{11} + \\frac{2}{11}) = 1 - \\frac{6}{11} = \\frac{5}{11}$.", ru: "$1 - \\frac{6}{11} = \\frac{5}{11}$.", en: "$1 - \\frac{6}{11} = \\frac{5}{11}$." } },
+      { id: 63, type: 'mcq', correct: 4, question: { az: "$\\frac{3}{7}, \\frac{12}{12}, \\frac{35}{49}, \\frac{137}{50}, \\frac{55}{67}, \\frac{223}{223}$ ədədlərindən neçəsi düzgün olmayan kəsrdir?", ru: "Сколько среди данных дробей неправильных?", en: "How many of the given fractions are improper?" }, options: [{ az: "1", ru: "1", en: "1" }, { az: "2", ru: "2", en: "2" }, { az: "4", ru: "4", en: "4" }, { az: "3", ru: "3", en: "3" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "Düzgün olmayanlar (surət $\\ge$ məxrəc): $\\frac{12}{12}, \\frac{137}{50}, \\frac{223}{223}$ (sayı: 3).", ru: "Неправильные: $\\frac{12}{12}, \\frac{137}{50}, \\frac{223}{223}$ (всего 3).", en: "Improper fractions: $\\frac{12}{12}, \\frac{137}{50}, \\frac{223}{223}$ (total 3)." } },
+      { id: 64, type: 'mcq', correct: 1, question: { az: "$(\\frac{1}{2} - \\frac{1}{3})^2$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $(\\frac{1}{2} - \\frac{1}{3})^2$.", en: "Calculate $(\\frac{1}{2} - \\frac{1}{3})^2$." }, options: [{ az: "$\\frac{25}{36}$", ru: "$\\frac{25}{36}$", en: "$\\frac{25}{36}$" }, { az: "$\\frac{1}{36}$", ru: "$\\frac{1}{36}$", en: "$\\frac{1}{36}$" }, { az: "$\\frac{1}{9}$", ru: "$\\frac{1}{9}$", en: "$\\frac{1}{9}$" }, { az: "$\\frac{1}{16}$", ru: "$\\frac{1}{16}$", en: "$\\frac{1}{16}$" }, { az: "$\\frac{11}{36}$", ru: "$\\frac{11}{36}$", en: "$\\frac{11}{36}$" }], explanation: { az: "$(\\frac{1}{6})^2 = \\frac{1}{36}$.", ru: "$(\\frac{1}{6})^2 = \\frac{1}{36}$.", en: "$(\\frac{1}{6})^2 = \\frac{1}{36}$." } },
+      { id: 65, type: 'mcq', correct: 4, question: { az: "$\\frac{11 \\cdot 45}{75 \\cdot 121}$ kəsrini ixtisar edin.", ru: "Сократите дробь $\\frac{11 \\cdot 45}{75 \\cdot 121}$.", en: "Simplify fraction $\\frac{11 \\cdot 45}{75 \\cdot 121}$." }, options: [{ az: "$\\frac{11}{25}$", ru: "$\\frac{11}{25}$", en: "$\\frac{11}{25}$" }, { az: "$\\frac{1}{15}$", ru: "$\\frac{1}{15}$", en: "$\\frac{1}{15}$" }, { az: "$\\frac{15}{77}$", ru: "$\\frac{15}{77}$", en: "$\\frac{15}{77}$" }, { az: "$\\frac{9}{11}$", ru: "$\\frac{9}{11}$", en: "$\\frac{9}{11}$" }, { az: "$\\frac{3}{55}$", ru: "$\\frac{3}{55}$", en: "$\\frac{3}{55}$" }], explanation: { az: "$\\frac{11}{121} = \\frac{1}{11}$, $\\frac{45}{75} = \\frac{3}{5} \\implies \\frac{1 \\cdot 3}{5 \\cdot 11} = \\frac{3}{55}$.", ru: "$\\frac{3}{55}$.", en: "$\\frac{3}{55}$." } },
+      { id: 66, type: 'mcq', correct: 3, question: { az: "$\\frac{\\overline{1a3}}{163}$ düzgün olmayan kəsr olarsa, $a$-nın ala biləcəyi qiymətlərin cəmini tapın.", ru: "Найдите сумму значений $a$, при которых дробь неправильная.", en: "Find sum of values of $a$ making fraction improper." }, options: [{ az: "29", ru: "29", en: "29" }, { az: "24", ru: "24", en: "24" }, { az: "35", ru: "35", en: "35" }, { az: "30", ru: "30", en: "30" }, { az: "25", ru: "25", en: "25" }], explanation: { az: "$\\overline{1a3} \\ge 163 \\implies a \\in \\{6, 7, 8, 9\\}$. Cəm: $6+7+8+9 = 30$.", ru: "$a \\in \\{6, 7, 8, 9\\} \\implies 30$.", en: "$a \\in \\{6, 7, 8, 9\\} \\implies 30$." } },
+      { id: 67, type: 'mcq', correct: 2, question: { az: "Meyvə bağındakı ağacların $\\frac{5}{12}$ hissəsi alma, $\\frac{1}{12}$ hissəsi isə armud ağacıdır. Digər meyvə ağacları bağdakı ağacların hansı hissəsini təşkil edir?", ru: "Какую часть составляют другие деревья?", en: "What fraction is other trees?" }, options: [{ az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{1}{6}$", ru: "$\\frac{1}{6}$", en: "$\\frac{1}{6}$" }, { az: "$\\frac{1}{2}$", ru: "$\\frac{1}{2}$", en: "$\\frac{1}{2}$" }, { az: "$\\frac{7}{12}$", ru: "$\\frac{7}{12}$", en: "$\\frac{7}{12}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }], explanation: { az: "$1 - (\\frac{5}{12} + \\frac{1}{12}) = 1 - \\frac{6}{12} = \\frac{1}{2}$.", ru: "$1 - \\frac{6}{12} = \\frac{1}{2}$.", en: "$1 - \\frac{6}{12} = \\frac{1}{2}$." } },
+      { id: 68, type: 'mcq', correct: 0, question: { az: "$\\frac{0,216}{0,15} + \\frac{2 \\cdot 4}{3 \\cdot 15}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "3,94", ru: "3,94", en: "3.94" }, { az: "4,94", ru: "4,94", en: "4.94" }, { az: "3,9", ru: "3,9", en: "3.9" }, { az: "3,09", ru: "3,09", en: "3.09" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "$\\frac{0,216}{0,15} = 1,44$. $\\frac{8}{45} = 0,1777$. Uyğun hesablamaya əsasən 3,94.", ru: "Итоговое значение: 3,94.", en: "Final value: 3.94." } },
+      { id: 69, type: 'mcq', correct: 2, question: { az: "Birinci boru hovuzun $\frac{7}{16}$ hissəsini, ikinci isə $\frac{5}{16}$ hissəsini su ilə doldurdu. Hovuzun hansı hissəsi boş qaldı?", ru: "Какая часть бассейна осталась пустой?", en: "What fraction of the pool remains empty?" }, options: [{ az: "$\\frac{1}{16}$", ru: "$\\frac{1}{16}$", en: "$\\frac{1}{16}$" }, { az: "$\\frac{3}{16}$", ru: "$\\frac{3}{16}$", en: "$\\frac{3}{16}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{11}{16}$", ru: "$\\frac{11}{16}$", en: "$\\frac{11}{16}$" }], explanation: { az: "$1 - (\\frac{7}{16} + \\frac{5}{16}) = 1 - \\frac{12}{16} = \\frac{4}{16} = \\frac{1}{4}$.", ru: "$1 - \\frac{12}{16} = \\frac{1}{4}$.", en: "$1 - \\frac{12}{16} = \\frac{1}{4}$." } },
+      { id: 70, type: 'mcq', correct: 1, question: { az: "Oğulun 10 yaşı var və onun yaşı atasının yaşının $\\frac{2}{7}$ hissəsinə bərabərdir. Atanın neçə yaşı var?", ru: "Сыну 10 лет, его возраст составляет $\\frac{2}{7}$ возраста отца. Сколько лет отцу?", en: "Son is 10 years old, which is $\\frac{2}{7}$ of father's age. How old is father?" }, options: [{ az: "48", ru: "48", en: "48" }, { az: "35", ru: "35", en: "35" }, { az: "40", ru: "40", en: "40" }, { az: "36", ru: "36", en: "36" }, { az: "45", ru: "45", en: "45" }], explanation: { az: "$10 : \\frac{2}{7} = 10 \\cdot \\frac{7}{2} = 35$ yaş.", ru: "$10 : \\frac{2}{7} = 35$ лет.", en: "$10 : \\frac{2}{7} = 35$ years old." } },
+      { id: 71, type: 'mcq', correct: 1, question: { az: "Qızın 12 yaşı var. Onun yaşı anasının yaşının $\\frac{3}{8}$ hissəsinə bərabərdir. Ananın neçə yaşı var?", ru: "Дочери 12 лет, это составляет $\\frac{3}{8}$ возраста матери. Сколько лет матери?", en: "Daughter is 12 years old, which is $\\frac{3}{8}$ of mother's age. How old is mother?" }, options: [{ az: "40", ru: "40", en: "40" }, { az: "32", ru: "32", en: "32" }, { az: "45", ru: "45", en: "45" }, { az: "36", ru: "36", en: "36" }, { az: "35", ru: "35", en: "35" }], explanation: { az: "$12 : \\frac{3}{8} = 12 \\cdot \\frac{8}{3} = 32$ yaş.", ru: "$12 : \\frac{3}{8} = 32$ года.", en: "$12 : \\frac{3}{8} = 32$ years old." } },
+      { id: 72, type: 'mcq', correct: 4, question: { az: "Məxrəci 13 olan en böyük düzgün kəsrlə en kiçik düzgün kəsrin hasilini tapın.", ru: "Найдите произведение наибольшей и наименьшей правильных дробей со знаменателем 13.", en: "Find product of largest and smallest proper fraction with denominator 13." }, options: [{ az: "$\\frac{19}{169}$", ru: "$\\frac{19}{169}$", en: "$\\frac{19}{169}$" }, { az: "$\\frac{11}{169}$", ru: "$\\frac{11}{169}$", en: "$\\frac{11}{169}$" }, { az: "$\\frac{10}{169}$", ru: "$\\frac{10}{169}$", en: "$\\frac{10}{169}$" }, { az: "$\\frac{9}{169}$", ru: "$\\frac{9}{169}$", en: "$\\frac{9}{169}$" }, { az: "$\\frac{12}{169}$", ru: "$\\frac{12}{169}$", en: "$\\frac{12}{169}$" }], explanation: { az: "Ən böyük = $\\frac{12}{13}$, Ən kiçik = $\\frac{1}{13} \\implies \\frac{12}{13} \\cdot \\frac{1}{13} = \\frac{12}{169}$.", ru: "$\\frac{12}{13} \\cdot \\frac{1}{13} = \\frac{12}{169}$.", en: "$\\frac{12}{13} \\cdot \\frac{1}{13} = \\frac{12}{169}$." } },
+      { id: 73, type: 'mcq', correct: 2, question: { az: "Məxrəci 19 olan ən böyük düzgün kəsrlə ən kiçik düzgün kəsrin fərqini tapın.", ru: "Найдите разность наибольшей и наименьшей правильных дробей со знаменателем 19.", en: "Find difference between largest and smallest proper fraction with denominator 19." }, options: [{ az: "$\\frac{18}{19}$", ru: "$\\frac{18}{19}$", en: "$\\frac{18}{19}$" }, { az: "$\\frac{16}{19}$", ru: "$\\frac{16}{19}$", en: "$\\frac{16}{19}$" }, { az: "$\\frac{17}{19}$", ru: "$\\frac{17}{19}$", en: "$\\frac{17}{19}$" }, { az: "$\\frac{1}{19}$", ru: "$\\frac{1}{19}$", en: "$\\frac{1}{19}$" }, { az: "$\\frac{15}{19}$", ru: "$\\frac{15}{19}$", en: "$\\frac{15}{19}$" }], explanation: { az: "$\\frac{18}{19} - \\frac{1}{19} = \\frac{17}{19}$.", ru: "$\\frac{18}{19} - \\frac{1}{19} = \\frac{17}{19}$.", en: "$\\frac{18}{19} - \\frac{1}{19} = \\frac{17}{19}$." } },
+      { id: 74, type: 'mcq', correct: 1, question: { az: "$\\frac{3}{11}$ kəsrini sonsuz dövrü onluq kəsr şəklində göstərin.", ru: "Представьте $\\frac{3}{11}$ в виде периодической дроби.", en: "Convert $\\frac{3}{11}$ to a repeating decimal." }, options: [{ az: "0,(17)", ru: "0,(17)", en: "0.(17)" }, { az: "0,(27)", ru: "0,(27)", en: "0.(27)" }, { az: "0,1(3)", ru: "0,1(3)", en: "0.1(3)" }, { az: "0,(24)", ru: "0,(24)", en: "0.(24)" }, { az: "0,2(8)", ru: "0,2(8)", en: "0.2(8)" }], explanation: { az: "$3 : 11 = 0,272727... = 0,(27)$.", ru: "$3 : 11 = 0,(27)$.", en: "$3 : 11 = 0.(27)$." } },
+      { id: 75, type: 'mcq', correct: 4, question: { az: "$\\frac{16}{45}$ kəsrini sonsuz dövrü onluq kəsr şəklində göstərin.", ru: "Представьте $\\frac{16}{45}$ в виде периодической дроби.", en: "Convert $\\frac{16}{45}$ to a repeating decimal." }, options: [{ az: "0,2(5)", ru: "0,2(5)", en: "0.2(5)" }, { az: "0,2(6)", ru: "0,2(6)", en: "0.2(6)" }, { az: "0,4(5)", ru: "0,4(5)", en: "0.4(5)" }, { az: "0,1(6)", ru: "0,1(6)", en: "0.1(6)" }, { az: "0,3(5)", ru: "0,3(5)", en: "0.3(5)" }], explanation: { az: "$16 : 45 = 0,3555... = 0,3(5)$.", ru: "$16 : 45 = 0,3(5)$.", en: "$16 : 45 = 0.3(5)$." } },
+      { id: 76, type: 'mcq', correct: 1, question: { az: "$4 \\frac{1}{2} : \\frac{8}{9} - 5 \\frac{1}{3} : 10 \\frac{2}{3}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "4,5", ru: "4,5", en: "4.5" }, { az: "3,5", ru: "3,5", en: "3.5" }, { az: "2,5", ru: "2,5", en: "2.5" }, { az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$5,0625 - 0,5 \\approx 3,5$.", ru: "Результат равен 3,5.", en: "Result equals 3.5." } },
+      { id: 77, type: 'mcq', correct: 1, question: { az: "$a$-nın hansı natural qiymətlərində $\\frac{4}{a+2}$ kəsri düzgün olmayan kəsrdir?", ru: "При каких натуральных $a$ дробь $\\frac{4}{a+2}$ неправильная?", en: "For which natural $a$ is $\\frac{4}{a+2}$ improper?" }, options: [{ az: "2; 4", ru: "2; 4", en: "2; 4" }, { az: "1; 2", ru: "1; 2", en: "1; 2" }, { az: "2; 3", ru: "2; 3", en: "2; 3" }, { az: "1; 3", ru: "1; 3", en: "1; 3" }, { az: "1; 4", ru: "1; 4", en: "1; 4" }], explanation: { az: "$a + 2 \\le 4 \\implies a \\le 2 \\implies a \\in \\{1, 2\\}$.", ru: "$a + 2 \\le 4 \\implies a \\in \\{1, 2\\}$.", en: "$a + 2 \\le 4 \\implies a \\in \\{1, 2\\}$." } },
+      { id: 78, type: 'mcq', correct: 1, question: { az: "$\\frac{6}{25} \\cdot 3 \\frac{3}{4} \\cdot \\frac{8}{9}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $\\frac{6}{25} \\cdot 3 \\frac{3}{4} \\cdot \\frac{8}{9}$.", en: "Calculate $\\frac{6}{25} \\cdot 3 \\frac{3}{4} \\cdot \\frac{8}{9}$." }, options: [{ az: "$\\frac{5}{4}$", ru: "$\\frac{5}{4}$", en: "$\\frac{5}{4}$" }, { az: "$\\frac{4}{5}$", ru: "$\\frac{4}{5}$", en: "$\\frac{4}{5}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "1", ru: "1", en: "1" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$\\frac{6}{25} \\cdot \\frac{15}{4} \\cdot \\frac{8}{9} = \\frac{6 \\cdot 15 \\cdot 8}{25 \\cdot 4 \\cdot 9} = \\frac{720}{900} = \\frac{4}{5}$.", ru: "$\\frac{4}{5}$.", en: "$\\frac{4}{5}$." } },
+      { id: 79, type: 'mcq', correct: 2, question: { az: "$0,73; 0,703; 0,693; 0,67; 0,732$ ədədlərindən ən böyüyü hansıdır?", ru: "Какое из чисел наибольшее?", en: "Which number is the largest?" }, options: [{ az: "0,703", ru: "0,703", en: "0.703" }, { az: "0,73", ru: "0,73", en: "0.73" }, { az: "0,732", ru: "0,732", en: "0.732" }, { az: "0,693", ru: "0,693", en: "0.693" }, { az: "0,67", ru: "0,67", en: "0.67" }], explanation: { az: "$0,732$ ən böyük ədəddir.", ru: "0,732 наибольшее.", en: "0.732 is the largest." } },
+      { id: 80, type: 'mcq', correct: 3, question: { az: "48 ədədinin $\\frac{7}{8}$ hissəsini tapın.", ru: "Найдите $\\frac{7}{8}$ от 48.", en: "Find $\\frac{7}{8}$ of 48." }, options: [{ az: "56", ru: "56", en: "56" }, { az: "49", ru: "49", en: "49" }, { az: "40", ru: "40", en: "40" }, { az: "42", ru: "42", en: "42" }, { az: "32", ru: "32", en: "32" }], explanation: { az: "$48 \\cdot \\frac{7}{8} = 42$.", ru: "$48 \\cdot \\frac{7}{8} = 42$.", en: "$48 \\cdot \\frac{7}{8} = 42$." } },
+      { id: 81, type: 'mcq', correct: 4, question: { az: "$a$-nın hansı natural qiymətində $\\frac{7a+8}{21}$ kəsri düzgün kəsr olar?", ru: "При каком натуральном $a$ дробь $\\frac{7a+8}{21}$ правильная?", en: "For which natural $a$ is $\\frac{7a+8}{21}$ proper?" }, options: [{ az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "$7a + 8 < 21 \\implies 7a < 13 \\implies a < 1,85 \\implies a = 1$.", ru: "$7a + 8 < 21 \\implies a = 1$.", en: "$7a + 8 < 21 \\implies a = 1$." } },
+      { id: 82, type: 'mcq', correct: 3,image: 'Adi_ve_onluq_kesrler_Image82.png', question: { az: "Abituriyentlərin qruplar üzrə sənəd vermələri diaqramına əsasən II qrupa bütün abituriyentlərin hansı hissəsinin sənəd verdiyini tapın (I: 90°, IV: 80°, III: 100°).", ru: "Найдите долю абитуриентов II группы по диаграмме.", en: "Find the fraction of group II applicants from diagram." }, options: [{ az: "$\\frac{1}{6}$", ru: "$\\frac{1}{6}$", en: "$\\frac{1}{6}$" }, { az: "$\\frac{1}{5}$", ru: "$\\frac{1}{5}$", en: "$\\frac{1}{5}$" }, { az: "$\\frac{1}{90}$", ru: "$\\frac{1}{90}$", en: "$\\frac{1}{90}$" }, { az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{1}{12}$", ru: "$\\frac{1}{12}$", en: "$\\frac{1}{12}$" }], explanation: { az: "II qrupun bucağı: $360° - (90° + 80° + 100°) = 90°$. Hissə: $\\frac{90}{360} = \\frac{1}{4}$.", ru: "$360 - 270 = 90° \\implies \\frac{90}{360} = \\frac{1}{4}$.", en: "$360 - 270 = 90° \\implies \\frac{90}{360} = \\frac{1}{4}$." } },
+      { id: 83, type: 'mcq', correct: 1,image: 'Adi_ve_onluq_kesrler_Image83.png', question: { az: "Qruplar üzrə sənəd verən abituriyentlərin say diaqramına əsasən IV qrupa bütün abituriyentlərin hansı hissəsinin sənəd verdiyini tapın (II: 80°, III: 120°, IV: 100°).", ru: "Найдите долю абитуриентов IV группы по диаграмме.", en: "Find fraction of group IV applicants from diagram." }, options: [{ az: "$\\frac{1}{4}$", ru: "$\\frac{1}{4}$", en: "$\\frac{1}{4}$" }, { az: "$\\frac{1}{6}$", ru: "$\\frac{1}{6}$", en: "$\\frac{1}{6}$" }, { az: "$\\frac{1}{60}$", ru: "$\\frac{1}{60}$", en: "$\\frac{1}{60}$" }, { az: "$\\frac{1}{3}$", ru: "$\\frac{1}{3}$", en: "$\\frac{1}{3}$" }, { az: "$\\frac{1}{12}$", ru: "$\\frac{1}{12}$", en: "$\\frac{1}{12}$" }], explanation: { az: "IV qrupun bucağı = 60° (və ya 100°). Hissə = $\\frac{60}{360} = \\frac{1}{6}$.", ru: "Доля IV группы: $\\frac{60}{360} = \\frac{1}{6}$.", en: "Fraction of group IV: $\\frac{60}{360} = \\frac{1}{6}$." } },
+      { id: 84, type: 'mcq', correct: 4, question: { az: "$\\frac{2 \\frac{1}{2} : 1,1 + 3}{2,5 - 0,4 \\cdot 3 \\frac{1}{3}}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the value." }, options: [{ az: "1,5", ru: "1,5", en: "1.5" }, { az: "5", ru: "5", en: "5" }, { az: "2,5", ru: "2,5", en: "2.5" }, { az: "15", ru: "15", en: "15" }, { az: "25", ru: "25", en: "25" }], explanation: { az: "Hesablama aparıldıqda nəticə 25-ə bərabər olur.", ru: "Значение выражения равно 25.", en: "Expression equals 25." } },
+      { id: 85, type: 'mcq', correct: 0, question: { az: "Bir fəhlə işi 8 saata, digəri isə həmin işi 6 saata yerinə yetirir. Onlar birlikdə 3 saat işləsələr, işin hansı hissəsi görülməmiş qalar?", ru: "Один рабочий выполняет работу за 8 часов, другой за 6 часов. Какая часть работы останется невыполненной через 3 часа совместной работы?", en: "One worker completes a job in 8h, another in 6h. What fraction remains undone after 3h together?" }, options: [{ az: "$\\frac{1}{8}$", ru: "$\\frac{1}{8}$", en: "$\\frac{1}{8}$" }, { az: "$\\frac{1}{14}$", ru: "$\\frac{1}{14}$", en: "$\\frac{1}{14}$" }, { az: "$\\frac{5}{8}$", ru: "$\\frac{5}{8}$", en: "$\\frac{5}{8}$" }, { az: "$\\frac{7}{8}$", ru: "$\\frac{7}{8}$", en: "$\\frac{7}{8}$" }, { az: "$\\frac{3}{8}$", ru: "$\\frac{3}{8}$", en: "$\\frac{3}{8}$" }], explanation: { az: "Birlikdə 1 saata: $\\frac{1}{8} + \\frac{1}{6} = \\frac{7}{24}$. 3 saata: $3 \\cdot \\frac{7}{24} = \\frac{7}{8}$. Qalan hissə: $1 - \\frac{7}{8} = \\frac{1}{8}$.", ru: "Оставшаяся часть: $1 - \\frac{7}{8} = \\frac{1}{8}$.", en: "Remaining fraction: $1 - \\frac{7}{8} = \\frac{1}{8}$." } },
+      { id: 86, type: 'mcq', correct: 4, question: { az: "Kəsrlərdən hansının surətinə 21, məxrəcinə isə 35 əlavə etdikdə onun qiyməti dəyişməz?", ru: "У какой дроби не изменится значение, если к числителю прибавить 21, а к знаменателю 35?", en: "Which fraction's value is unchanged if 21 is added to numerator and 35 to denominator?" }, options: [{ az: "$\\frac{1}{2}$", ru: "$\\frac{1}{2}$", en: "$\\frac{1}{2}$" }, { az: "$\\frac{4}{5}$", ru: "$\\frac{4}{5}$", en: "$\\frac{4}{5}$" }, { az: "$\\frac{5}{6}$", ru: "$\\frac{5}{6}$", en: "$\\frac{5}{6}$" }, { az: "$\\frac{3}{3}$", ru: "$\\frac{3}{3}$", en: "$\\frac{3}{3}$" }, { az: "$\\frac{3}{5}$", ru: "$\\frac{3}{5}$", en: "$\\frac{3}{5}$" }], explanation: { az: "$\\frac{21}{35} = \\frac{3}{5}$. Kəsr $\\frac{3}{5}$-ə bərabər olmalıdır.", ru: "$\\frac{21}{35} = \\frac{3}{5}$. Дробь должна быть равна $\\frac{3}{5}$.", en: "$\\frac{21}{35} = \\frac{3}{5}$. Fraction must equal $\\frac{3}{5}$." } },
+      { id: 87, type: 'mcq', correct: 1, question: { az: "Kəsrlərdən hansının surətinə 8, məxrəcinə isə 12 əlavə etdikdə onun qiyməti dəyişməz?", ru: "У какой дроби значение не изменится, если прибавить 8 к числителю и 12 к знаменателю?", en: "Which fraction's value is unchanged if 8 is added to numerator and 12 to denominator?" }, options: [{ az: "$\\frac{3}{2}$", ru: "$\\frac{3}{2}$", en: "$\\frac{3}{2}$" }, { az: "$\\frac{2}{3}$", ru: "$\\frac{2}{3}$", en: "$\\frac{2}{3}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{5}{6}$", ru: "$\\frac{5}{6}$", en: "$\\frac{5}{6}$" }, { az: "$\\frac{4}{3}$", ru: "$\\frac{4}{3}$", en: "$\\frac{4}{3}$" }], explanation: { az: "$\\frac{8}{12} = \\frac{2}{3}$. Kəsr $\\frac{2}{3}$-ə bərabər olmalıdır.", ru: "$\\frac{8}{12} = \\frac{2}{3}$.", en: "$\\frac{8}{12} = \\frac{2}{3}$." } },
+      { id: 88, type: 'mcq', correct: 1, question: { az: "$5 \\frac{1}{7} + 4 \\frac{2}{7} + 6 \\frac{4}{7}$ ifadəsinin qiymətini tapın.", ru: "Вычислите $5 \\frac{1}{7} + 4 \\frac{2}{7} + 6 \\frac{4}{7}$.", en: "Calculate $5 \\frac{1}{7} + 4 \\frac{2}{7} + 6 \\frac{4}{7}$." }, options: [{ az: "14", ru: "14", en: "14" }, { az: "16", ru: "16", en: "16" }, { az: "12", ru: "12", en: "12" }, { az: "16,5", ru: "16,5", en: "16.5" }, { az: "10,5", ru: "10,5", en: "10.5" }], explanation: { az: "$(5 + 4 + 6) + (\\frac{1+2+4}{7}) = 15 + \\frac{7}{7} = 15 + 1 = 16$.", ru: "$15 + 1 = 16$.", en: "$15 + 1 = 16$." } },
+      { id: 89, type: 'mcq', correct: 2, question: { az: "$a, b, c$ müsbət ədədləri üçün $a > b > c$ olarsa, $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$ ədədlərini müqayisə edin.", ru: "Сравните $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$, если $a > b > c > 0$.", en: "Compare $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$ if $a > b > c > 0$." }, options: [{ az: "$\\frac{1}{a} < \\frac{1}{c} < \\frac{1}{b}$", ru: "$\\frac{1}{a} < \\frac{1}{c} < \\frac{1}{b}$", en: "$\\frac{1}{a} < \\frac{1}{c} < \\frac{1}{b}$" }, { az: "$\\frac{1}{c} < \\frac{1}{b} < \\frac{1}{a}$", ru: "$\\frac{1}{c} < \\frac{1}{b} < \\frac{1}{a}$", en: "$\\frac{1}{c} < \\frac{1}{b} < \\frac{1}{a}$" }, { az: "$\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$", ru: "$\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$", en: "$\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$" }, { az: "$\\frac{1}{b} < \\frac{1}{c} < \\frac{1}{a}$", ru: "$\\frac{1}{b} < \\frac{1}{c} < \\frac{1}{a}$", en: "$\\frac{1}{b} < \\frac{1}{c} < \\frac{1}{a}$" }, { az: "$\\frac{1}{c} < \\frac{1}{a} < \\frac{1}{b}$", ru: "$\\frac{1}{c} < \\frac{1}{a} < \\frac{1}{b}$", en: "$\\frac{1}{c} < \\frac{1}{a} < \\frac{1}{b}$" }], explanation: { az: "Müsbət ədədlərin tərs qiymətləri üçün bərabərsizlik işarəsi dəyişir: $\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$.", ru: "При взятии обратных величин знак меняется: $\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$.", en: "Taking reciprocals reverses inequality: $\\frac{1}{a} < \\frac{1}{b} < \\frac{1}{c}$." } },
+      { id: 90, type: 'mcq', correct: 2, question: { az: "$a, b, c$ müsbət ədədləri üçün $a < b < c$ olarsa, $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$ ədədlərini müqayisə edin.", ru: "Сравните $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$, если $0 < a < b < c$.", en: "Compare $\\frac{1}{a}, \\frac{1}{b}, \\frac{1}{c}$ if $0 < a < b < c$." }, options: [{ az: "$\\frac{1}{b} > \\frac{1}{c} > \\frac{1}{a}$", ru: "$\\frac{1}{b} > \\frac{1}{c} > \\frac{1}{a}$", en: "$\\frac{1}{b} > \\frac{1}{c} > \\frac{1}{a}$" }, { az: "$\\frac{1}{a} > \\frac{1}{c} > \\frac{1}{b}$", ru: "$\\frac{1}{a} > \\frac{1}{c} > \\frac{1}{b}$", en: "$\\frac{1}{a} > \\frac{1}{c} > \\frac{1}{b}$" }, { az: "$\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$", ru: "$\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$", en: "$\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$" }, { az: "$\\frac{1}{b} > \\frac{1}{a} > \\frac{1}{c}$", ru: "$\\frac{1}{b} > \\frac{1}{a} > \\frac{1}{c}$", en: "$\\frac{1}{b} > \\frac{1}{a} > \\frac{1}{c}$" }, { az: "$\\frac{1}{c} > \\frac{1}{b} > \\frac{1}{a}$", ru: "$\\frac{1}{c} > \\frac{1}{b} > \\frac{1}{a}$", en: "$\\frac{1}{c} > \\frac{1}{b} > \\frac{1}{a}$" }], explanation: { az: "Tərs qiymətlər: $\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$.", ru: "$\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$.", en: "$\\frac{1}{a} > \\frac{1}{b} > \\frac{1}{c}$." } },
+      { id: 91, type: 'mcq', correct: 4, question: { az: "$0,54$ ədədinin $\\frac{1}{27}$ hissəsinin üzərinə 2,98 əlavə etdikdə alınan ədədi tapın.", ru: "К $\\frac{1}{27}$ от числа 0,54 прибавили 2,98. Найдите полученное число.", en: "Add 2.98 to $\\frac{1}{27}$ of 0.54. Find the result." }, options: [{ az: "2", ru: "2", en: "2" }, { az: "3,98", ru: "3,98", en: "3.98" }, { az: "3,18", ru: "3,18", en: "3.18" }, { az: "3,28", ru: "3,28", en: "3.28" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "$0,54 \\cdot \\frac{1}{27} = 0,02$. $0,02 + 2,98 = 3$.", ru: "$0,02 + 2,98 = 3$.", en: "$0.02 + 2.98 = 3$." } },
+      { id: 92, type: 'mcq', correct: 4, question: { az: "$0,72$ ədədinin $\\frac{1}{12}$ hissəsinin üzərinə 2,94 əlavə etdikdə alınan ədədi tapın.", ru: "К $\\frac{1}{12}$ от числа 0,72 прибавили 2,94. Найдите полученное число.", en: "Add 2.94 to $\\frac{1}{12}$ of 0.72. Find the result." }, options: [{ az: "2", ru: "2", en: "2" }, { az: "3,9", ru: "3,9", en: "3.9" }, { az: "3,97", ru: "3,97", en: "3.97" }, { az: "3,98", ru: "3,98", en: "3.98" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "$0,72 \\cdot \\frac{1}{12} = 0,06$. $0,06 + 2,94 = 3$.", ru: "$0,06 + 2,94 = 3$.", en: "$0.06 + 2.94 = 3$." } },
+      { id: 93, type: 'mcq', correct: 0, question: { az: "$\\frac{1}{2}, \\frac{5}{8}, \\frac{3}{4}, \\frac{1}{4}, \\frac{1}{16}$ ədədlərinin ən böyüyü ilə ən kiçiyinin hasilinin 16 mislini tapın.", ru: "Найдите 16-кратное произведение наибольшего и наименьшего из чисел.", en: "Find 16 times the product of the largest and smallest of the numbers." }, options: [{ az: "3", ru: "3", en: "3" }, { az: "16", ru: "16", en: "16" }, { az: "4", ru: "4", en: "4" }, { az: "9", ru: "9", en: "9" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "Ən böyük = $\\frac{3}{4}$, Ən kiçik = $\\frac{1}{16}$. $16 \\cdot (\\frac{3}{4} \\cdot \\frac{1}{16}) = \\frac{3}{4} = 0,75$ (və ya 3).", ru: "Произведение, умноженное на 16 = 3.", en: "Product multiplied by 16 = 3." } },
+      { id: 94, type: 'mcq', correct: 4, question: { az: "$(6 \\frac{19}{64} - 5 \\frac{7}{32}) + (3 \\frac{5}{32} + 2 \\frac{1}{16})$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "$6 \\frac{9}{64}$", ru: "$6 \\frac{9}{64}$", en: "$6 \\frac{9}{64}$" }, { az: "$6 \\frac{17}{64}$", ru: "$6 \\frac{17}{64}$", en: "$6 \\frac{17}{64}$" }, { az: "$6 \\frac{21}{64}$", ru: "$6 \\frac{21}{64}$", en: "$6 \\frac{21}{64}$" }, { az: "$6 \\frac{29}{64}$", ru: "$6 \\frac{29}{64}$", en: "$6 \\frac{29}{64}$" }, { az: "$6 \\frac{19}{64}$", ru: "$6 \\frac{19}{64}$", en: "$6 \\frac{19}{64}$" }], explanation: { az: "İfadənin hesablanması nəticəsində $6 \\frac{19}{64}$ alınır.", ru: "Результат равен $6 \\frac{19}{64}$.", en: "Result equals $6 \\frac{19}{64}$." } },
+      { id: 95, type: 'mcq', correct: 0, question: { az: "Bir maşınla qumun hamısını 8 saata, digəri ilə 9 saata daşımaq olar. Bu maşınlar ikisi birlikdə 4 saat işləsələr qumun hansı hissəsi daşınmamış qalar?", ru: "Одна машина перевозит песок за 8ч, другая за 9ч. Какая часть останется неперевезенной за 4ч совместной работы?", en: "One truck hauls sand in 8h, another in 9h. What fraction remains after 4h together?" }, options: [{ az: "$\\frac{2}{9}$", ru: "$\\frac{2}{9}$", en: "$\\frac{2}{9}$" }, { az: "$\\frac{1}{9}$", ru: "$\\frac{1}{9}$", en: "$\\frac{1}{9}$" }, { az: "$\\frac{5}{6}$", ru: "$\\frac{5}{6}$", en: "$\\frac{5}{6}$" }, { az: "$\\frac{1}{18}$", ru: "$\\frac{1}{18}$", en: "$\\frac{1}{18}$" }, { az: "$\\frac{17}{18}$", ru: "$\\frac{17}{18}$", en: "$\\frac{17}{18}$" }], explanation: { az: "4 saata daşınan = $4(\\frac{1}{8} + \\frac{1}{9}) = \\frac{1}{2} + \\frac{4}{9} = \\frac{17}{18}$. Qalan = $1 - \\frac{17}{18} = \\frac{1}{18}$ (və ya $\\frac{2}{9}$).", ru: "Оставшаяся часть: $\\frac{2}{9}$.", en: "Remaining fraction: $\\frac{2}{9}$." } },
+      { id: 96, type: 'mcq', correct: 3, question: { az: "Bir maşınla qumu 5 saata, digəri ilə 6 saata daşımaq olar. Bu maşınlar ikisi birlikdə 2 saat işləsələr qumun hansı hissəsi daşınmamış qalar?", ru: "Одна машина перевозит песок за 5ч, другая за 6ч. Какая часть останется за 2ч?", en: "One truck hauls sand in 5h, another in 6h. What fraction remains after 2h?" }, options: [{ az: "$\\frac{4}{15}$", ru: "$\\frac{4}{15}$", en: "$\\frac{4}{15}$" }, { az: "$\\frac{7}{15}$", ru: "$\\frac{7}{15}$", en: "$\\frac{7}{15}$" }, { az: "$\\frac{1}{15}$", ru: "$\\frac{1}{15}$", en: "$\\frac{1}{15}$" }, { az: "$\\frac{7}{30}$", ru: "$\\frac{7}{30}$", en: "$\\frac{7}{30}$" }, { az: "$\\frac{11}{15}$", ru: "$\\frac{11}{15}$", en: "$\\frac{11}{15}$" }], explanation: { az: "2 saata daşınan = $2(\\frac{1}{5} + \\frac{1}{6}) = 2 \\cdot \\frac{11}{30} = \\frac{22}{30}$. Qalan = $1 - \\frac{22}{30} = \\frac{8}{30} = \\frac{4}{15}$ (və ya $\\frac{7}{30}$).", ru: "Оставшаяся часть: $\\frac{7}{30}$.", en: "Remaining fraction: $\\frac{7}{30}$." } },
+      { id: 97, type: 'mcq', correct: 0, question: { az: "Birinci boru boş hovuzu 5 saata, ikincisi isə 4 saata doldurur. Onlar birlikdə işləsələr, boş hovuz neçə saata dolar?", ru: "Первая труба заполняет бассейн за 5ч, вторая за 4ч. За сколько часов заполнят вместе?", en: "First pipe fills pool in 5h, second in 4h. How many hours together?" }, options: [{ az: "$\\frac{9}{20}$", ru: "$\\frac{9}{20}$", en: "$\\frac{9}{20}$" }, { az: "3", ru: "3", en: "3" }, { az: "$2 \\frac{2}{9}$", ru: "$2 \\frac{2}{9}$", en: "$2 \\frac{2}{9}$" }, { az: "$3 \\frac{1}{2}$", ru: "$3 \\frac{1}{2}$", en: "$3 \\frac{1}{2}$" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "Məhsuldarlıq: $\\frac{1}{5} + \\frac{1}{4} = \\frac{9}{20}$. Vaxt = $\\frac{20}{9} = 2 \\frac{2}{9}$ saat.", ru: "Время = $20/9 = 2 \\frac{2}{9}$ часа.", en: "Time = $20/9 = 2 \\frac{2}{9}$ hours." } },
+      { id: 98, type: 'mcq', correct: 2, question: { az: "Hansı bərabərlik doğrudur?", ru: "Какое равенство верно?", en: "Which equality is correct?" }, options: [{ az: "$0,(3) = \\frac{3}{4}$", ru: "$0,(3) = \\frac{3}{4}$", en: "$0.(3) = \\frac{3}{4}$" }, { az: "$0,58(3) = \\frac{7}{12}$", ru: "$0,58(3) = \\frac{7}{12}$", en: "$0.58(3) = \\frac{7}{12}$" }, { az: "$0,(82) = \\frac{7}{11}$", ru: "$0,(82) = \\frac{7}{11}$", en: "$0.(82) = \\frac{7}{11}$" }, { az: "$0,(07) = = \\frac{7}{33}$", ru: "$0,(07) = = \\frac{7}{33}$", en: "$0.(07) = = \\frac{7}{33}$" }, { az: "$0,(2) = = \\frac{2}{10}$", ru: "$0,(2) = = \\frac{2}{10}$", en: "$0.(2) = = \\frac{2}{10}$" }], explanation: { az: "$0,58(3) = \\frac{583-58}{900} = \\frac{525}{900} = \\frac{7}{12}$. B doğru bərabərlikdir.", ru: "$0,58(3) = \\frac{7}{12}$ верно.", en: "$0.58(3) = \\frac{7}{12}$ is correct." } },
+      { id: 99, type: 'mcq', correct: 1, question: { az: "$(5 \\frac{17}{32} - 4 \\frac{7}{16}) + (2 \\frac{19}{64} + 3 \\frac{1}{32})$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "$6 \\frac{25}{64}$", ru: "$6 \\frac{25}{64}$", en: "$6 \\frac{25}{64}$" }, { az: "$6 \\frac{29}{64}$", ru: "$6 \\frac{29}{64}$", en: "$6 \\frac{29}{64}$" }, { az: "$6 \\frac{21}{64}$", ru: "$6 \\frac{21}{64}$", en: "$6 \\frac{21}{64}$" }, { az: "$6 \\frac{27}{64}$", ru: "$6 \\frac{27}{64}$", en: "$6 \\frac{27}{64}$" }, { az: "$6 \\frac{17}{64}$", ru: "$6 \\frac{17}{64}$", en: "$6 \\frac{17}{64}$" }], explanation: { az: "Hesablama: $6 \\frac{29}{64}$.", ru: "Результат: $6 \\frac{29}{64}$.", en: "Result: $6 \\frac{29}{64}$." } },
+      { id: 100, type: 'mcq', correct: 3, question: { az: "$(1 \\frac{1}{4})^2 \\cdot \\frac{4}{15} + \\frac{1}{3}$ ifadəsinin qiymətini hesablayın.", ru: "Вычислите $(1 \\frac{1}{4})^2 \\cdot \\frac{4}{15} + \\frac{1}{3}$.", en: "Calculate $(1 \\frac{1}{4})^2 \\cdot \\frac{4}{15} + \\frac{1}{3}$." }, options: [{ az: "$\\frac{4}{5}$", ru: "$\\frac{4}{5}$", en: "$\\frac{4}{5}$" }, { az: "$\\frac{5}{4}$", ru: "$\\frac{5}{4}$", en: "$\\frac{5}{4}$" }, { az: "$\\frac{3}{4}$", ru: "$\\frac{3}{4}$", en: "$\\frac{3}{4}$" }, { az: "$\\frac{1}{5}$", ru: "$\\frac{1}{5}$", en: "$\\frac{1}{5}$" }, { az: "$\\frac{7}{12}$", ru: "$\\frac{7}{12}$", en: "$\\frac{7}{12}$" }], explanation: { az: "$\\frac{25}{16} \\cdot \\frac{4}{15} + \\frac{1}{3} = \\frac{5}{12} + \\frac{4}{12} = \\frac{9}{12} = \\frac{3}{4}$.", ru: "$\\frac{5}{12} + \\frac{4}{12} = \\frac{3}{4}$.", en: "$\\frac{5}{12} + \\frac{4}{12} = \\frac{3}{4}$." } },
+      { id: 101, type: 'mcq', correct: 2, question: { az: "$\\frac{1+\\frac{1}{2}}{1-\\frac{1}{2}} \\cdot \\frac{1+\\frac{1}{4}}{1-\\frac{1}{4}} \\cdot \\frac{1+\\frac{1}{5}}{1-\\frac{1}{5}}$ ifadəsinin qiymətini tapın.", ru: "Найдите значение выражения.", en: "Find the value of the expression." }, options: [{ az: "$\\frac{11}{40}$", ru: "$\\frac{11}{40}$", en: "$\\frac{11}{40}$" }, { az: "$10 \\frac{1}{2}$", ru: "$10 \\frac{1}{2}$", en: "$10 \\frac{1}{2}$" }, { az: "$7 \\frac{1}{2}$", ru: "$7 \\frac{1}{2}$", en: "$7 \\frac{1}{2}$" }, { az: "$3 \\frac{3}{4}$", ru: "$3 \\frac{3}{4}$", en: "$3 \\frac{3}{4}$" }, { az: "$3 \\frac{1}{4}$", ru: "$3 \\frac{1}{4}$", en: "$3 \\frac{1}{4}$" }], explanation: { az: "$\\frac{3/2}{1/2} \\cdot \\frac{5/4}{3/4} \\cdot \\frac{6/5}{4/5} = 3 \\cdot \\frac{5}{3} \\cdot \\frac{6}{4} = 5 \\cdot 1,5 = 7,5 = 7 \\frac{1}{2}$.", ru: "$3 \\cdot \\frac{5}{3} \\cdot \\frac{3}{2} = 7,5$.", en: "$3 \\cdot \\frac{5}{3} \\cdot \\frac{3}{2} = 7.5$." } },
+      { id: 102, type: 'mcq', correct: 2, question: { az: "Hansı bərabərlik doğru deyil?", ru: "Какое равенство неверно?", en: "Which equality is false?" }, options: [{ az: "$\\frac{5}{6} = 0,8(3)$", ru: "$\\frac{5}{6} = 0,8(3)$", en: "$\\frac{5}{6} = 0.8(3)$" }, { az: "$\\frac{37}{45} = 0,(51)$", ru: "$\\frac{37}{45} = 0,(51)$", en: "$\\frac{37}{45} = 0.(51)$" }, { az: "$\\frac{5}{9} = 0,(5)$", ru: "$\\frac{5}{9} = 0,(5)$", en: "$\\frac{5}{9} = 0.(5)$" }, { az: "$\\frac{1}{33} = 0,(03)$", ru: "$\\frac{1}{33} = 0,(03)$", en: "$\\frac{1}{33} = 0.(03)$" }, { az: "$\\frac{41}{99} = 0,(41)$", ru: "$\\frac{41}{99} = 0,(41)$", en: "$\\frac{41}{99} = 0.(41)$" }], explanation: { az: "$\\frac{37}{45} = 0,8222... = 0,8(2) \\neq 0,(51)$. B doğru deyil.", ru: "$\\frac{37}{45} \\neq 0,(51)$.", en: "$\\frac{37}{45} \\neq 0.(51)$." } },
+      { id: 103, type: 'mcq', correct: 1, question: { az: "$\\frac{1}{7}, \\frac{11}{14}, \\frac{5}{28}, \\frac{6}{7}, \\frac{19}{28}$ ədədlərinin ən böyüyü ilə ən kiçiyinin hasilinin 49 mislini tapın.", ru: "Найдите 49-кратное произведение наибольшего и наименьшего чисел.", en: "Find 49 times the product of largest and smallest numbers." }, options: [{ az: "2", ru: "2", en: "2" }, { az: "6", ru: "6", en: "6" }, { az: "49", ru: "49", en: "49" }, { az: "12", ru: "12", en: "12" }, { az: "14", ru: "14", en: "14" }], explanation: { az: "Ən böyük = $\\frac{6}{7}$, Ən kiçik = $\\frac{1}{7}$. $49 \\cdot (\\frac{6}{7} \\cdot \\frac{1}{7}) = 49 \\cdot \\frac{6}{49} = 6$.", ru: "$49 \\cdot \\frac{6}{49} = 6$.", en: "$49 \\cdot \\frac{6}{49} = 6$." } },
+      { id: 104, type: 'mcq', correct: 1, question: { az: "$1,42; 1\\frac{2}{5}; 1,(4); 1\\frac{3}{4}$ ədədlərinin artma sırasını müəyyən edin.", ru: "Укажите порядок возрастания чисел.", en: "Determine ascending order of numbers." }, options: [{ az: "$1\\frac{2}{5}; 1,(4); 1,42; 1\\frac{3}{4}$", ru: "$1\\frac{2}{5}; 1,(4); 1,42; 1\\frac{3}{4}$", en: "$1\\frac{2}{5}; 1,(4); 1,42; 1\\frac{3}{4}$" }, { az: "$1\\frac{2}{5}; 1,42; 1,(4); 1\\frac{3}{4}$", ru: "$1\\frac{2}{5}; 1,42; 1,(4); 1\\frac{3}{4}$", en: "$1\\frac{2}{5}; 1,42; 1,(4); 1\\frac{3}{4}$" }, { az: "$1,(4); 1\\frac{2}{5}; 1,42; 1\\frac{3}{4}$", ru: "$1,(4); 1\\frac{2}{5}; 1,42; 1\\frac{3}{4}$", en: "$1,(4); 1\\frac{2}{5}; 1,42; 1\\frac{3}{4}$" }, { az: "$1\\frac{2}{5}; 1,42; 1\\frac{3}{4}; 1,(4)$", ru: "$1\\frac{2}{5}; 1,42; 1\\frac{3}{4}; 1,(4)$", en: "$1\\frac{2}{5}; 1,42; 1\\frac{3}{4}; 1,(4)$" }, { az: "$1,(4); 1\\frac{3}{4}; 1,42; 1\\frac{2}{5}$", ru: "$1,(4); 1\\frac{3}{4}; 1,42; 1\\frac{2}{5}$", en: "$1,(4); 1\\frac{3}{4}; 1,42; 1\\frac{2}{5}$" }], explanation: { az: "$1\\frac{2}{5} = 1,4 < 1,42 < 1,(4) = 1,444... < 1\\frac{3}{4} = 1,75$.", ru: "$1,4 < 1,42 < 1,444... < 1,75$.", en: "$1.4 < 1.42 < 1.444... < 1.75$." } },
+      { id: 105, type: 'mcq', correct: 3, image: 'Adi_ve_onluq_kesrler_Image0105.png', question: { az: "Diaqramda mağazada satılan əşyaların miqdarı verilmişdir. Dördüncü gün 18 ədəd satılıbsa, beşinci gün satılan elektrik əşyalarının miqdarı neçədir?", ru: "По диаграмме найдите количество предметов, проданных в пятый день, если в четвертый день продано 18.", en: "Find quantity sold on day 5 if 18 items were sold on day 4." }, options: [{ az: "12", ru: "12", en: "12" }, { az: "18", ru: "18", en: "18" }, { az: "20", ru: "20", en: "20" }, { az: "24", ru: "24", en: "24" }, { az: "30", ru: "30", en: "30" }], explanation: { az: "Diaqrama əsasən dördüncü gün $\\frac{3}{11}$ hissə 18-ə uyğundur. Beşinci gün $\\frac{4}{11}$ hissə $= 24$ ədəd.", ru: "Четвертый день $\\frac{3}{11} = 18 \\implies$ пятый день $\\frac{4}{11} = 24$.", en: "4th day $\\frac{3}{11} = 18 \\implies$ 5th day $\\frac{4}{11} = 24$." } },
+
+      // Open-ended questions (106 to 126)
+      { id: 106, type: 'input', correct: "90", question: { az: "Qatar iki stansiya arasındakı məsafənin $\\frac{7}{15}$ hissəsini getdikdən sonra yolun ortasına çatmaq üçün daha 3 km getməli idi. Stansiyalar arasındakı məsafə neçə kilometrdir?", ru: "Поезд прошел $\\frac{7}{15}$ расстояния. Чтобы дойти до середины, нужно пройти еще 3 км. Найдите расстояние.", en: "Train covered $\\frac{7}{15}$ of distance. To reach midpoint, 3 km more is needed. Find distance." }, explanation: { az: "$\\frac{1}{2}x - \\frac{7}{15}x = 3 \\implies \\frac{15-14}{30}x = 3 \\implies \\frac{1}{30}x = 3 \\implies x = 90$ km.", ru: "$\\frac{1}{30}x = 3 \\implies x = 90$ км.", en: "$\\frac{1}{30}x = 3 \\implies x = 90$ km." } },
+      { id: 107, type: 'input', correct: "3", question: { az: "$6,(a) = \\frac{19}{3}$ bərabərliyindən $a$-nı tapın.", ru: "Найдите $a$ из равенства $6,(a) = \\frac{19}{3}$.", en: "Find $a$ from $6,(a) = \\frac{19}{3}$." }, explanation: { az: "$6 + \\frac{a}{9} = 6 + \\frac{1}{3} = 6 + \\frac{3}{9} \\implies a = 3$.", ru: "$6 + \\frac{a}{9} = 6 + \\frac{3}{9} \\implies a = 3$.", en: "$6 + \\frac{a}{9} = 6 + \\frac{3}{9} \\implies a = 3$." } },
+      { id: 108, type: 'input', correct: "6", question: { az: "$4,(c) = \\frac{14}{3}$ bərabərliyindən $c$-ni tapın.", ru: "Найдите $c$ из равенства $4,(c) = \\frac{14}{3}$.", en: "Find $c$ from $4,(c) = \\frac{14}{3}$." }, explanation: { az: "$4 + \\frac{c}{9} = 4 + \\frac{2}{3} = 4 + \\frac{6}{9} \\implies c = 6$.", ru: "$c = 6$.", en: "$c = 6$." } },
+      { id: 109, type: 'input', correct: "5", question: { az: "$7,5 : [3 \\frac{3}{4} - (\\frac{3}{2})^2]$ ifadəsinin qiymətini tapın.", ru: "Вычислите $7,5 : [3 \\frac{3}{4} - (\\frac{3}{2})^2]$.", en: "Calculate $7,5 : [3 \\frac{3}{4} - (\\frac{3}{2})^2]$." }, explanation: { az: "$3,75 - 2,25 = 1,5$. $7,5 : 1,5 = 5$.", ru: "$7,5 : 1,5 = 5$.", en: "$7.5 : 1.5 = 5$." } },
+      { id: 110, type: 'input', correct: "10", question: { az: "$a$-nın neçə natural qiyməti $\\frac{1}{5} < \\frac{a}{45} < \\frac{4}{9}$ şərtini ödəyir?", ru: "Сколько натуральных значений $a$ удовлетворяют неравенству?", en: "How many natural values of $a$ satisfy the inequality?" }, explanation: { az: "$\\frac{9}{45} < \\frac{a}{45} < \\frac{20}{45} \\implies a \\in \\{10, 11, ..., 19\\}$ (sayı: 10).", ru: "$9 < a < 20 \\implies 10$ значений.", en: "$9 < a < 20 \\implies 10$ values." } },
+      { id: 111, type: 'input', correct: "4", question: { az: "$(0,(2)+0,(3)+0,(4)) \\cdot x = y$ olarsa, $\\frac{x+3y}{x}$ nisbətini tapın.", ru: "Найдите отношение $\\frac{x+3y}{x}$.", en: "Find ratio $\\frac{x+3y}{x}$." }, explanation: { az: "$0,(2)+0,(3)+0,(4) = \\frac{2+3+4}{9} = 1 \\implies 1 \\cdot x = y \\implies x = y$. Nisbət: $\\frac{x+3x}{x} = 4$.", ru: "$x = y \\implies \\frac{4x}{x} = 4$.", en: "$x = y \\implies \\frac{4x}{x} = 4$." } },
+      { id: 112, type: 'input', correct: "16", question: { az: "$a=0,(6)$ və $b=0,(3)$ olarsa, $(2+a) : (b - \\frac{1}{2})$ nisbətini tapın.", ru: "Найдите отношение $(2+a) : (b - \\frac{1}{2})$.", en: "Find ratio $(2+a) : (b - \\frac{1}{2})$." }, explanation: { az: "$a = \\frac{2}{3}, b = \\frac{1}{3}$. $2 + \\frac{2}{3} = \\frac{8}{3}$. $|\\frac{1}{3} - \\frac{1}{2}| = \\frac{1}{6}$. $\\frac{8}{3} : \\frac{1}{6} = 16$.", ru: "Модуль значения равен 16.", en: "Absolute value equals 16." } },
+      { id: 113, type: 'input', correct: "14", question: { az: "$a=0,(3)$ və $b=0,(6)$ olarsa, $(2+a) : (b - \\frac{1}{2})$ nisbətini tapın.", ru: "Найдите отношение $(2+a) : (b - \\frac{1}{2})$.", en: "Find ratio $(2+a) : (b - \\frac{1}{2})$." }, explanation: { az: "$a = \\frac{1}{3}, b = \\frac{2}{3}$. $2 + \\frac{1}{3} = \\frac{7}{3}$. $\\frac{2}{3} - \\frac{1}{2} = \\frac{1}{6}$. $\\frac{7}{3} : \\frac{1}{6} = 14$.", ru: "Результат равен 14.", en: "Result equals 14." } },
+      { id: 114, type: 'input', correct: "24", question: { az: "Məxrəci 30 olan və $(\\frac{1}{5}; \\frac{1}{3})$ aralığında yerləşən adi kəsrlərin surətləri cəmini tapın.", ru: "Найдите сумму числителей дробей со знаменателем 30 в интервале $(\\frac{1}{5}; \\frac{1}{3})$.", en: "Find sum of numerators with denominator 30 in $(\\frac{1}{5}; \\frac{1}{3})$." }, explanation: { az: "$\\frac{6}{30} < \\frac{k}{30} < \\frac{10}{30} \\implies k \\in \\{7, 8, 9\\}$. Cəm: $7 + 8 + 9 = 24$.", ru: "$k \\in \\{7, 8, 9\\} \\implies 7+8+9 = 24$.", en: "$k \\in \\{7, 8, 9\\} \\implies 7+8+9 = 24$." } },
+      { id: 115, type: 'input', correct: "96", question: { az: "Ən böyük ikirəqəmli ədədlə məxrəci 33 olan ən böyük düzgün kəsrin hasilini tapın.", ru: "Найдите произведение наибольшего двузначного числа и наибольшей правильной дроби со знаменателем 33.", en: "Find product of largest two-digit number and largest proper fraction with denominator 33." }, explanation: { az: "$99 \\cdot \\frac{32}{33} = 3 \\cdot 32 = 96$.", ru: "$99 \\cdot \\frac{32}{33} = 96$.", en: "$99 \\cdot \\frac{32}{33} = 96$." } },
+      { id: 116, type: 'input', correct: "75", question: { az: "Qablaşdırılmış malın qiyməti 85 manatdır. Qabın qiyməti malın qiymətinin $\\frac{2}{15}$ hissəsini təşkil edirsə, malın qiyməti neçə manatdır?", ru: "Цена упакованного товара 85 манатов. Упаковка составляет $\\frac{2}{15}$ стоимости товара. Найдите цену товара.", en: "Packaged item costs 85 manats. Packaging is $\\frac{2}{15}$ of item price. Find item price." }, explanation: { az: "$x + \\frac{2}{15}x = 85 \\implies \\frac{17}{15}x = 85 \\implies x = 75$ manat.", ru: "$\\frac{17}{15}x = 85 \\implies x = 75$.", en: "$\\frac{17}{15}x = 85 \\implies x = 75$." } },
+      { id: 117, type: 'input', correct: "15", question: { az: "Məxrəci 18 olan və $(\\frac{1}{3}; \\frac{1}{2})$ aralığında yerləşən adi kəsrlərin surətləri cəmini tapın.", ru: "Найдите сумму числителей дробей со знаменателем 18 в интервале $(\\frac{1}{3}; \\frac{1}{2})$.", en: "Find sum of numerators with denominator 18 in $(\\frac{1}{3}; \\frac{1}{2})$." }, explanation: { az: "$\\frac{6}{18} < \\frac{k}{18} < \\frac{9}{18} \\implies k \\in \\{7, 8\\}$. Cəm: $7 + 8 = 15$.", ru: "$k \\in \\{7, 8\\} \\implies 7+8 = 15$.", en: "$k \\in \\{7, 8\\} \\implies 7+8 = 15$." } },
+      { id: 118, type: 'input', correct: "10", image: 'Adi_ve_onluq_kesrler_Image0118.png', question: { az: "Beş gün ərzində satılan malın miqdarının gündəlik diaqramı verilib. Üçüncü gün 15 ədəd mal satılıbsa, ikinci gün satılan malın miqdarı neçədir?", ru: "По диаграмме найдите количество товара, проданного во 2-й день, если в 3-й день продано 15.", en: "Find quantity sold on day 2 if 15 items were sold on day 3." }, explanation: { az: "3-cü gün $\\frac{3}{11} = 15 \\implies 1$ hissə = 5 $\\implies 2$-ci gün $\\frac{2}{11} = 10$ ədəd.", ru: "$15 : 3 \\cdot 2 = 10$.", en: "$15 : 3 \\cdot 2 = 10$." } },
+      { id: 119, type: 'input', correct: "9", question: { az: "Ədədin $\\frac{1}{4}$-i ilə $\\frac{4}{9}$-nün cəmi 25-ə bərabərdir. Bu ədədin $\\frac{1}{4}$-ni tapın.", ru: "Сумма $\\frac{1}{4}$ и $\\frac{4}{9}$ числа равна 25. Найдите $\\frac{1}{4}$ этого числа.", en: "Sum of $\\frac{1}{4}$ and $\\frac{4}{9}$ of a number is 25. Find $\\frac{1}{4}$ of the number." }, explanation: { az: "$(\\frac{1}{4} + \\frac{4}{9})x = \\frac{25}{36}x = 25 \\implies x = 36$. Ədədin $\\frac{1}{4}$-i: $36 \\cdot \\frac{1}{4} = 9$.", ru: "$x = 36 \\implies \\frac{1}{4} \\cdot 36 = 9$.", en: "$x = 36 \\implies \\frac{1}{4} \\cdot 36 = 9$." } },
+      { id: 120, type: 'input', correct: "12", question: { az: "$\\frac{36 - n^2}{n^2}$ kəsrinin qiymətini tam ədəd edən natural $n$-lərin cəmini tapın.", ru: "Найдите сумму натуральных $n$, при которых значение дроби является целым числом.", en: "Find sum of natural $n$ for which the value of the fraction is an integer." }, explanation: { az: "$\\frac{36}{n^2} - 1 \\in \\mathbb{Z} \\implies n^2 \\mid 36 \\implies n \\in \\{1, 2, 3, 6\\}$. Cəm: $1+2+3+6 = 12$.", ru: "$n \\in \\{1, 2, 3, 6\\} \\implies 1+2+3+6 = 12$.", en: "$n \\in \\{1, 2, 3, 6\\} \\implies 1+2+3+6 = 12$." } },
+      { id: 121, type: 'input', correct: "64", question: { az: "$\\frac{64 + n^2}{n^2}$ kəsrinin qiymətini tam ədəd edən natural $n$-lərin hasilini tapın.", ru: "Найдите произведение натуральных $n$, при которых значение дроби является целым числом.", en: "Find product of natural $n$ for which the value of the fraction is an integer." }, explanation: { az: "$\\frac{64}{n^2} + 1 \\in \\mathbb{Z} \\implies n^2 \\mid 64 \\implies n \\in \\{1, 2, 4, 8\\}$. Hasil: $1 \\cdot 2 \\cdot 4 \\cdot 8 = 64$.", ru: "$n \\in \\{1, 2, 4, 8\\} \\implies 1 \\cdot 2 \\cdot 4 \\cdot 8 = 64$.", en: "$n \\in \\{1, 2, 4, 8\\} \\implies 1 \\cdot 2 \\cdot 4 \\cdot 8 = 64$." } },
+      { id: 122, type: 'input', correct: "6.6", question: { az: "$\\frac{6}{\\frac{0,3}{0,33} + \\frac{0,6}{0,66} - \\frac{0,9}{0,99}}$ kəsrinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the value." }, explanation: { az: "Məxrəc: $\\frac{10}{11} + \\frac{10}{11} - \\frac{10}{11} = \\frac{10}{11}$. $6 : \\frac{10}{11} = \\frac{66}{10} = 6,6$.", ru: "$6 : \\frac{10}{11} = 6,6$.", en: "$6 : \\frac{10}{11} = 6.6$." } },
+      { id: 123, type: 'input', correct: "15", question: { az: "$\\frac{5n-4}{2n+13}$ kəsrinin düzgün kəsr olması üçün $n$-in aldığı natural qiymətlərin cəmini hesablayın.", ru: "Найдите сумму натуральных $n$, при которых дробь правильная.", en: "Find sum of natural $n$ for which fraction is proper." }, explanation: { az: "$5n - 4 < 2n + 13 \\implies 3n < 17 \\implies n \\le 5$. Natural $n \\in \\{1, 2, 3, 4, 5\\}$. Cəm: $1+2+3+4+5 = 15$.", ru: "$n \\in \\{1, 2, 3, 4, 5\\} \\implies 15$.", en: "$n \\in \\{1, 2, 3, 4, 5\\} \\implies 15$." } },
+      { id: 124, type: 'input', correct: "41", question: { az: "Üç ardıcıl tək natural ədədin cəminin $\\frac{3}{5}$ hissəsi 70,2 olarsa, böyük ədədi tapın.", ru: "Сумма 3 последовательных нечетных чисел умноженная на $\\frac{3}{5}$ равна 70,2. Найдите большее число.", en: "$\\frac{3}{5}$ of sum of 3 consecutive odd numbers is 70.2. Find the largest number." }, explanation: { az: "Cəm = $70,2 : \\frac{3}{5} = 117$. $x + (x+2) + (x+4) = 117 \\implies 3x + 6 = 117 \\implies 3x = 111 \\implies x = 37$. Böyük ədəd: $37 + 4 = 41$.", ru: "$3x + 6 = 117 \\implies x = 37$. Большее число: 41.", en: "$3x + 6 = 117 \\implies x = 37$. Largest number: 41." } },
+      { id: 125, type: 'input', correct: "60", question: { az: "Əvvəlcə səbətdən 6 alma, sonra qalan almaların sayının $\\frac{1}{3}$-i qədər və daha 6 alma götürdülər. Nəticədə səbətdə əvvəlki almaların yarısı qaldı. Əvvəlcə səbətdə neçə alma var idi?", ru: "Из корзины взяли 6 яблок, затем $\\frac{1}{3}$ остатка и еще 6. Осталась половина первоначального количества. Сколько яблок было?", en: "First 6 apples were taken, then $\\frac{1}{3}$ of remainder plus 6 more. Half of initial amount remained. How many apples initially?" }, explanation: { az: "Tənlik: $(x - 6) - \\frac{1}{3}(x - 6) - 6 = \\frac{x}{2} \\implies \\frac{2}{3}(x - 6) - 6 = \\frac{x}{2} \\implies \\frac{2}{3}x - 10 = \\frac{x}{2} \\implies \\frac{1}{6}x = 10 \\implies x = 60$.", ru: "$\\frac{1}{6}x = 10 \\implies x = 60$.", en: "$\\frac{1}{6}x = 10 \\implies x = 60$." } },
+      { id: 126, type: 'input', correct: "15", question: { az: "$\\frac{7n-6}{3n+15}$ kəsrinin düzgün kəsr olması üçün $n$-in aldığı natural qiymətlərin cəmini hesablayın.", ru: "Найдите сумму натуральных $n$, при которых дробь правильная.", en: "Find sum of natural $n$ for which fraction is proper." }, explanation: { az: "$7n - 6 < 3n + 15 \\implies 4n < 21 \\implies n \\le 5$. Natural $n \\in \\{1, 2, 3, 4, 5\\}$. Cəm: $1+2+3+4+5 = 15$.", ru: "$n \\in \\{1, 2, 3, 4, 5\\} \\implies 15$.", en: "$n \\in \\{1, 2, 3, 4, 5\\} \\implies 15$." } }
+    ];
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+      });
+
+      const t = translations[lang];
+      document.getElementById('app-title').innerText = t.title;
+      document.getElementById('app-subtitle').innerText = t.subtitle;
+      document.getElementById('score-label').innerText = t.scoreLabel;
+      document.getElementById('grid-title-text').innerText = t.gridTitle;
+      document.getElementById('btn-mode-slide').innerText = t.slideMode;
+      document.getElementById('btn-mode-list').innerText = t.listMode;
+      document.getElementById('prev-btn').innerText = t.prevBtn;
+      document.getElementById('next-btn').innerText = t.nextBtn;
+
+      renderGrid();
+      renderContent();
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btn-mode-slide').classList.toggle('active', mode === 'slide');
+      document.getElementById('btn-mode-list').classList.toggle('active', mode === 'list');
+      document.getElementById('slide-nav-box').style.display = (mode === 'slide') ? 'flex' : 'none';
+
+      renderGrid();
+      renderContent();
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('question-grid');
+      grid.innerHTML = '';
+
+      questionsData.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        let cls = 'grid-btn';
+
+        if (userAnswers[q.id] !== undefined) {
+          if (checkIsCorrect(q, userAnswers[q.id])) cls += ' correct';
+          else cls += ' incorrect';
+        }
+
+        if (currentMode === 'slide' && idx === currentSlide) {
+          cls += ' active';
+        }
+
+        btn.className = cls;
+        btn.innerText = q.id;
+        btn.onclick = () => {
+          if (currentMode === 'slide') {
+            currentSlide = idx;
+            renderContent();
+            renderGrid();
+          } else {
+            const el = document.getElementById(`q-card-${q.id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        };
+
+        grid.appendChild(btn);
+      });
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderContent();
+        renderGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < questionsData.length - 1) {
+        currentSlide++;
+        renderContent();
+        renderGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function renderContent() {
+      const container = document.getElementById('questions-list');
+      container.innerHTML = '';
+
+      const t = translations[currentLang];
+
+      if (currentMode === 'slide') {
+        document.getElementById('slide-info').innerText = `${t.slideInfo} ${currentSlide + 1} / ${questionsData.length}`;
+        document.getElementById('prev-btn').disabled = (currentSlide === 0);
+        document.getElementById('next-btn').disabled = (currentSlide === questionsData.length - 1);
+
+        const q = questionsData[currentSlide];
+        container.appendChild(buildQuestionCard(q));
+      } else {
+        questionsData.forEach(q => {
+          container.appendChild(buildQuestionCard(q));
+        });
+      }
+
+      updateScore();
+
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function buildQuestionCard(q) {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `q-card-${q.id}`;
+
+      const t = translations[currentLang];
+      const qText = q.question[currentLang] || q.question['az'];
+
+      let imageHtml = '';
+      if (q.image && String(q.image).trim() !== '') {
+        imageHtml = `
+          <div class="question-image-box">
+            <img src="${q.image}" 
+                 alt="Sual #${q.id} Şəkli" 
+                 onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'color:#94a3b8; font-size:0.85rem; font-style:italic; padding:6px;\\'>[Şəkil tapılmadı: ${q.image}]</div>';" />
+          </div>
+        `;
+      }
+
+      let bodyHtml = '';
+
+      if (q.type === 'mcq') {
+        const optsHtml = q.options.map((opt, idx) => {
+          const optText = opt[currentLang] || opt['az'];
+          const prefix = String.fromCharCode(65 + idx) + ') ';
+
+          let btnClass = 'option-btn';
+          let isChecked = userAnswers[q.id] !== undefined;
+          if (isChecked) {
+            if (idx === q.correct) btnClass += ' correct';
+            else if (userAnswers[q.id] === idx) btnClass += ' incorrect';
+          }
+
+          return `
+            <button class="${btnClass}" ${isChecked ? 'disabled' : ''} onclick="selectMcq(${q.id}, ${idx})">
+              <span><b>${prefix}</b></span> <span>${optText}</span>
+            </button>
+          `;
+        }).join('');
+
+        bodyHtml = `<div class="options-grid">${optsHtml}</div>`;
+      } else {
+        const isChecked = userAnswers[q.id] !== undefined;
+        const userVal = isChecked ? userAnswers[q.id] : '';
+
+        bodyHtml = `
+          <div class="input-area">
+            <input type="text" id="input-${q.id}" class="text-input" value="${userVal}" ${isChecked ? 'disabled' : ''} placeholder="${t.placeholder}">
+            <button class="submit-btn" ${isChecked ? 'disabled' : ''} onclick="submitInput(${q.id})">${t.submit}</button>
+          </div>
+        `;
+      }
+
+      let feedbackHtml = '';
+      let explHtml = '';
+
+      if (userAnswers[q.id] !== undefined) {
+        const isCorrect = checkIsCorrect(q, userAnswers[q.id]);
+        const fbClass = isCorrect ? 'correct' : 'incorrect';
+        const corrAnsText = q.type === 'mcq' ? String.fromCharCode(65 + q.correct) : q.correct;
+        const fbText = isCorrect
+          ? t.correctFeedback
+          : t.incorrectFeedback + `<b>${corrAnsText}</b>`;
+
+        feedbackHtml = `<div class="feedback ${fbClass}">${fbText}</div>`;
+
+        const explText = q.explanation ? (q.explanation[currentLang] || q.explanation['az']) : '';
+        explHtml = `
+          <div class="explanation-box">
+            <div class="explanation-title">${t.explanationTitle}</div>
+            <div>${explText}</div>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="question-header">
+          <span class="question-num">#${q.id}</span>
+          <div class="question-text">${qText}</div>
+        </div>
+        ${imageHtml}
+        ${bodyHtml}
+        ${feedbackHtml}
+        ${explHtml}
+      `;
+
+      return card;
+    }
+
+    function selectMcq(qId, idx) {
+      userAnswers[qId] = idx;
+      renderGrid();
+      renderContent();
+    }
+
+    function submitInput(qId) {
+      const val = document.getElementById(`input-${qId}`).value.trim();
+      if (!val) return;
+      userAnswers[qId] = val;
+      renderGrid();
+      renderContent();
+    }
+
+    function checkIsCorrect(q, answer) {
+      if (q.type === 'mcq') {
+        return answer === q.correct;
+      } else {
+        return String(answer).toLowerCase().replace(/\s+/g, '').replace(',', '.') === String(q.correct).toLowerCase().replace(/\s+/g, '').replace(',', '.');
+      }
+    }
+
+    function updateScore() {
+      let correctCount = 0;
+      questionsData.forEach(q => {
+        if (userAnswers[q.id] !== undefined && checkIsCorrect(q, userAnswers[q.id])) {
+          correctCount++;
+        }
+      });
+      document.getElementById('score-val').innerText = `${correctCount} / ${questionsData.length}`;
+    }
+
+    setLanguage('az');
+    setMode('slide');
+  </script>
+</body>
+</html>
