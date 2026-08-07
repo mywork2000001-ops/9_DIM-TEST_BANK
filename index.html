@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="az" class="h-full bg-slate-900 text-slate-100">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riyaziyyat — Test Platforması</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+    body { font-family: 'Plus Jakarta Sans', sans-serif; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
+  </style>
+</head>
+<body class="h-full flex flex-col font-sans selection:bg-indigo-500 selection:text-white">
+
+  <!-- TOP NAVBAR -->
+  <header class="border-b border-slate-800 bg-slate-950/80 backdrop-blur-md sticky top-0 z-30">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      
+      <!-- Logo & Title -->
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+          <i data-lucide="calculator" class="w-5 h-5 text-white"></i>
+        </div>
+        <div>
+          <h1 class="font-bold text-lg leading-tight text-white tracking-wide" id="nav-title">Riyaziyyat Test Bankı</h1>
+          <p class="text-xs text-slate-400" id="nav-subtitle">DİM 9-cu sinif Buraxılış İmtahanı</p>
+        </div>
+      </div>
+
+      <!-- Controls: Search & Lang Switcher -->
+      <div class="flex items-center space-x-3">
+        <!-- Search Bar -->
+        <div class="relative hidden sm:block">
+          <input type="text" id="search-input" placeholder="Mövzu axtar..." 
+                 class="w-64 pl-9 pr-4 py-2 text-xs bg-slate-900 border border-slate-800 rounded-lg text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all">
+          <i data-lucide="search" class="w-4 h-4 text-slate-500 absolute left-3 top-2.5"></i>
+        </div>
+
+        <!-- Language Switcher -->
+        <div class="flex bg-slate-900 p-1 rounded-lg border border-slate-800 text-xs font-semibold">
+          <button onclick="changeLang('az')" id="lang-az" class="px-2.5 py-1 rounded-md transition-all bg-indigo-600 text-white">AZ</button>
+          <button onclick="changeLang('ru')" id="lang-ru" class="px-2.5 py-1 rounded-md transition-all text-slate-400 hover:text-slate-200">RU</button>
+          <button onclick="changeLang('en')" id="lang-en" class="px-2.5 py-1 rounded-md transition-all text-slate-400 hover:text-slate-200">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO BANNER -->
+  <section class="border-b border-slate-800 bg-gradient-to-b from-slate-950 to-slate-900 py-8 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="space-y-2 text-center md:text-left">
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+          İnteraktiv İndeks Kataloqu
+        </span>
+        <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="hero-heading">Mövzu Kataloqu və Testlər</h2>
+        <p class="text-slate-400 text-sm max-w-xl" id="hero-desc">Bütün mövzular DİM imtahan çərçivəsinə uyğun olaraq nizamlanmışdır. Test həllinə başlamaq üçün mövzu seçin.</p>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="flex items-center gap-4 bg-slate-900/80 p-3 rounded-2xl border border-slate-800/80">
+        <div class="text-center px-4 border-r border-slate-800">
+          <div class="text-2xl font-bold text-indigo-400">24</div>
+          <div class="text-[11px] text-slate-500 uppercase font-semibold" id="lbl-topics">Mövzu</div>
+        </div>
+        <div class="text-center px-4">
+          <div class="text-2xl font-bold text-emerald-400" id="ready-count">1 / 24</div>
+          <div class="text-[11px] text-slate-500 uppercase font-semibold" id="lbl-ready">Hazır Testlər</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN CONTENT: TOPIC LIST -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Mobile Search input -->
+    <div class="sm:hidden mb-6">
+      <input type="text" id="search-input-mobile" placeholder="Mövzu axtar..." 
+             class="w-full pl-9 pr-4 py-2 text-sm bg-slate-900 border border-slate-800 rounded-lg text-slate-200 placeholder-slate-500">
+    </div>
+
+    <!-- Grid Header -->
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+        <i data-lucide="layers" class="w-4 h-4 text-indigo-400"></i>
+        <span id="section-title">Mündəricat</span>
+      </h3>
+      <span class="text-xs text-slate-500 font-mono" id="items-count">24 mövzu</span>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="topics-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <!-- Generated via JS -->
+    </div>
+  </main>
+
+  <!-- PENDING MODAL (For topics without HTML files yet) -->
+  <div id="modal-overlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full p-6 space-y-5 text-center shadow-2xl">
+      <div class="w-12 h-12 rounded-full bg-indigo-500/10 text-indigo-400 border border-indigo-500/20 flex items-center justify-center mx-auto">
+        <i data-lucide="clock" class="w-6 h-6"></i>
+      </div>
+      <div class="space-y-1">
+        <h4 class="text-lg font-bold text-white" id="modal-topic-title">Mövzu Adı</h4>
+        <p class="text-xs text-slate-400" id="modal-desc">Bu mövzu üzrə test faylı tezliklə əlavə olunacaq.</p>
+      </div>
+      <button onclick="closeModal()" class="w-full py-2.5 text-xs font-semibold bg-slate-800 text-slate-200 hover:bg-slate-700 rounded-xl transition-colors">
+        Anladım
+      </button>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-800 bg-slate-950 py-6 text-center text-xs text-slate-500">
+    <p>© 2026 Riyaziyyat Test Bankı. DİM 9-cu sinif çərçivəsi.</p>
+  </footer>
+
+  <!-- SCRIPT LOGIC -->
+  <script>
+    let currentLang = 'az';
+
+    // TOPICS INDEX DATA (Configured with exact folder & file paths)
+    const TOPICS_DATA = [
+      { 
+        id: 1, 
+        az: "Natural ədədlər", 
+        ru: "Натуральные числа", 
+        en: "Natural Numbers", 
+        path: "9-NATURAL ƏDƏDLƏR/Natural ədədlər.html",
+        status: "ready",
+        questionsCount: 113
+      },
+      { id: 2, az: "Adi və onluq kəsrlər", ru: "Обыкновенные и десятичные дроби", en: "Common and Decimal Fractions", path: "9-ADI VƏ ONLUQ KƏSRLƏR/Adi və onluq kəsrlər.html", status: "pending" },
+      { id: 3, az: "Faiz. Nisbət. Tənasüb", ru: "Процент. Отношение. Пропорция", en: "Percentage. Ratio. Proportion", path: "9-FAİZ NİSBƏT TƏNASÜB/Faiz nisbət tənasüb.html", status: "pending" },
+      { id: 4, az: "Həqiqi ədədlər", ru: "Действительные числа", en: "Real Numbers", status: "pending" },
+      { id: 5, az: "Tam cəbri ifadələr", ru: "Целые алгебраические выражения", en: "Integer Algebraic Expressions", status: "pending" },
+      { id: 6, az: "Çoxhədlinin vuruqlara ayrılması", ru: "Разложение многочлена на множители", en: "Factorization of Polynomials", status: "pending" },
+      { id: 7, az: "Rasional kəsrlər", ru: "Рациональные дроби", en: "Rational Fractions", status: "pending" },
+      { id: 8, az: "Kvadrat köklər. Həqiqi üstlü qüvvət", ru: "Квадратные корни. Степень с действительным показателем", en: "Square Roots. Real Exponents", status: "pending" },
+      { id: 9, az: "Birməchullu tənliklər və məsələlər", ru: "Уравнения с одной переменной и задачи", en: "Equations in One Variable and Word Problems", status: "pending" },
+      { id: 10, az: "Tənliklər sistemi", ru: "Системы уравнений", en: "Systems of Equations", status: "pending" },
+      { id: 11, az: "Bərabərsizliklər və bərabərsizliklər sistemi", ru: "Неравенства и системы неравенств", en: "Inequalities and Systems of Inequalities", status: "pending" },
+      { id: 12, az: "Funksiyalar və qrafiklər", ru: "Функции и графики", en: "Functions and Graphs", status: "pending" },
+      { id: 13, az: "Çoxluqlar", ru: "Множества", en: "Sets", status: "pending" },
+      { id: 14, az: "Ehtimal nəzəriyyəsi və statistika", ru: "Теория вероятностей и статистика", en: "Probability Theory and Statistics", status: "pending" },
+      { id: 15, az: "Həndəsənin əsas anlayışları", ru: "Основные понятия геометрии", en: "Basic Concepts of Geometry", status: "pending" },
+      { id: 16, az: "Üçbucaqlar", ru: "Треугольники", en: "Triangles", status: "pending" },
+      { id: 17, az: "Çoxbucaqlılar. Dördbucaqlılar", ru: "Многоугольники. Четырехугольники", en: "Polygons. Quadrilaterals", status: "pending" },
+      { id: 18, az: "Çevrə və dairə", ru: "Окружность и круг", en: "Circle and Disk", status: "pending" },
+      { id: 19, az: "Fiqurların sahəsi", ru: "Площадь фигур", en: "Area of Figures", status: "pending" },
+      { id: 20, az: "Hərəkət. Oxşarlıq", ru: "Движение. Подобие", en: "Transformations. Similarity", status: "pending" },
+      { id: 21, az: "Koordinatlar metodu", ru: "Метод координат", en: "Coordinate Method", status: "pending" },
+      { id: 22, az: "Çoxüzlülər, onların səthi və həcmi", ru: "Многогранники, их поверхность и объем", en: "Polyhedra, Their Surface Area and Volume", status: "pending" },
+      { id: 23, az: "2025-ci ildə buraxılış imtahanlarında (9 illik) istifadə olunmuş test tapşırıqları", ru: "Тестовые задания выпускных экзаменов 2025 года (9-летнее образование)", en: "Test tasks used in graduation exams in 2025 (9-year education)", status: "pending" },
+      { id: 24, az: "Mövzular üzrə test tapşırıqlarının düzgün cavabları", ru: "Правильные ответы к тестовым заданиям по темам", en: "Correct answers to test tasks by topic", status: "pending" }
+    ];
+
+    // UI Translations
+    const UI = {
+      az: {
+        navTitle: "Riyaziyyat Test Bankı",
+        navSubtitle: "DİM 9-cu sinif Buraxılış İmtahanı",
+        searchPh: "Mövzu axtar...",
+        heroHeading: "Mövzu Kataloqu və Testlər",
+        heroDesc: "Bütün mövzular DİM imtahan çərçivəsinə uyğun olaraq nizamlanmışdır. Test həllinə başlamaq üçün mövzu seçin.",
+        topics: "Mövzu",
+        ready: "Hazır Testlər",
+        sectionTitle: "Mündəricat",
+        openTopic: "Testə başla",
+        statusReady: "113 Sual",
+        statusPending: "Gözləmədə",
+        emptyTitle: "Test hazırlanır",
+        emptyDesc: "Bu mövzu üzrə test faylı tezliklə qovluğa əlavə olunacaq."
+      },
+      ru: {
+        navTitle: "Сборник тестов по математике",
+        navSubtitle: "Программа 9-го класса GEC",
+        searchPh: "Поиск темы...",
+        heroHeading: "Каталог тем и тесты",
+        heroDesc: "Все темы структурированы в соответствии с программой экзаменов. Выберите тему для перехода к тестам.",
+        topics: "Тем",
+        ready: "Готовые тесты",
+        sectionTitle: "Оглавление",
+        openTopic: "Начать тест",
+        statusReady: "113 Вопросов",
+        statusPending: "В разработке",
+        emptyTitle: "Тест готовится",
+        emptyDesc: "Файл теста по этой теме скоро будет добавлен в соответствующую папку."
+      },
+      en: {
+        navTitle: "Mathematics Test Bank",
+        navSubtitle: "GEC Grade 9 Graduation Program",
+        searchPh: "Search topic...",
+        heroHeading: "Topic Catalogue & Tests",
+        heroDesc: "All topics are arranged according to the official examination framework. Select a topic to proceed.",
+        topics: "Topics",
+        ready: "Ready Tests",
+        sectionTitle: "Table of Contents",
+        openTopic: "Start Test",
+        statusReady: "113 Questions",
+        statusPending: "In progress",
+        emptyTitle: "Test in progress",
+        emptyDesc: "The test file for this topic will be added to the folder soon."
+      }
+    };
+
+    // Render Grid
+    function renderGrid(searchQuery = '') {
+      const grid = document.getElementById('topics-grid');
+      grid.innerHTML = '';
+
+      const filtered = TOPICS_DATA.filter(t => 
+        t[currentLang].toLowerCase().includes(searchQuery.toLowerCase()) ||
+        t.id.toString() === searchQuery.trim()
+      );
+
+      document.getElementById('items-count').innerText = `${filtered.length} ${UI[currentLang].topics}`;
+
+      filtered.forEach(topic => {
+        const card = document.createElement('div');
+        const isReady = topic.status === 'ready';
+
+        card.className = `bg-slate-900/90 border ${isReady ? 'border-emerald-500/40 hover:border-emerald-400' : 'border-slate-800 hover:border-indigo-500/40'} rounded-xl p-5 flex flex-col justify-between transition-all duration-200 shadow-md group cursor-pointer`;
+
+        const badgeColor = isReady ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30' : 'bg-slate-800 text-slate-400 border-slate-700';
+        const badgeText = isReady ? UI[currentLang].statusReady : UI[currentLang].statusPending;
+
+        card.onclick = () => openTopic(topic.id);
+
+        card.innerHTML = `
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="w-8 h-8 rounded-lg bg-slate-800 ${isReady ? 'text-emerald-400 border-emerald-500/30' : 'text-indigo-400 border-slate-700'} font-mono font-bold text-xs flex items-center justify-center border">
+                ${topic.id < 10 ? '0' + topic.id : topic.id}
+              </span>
+              <span class="text-[10px] font-semibold px-2.5 py-0.5 rounded-full border ${badgeColor}">
+                ${badgeText}
+              </span>
+            </div>
+            <h4 class="font-semibold text-slate-100 group-hover:text-indigo-300 transition-colors text-base leading-snug">
+              ${topic[currentLang]}
+            </h4>
+          </div>
+
+          <div class="mt-6 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+            <span class="text-[11px] font-mono text-slate-500">Mövzu #${topic.id}</span>
+            <span class="inline-flex items-center gap-1.5 text-xs font-semibold ${isReady ? 'text-emerald-400 group-hover:text-emerald-300' : 'text-indigo-400 group-hover:text-indigo-300'} transition-colors">
+              ${UI[currentLang].openTopic}
+              <i data-lucide="${isReady ? 'play-circle' : 'chevron-right'}" class="w-4 h-4"></i>
+            </span>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      lucide.createIcons();
+    }
+
+    // Action Handler
+    function openTopic(id) {
+      const topic = TOPICS_DATA.find(t => t.id === id);
+      if (!topic) return;
+
+      if (topic.status === 'ready' && topic.path) {
+        // Direct navigation to the HTML file in its folder!
+        window.location.href = topic.path;
+      } else {
+        // Show modal for pending topics
+        document.getElementById('modal-topic-title').innerText = topic[currentLang];
+        document.getElementById('modal-desc').innerText = UI[currentLang].emptyDesc;
+        document.getElementById('modal-overlay').classList.remove('hidden');
+        lucide.createIcons();
+      }
+    }
+
+    function closeModal() {
+      document.getElementById('modal-overlay').classList.add('hidden');
+    }
+
+    // Change Language
+    function changeLang(lang) {
+      currentLang = lang;
+      ['az', 'ru', 'en'].forEach(l => {
+        const btn = document.getElementById(`lang-${l}`);
+        btn.className = (l === lang) 
+          ? "px-2.5 py-1 rounded-md transition-all bg-indigo-600 text-white" 
+          : "px-2.5 py-1 rounded-md transition-all text-slate-400 hover:text-slate-200";
+      });
+
+      document.getElementById('nav-title').innerText = UI[lang].navTitle;
+      document.getElementById('nav-subtitle').innerText = UI[lang].navSubtitle;
+      document.getElementById('search-input').placeholder = UI[lang].searchPh;
+      document.getElementById('hero-heading').innerText = UI[lang].heroHeading;
+      document.getElementById('hero-desc').innerText = UI[lang].heroDesc;
+      document.getElementById('lbl-topics').innerText = UI[lang].topics;
+      document.getElementById('lbl-ready').innerText = UI[lang].ready;
+      document.getElementById('section-title').innerText = UI[lang].sectionTitle;
+
+      renderGrid();
+    }
+
+    document.getElementById('search-input').addEventListener('input', (e) => renderGrid(e.target.value));
+    document.getElementById('search-input-mobile').addEventListener('input', (e) => renderGrid(e.target.value));
+
+    document.getElementById('modal-overlay').addEventListener('click', (e) => {
+      if (e.target.id === 'modal-overlay') closeModal();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderGrid();
+    });
+  </script>
+</body>
+</html>

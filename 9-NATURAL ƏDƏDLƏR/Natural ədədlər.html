@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Natural ədədlər — 113 Sual (İnteraktiv Test Baza)</title>
+  
+  <!-- KaTeX CSS & JS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      renderMathInElement(document.body, {
+        delimiters: [
+          {left: '$$', right: '$$', display: true},
+          {left: '$', right: '$', display: false}
+        ],
+        throwOnError: false
+      });
+    });
+  </script>
+
+  <style>
+    :root {
+      --primary: #0f172a;
+      --primary-accent: #2563eb;
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --text: #1e293b;
+      --border: #cbd5e1;
+      --success: #16a34a;
+      --success-bg: #f0fdf4;
+      --error: #dc2626;
+      --error-bg: #fef2f2;
+      --explanation-bg: #eff6ff;
+      --explanation-border: #93c5fd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      padding-bottom: 80px;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 16px 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .header-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .title-area h1 { font-size: 1.35rem; font-weight: 700; }
+    .title-area p { font-size: 0.85rem; opacity: 0.85; }
+
+    .controls-group {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .toggle-group, .lang-switcher {
+      display: flex;
+      background: rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      padding: 3px;
+    }
+
+    .control-btn, .lang-btn {
+      border: none;
+      background: transparent;
+      color: white;
+      padding: 6px 12px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 6px;
+      transition: all 0.2s;
+    }
+
+    .control-btn.active, .lang-btn.active {
+      background: white;
+      color: var(--primary);
+    }
+
+    .main-container {
+      max-width: 1000px;
+      margin: 20px auto;
+      padding: 0 20px;
+    }
+
+    /* Score Banner */
+    .score-banner {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 600;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+    }
+
+    .score-progress {
+      font-size: 1.1rem;
+      color: var(--primary-accent);
+      font-weight: 700;
+    }
+
+    /* Question Grid Panel */
+    .grid-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 24px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .grid-title {
+      font-size: 0.92rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .question-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      max-height: 180px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    .grid-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: #e2e8f0;
+      color: #334155;
+      font-weight: 600;
+      font-size: 0.82rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .grid-btn:hover {
+      border-color: var(--primary-accent);
+      background: #cbd5e1;
+    }
+
+    .grid-btn.correct {
+      background: var(--success) !important;
+      color: white !important;
+      border-color: var(--success) !important;
+    }
+
+    .grid-btn.incorrect {
+      background: var(--error) !important;
+      color: white !important;
+      border-color: var(--error) !important;
+    }
+
+    .grid-btn.active {
+      outline: 3px solid var(--primary-accent);
+      outline-offset: 1px;
+      font-weight: 800;
+    }
+
+    /* Slide Controls */
+    .slide-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      background: var(--card-bg);
+      padding: 12px 20px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .nav-btn {
+      background: var(--primary-accent);
+      color: white;
+      border: none;
+      padding: 8px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .nav-btn:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    .slide-info {
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    /* Question Card */
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .question-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .question-num {
+      background: var(--primary-accent);
+      color: white;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      flex-shrink: 0;
+    }
+
+    .question-text { font-size: 1.05rem; font-weight: 500; white-space: pre-line; }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .option-btn {
+      text-align: left;
+      padding: 12px 18px;
+      border: 1px solid var(--border);
+      background: #fafafa;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .option-btn:hover:not(:disabled) {
+      border-color: var(--primary-accent);
+      background: #f0f7ff;
+    }
+
+    .option-btn.correct {
+      background-color: var(--success-bg) !important;
+      border-color: var(--success) !important;
+      color: var(--success) !important;
+      font-weight: 600;
+    }
+
+    .option-btn.incorrect {
+      background-color: var(--error-bg) !important;
+      border-color: var(--error) !important;
+      color: var(--error) !important;
+    }
+
+    .input-area {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .text-input {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-size: 0.95rem;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .submit-btn {
+      background: var(--primary-accent);
+      color: white;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .submit-btn:disabled { background: #94a3b8; cursor: not-allowed; }
+
+    .feedback {
+      margin-top: 16px;
+      padding: 12px 16px;
+      border-radius: 8px;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .feedback.correct {
+      background: var(--success-bg);
+      color: var(--success);
+      border: 1px solid var(--success);
+    }
+
+    .feedback.incorrect {
+      background: var(--error-bg);
+      color: var(--error);
+      border: 1px solid var(--error);
+    }
+
+    .explanation-box {
+      margin-top: 16px;
+      padding: 16px 20px;
+      background: var(--explanation-bg);
+      border: 1px solid var(--explanation-border);
+      border-radius: 8px;
+      font-size: 0.93rem;
+      color: #1e3a8a;
+    }
+
+    .explanation-title {
+      font-weight: 700;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .question-image-box {
+      text-align: center;
+      margin: 15px 0;
+    }
+    
+    .question-image-box img {
+      max-width: 100%;
+      max-height: 380px;
+      height: auto;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="header-container">
+      <div class="title-area">
+        <h1 id="app-title">Natural ədədlər</h1>
+        <p id="app-subtitle">Riyaziyyat Test Baza — Bütün 113 Sual</p>
+      </div>
+      <div class="controls-group">
+        <div class="toggle-group">
+          <button id="btn-mode-slide" class="control-btn active" onclick="setMode('slide')">Slayd</button>
+          <button id="btn-mode-list" class="control-btn" onclick="setMode('list')">Siyahı</button>
+        </div>
+        <div class="lang-switcher">
+          <button class="lang-btn active" onclick="setLanguage('az')">AZ</button>
+          <button class="lang-btn" onclick="setLanguage('ru')">RU</button>
+          <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="score-banner">
+      <span id="score-label">Nəticə:</span>
+      <span id="score-val" class="score-progress">0 / 113</span>
+    </div>
+
+    <!-- Interactive Question Navigation Grid -->
+    <div class="grid-card">
+      <div class="grid-title">
+        <span id="grid-title-text">Sual şəbəkəsi:</span>
+      </div>
+      <div id="question-grid" class="question-grid"></div>
+    </div>
+
+    <!-- Slide Navigation (only in Slide Mode) -->
+    <div id="slide-nav-box" class="slide-nav">
+      <button id="prev-btn" class="nav-btn" onclick="prevSlide()">« Əvvəlki</button>
+      <span id="slide-info" class="slide-info">Sual 1 / 113</span>
+      <button id="next-btn" class="nav-btn" onclick="nextSlide()">Növbəti »</button>
+    </div>
+
+    <!-- Container where Questions are rendered -->
+    <div id="questions-list"></div>
+  </main>
+
+  <script>
+    let currentLang = 'az';
+    let currentMode = 'slide'; // 'slide' or 'list'
+    let currentSlide = 0; // 0..112
+    let userAnswers = {};
+
+    const translations = {
+      az: {
+        title: "Natural ədədlər",
+        subtitle: "Riyaziyyat Test Baza — Bütün 113 Sual və Ətraflı Həllər",
+        scoreLabel: "Nəticə:",
+        submit: "Yoxla",
+        correctFeedback: "Doğrudur!",
+        incorrectFeedback: "Yanlışdır! Düzgün cavab: ",
+        explanationTitle: "💡 Məsələnin Ətraflı Həlli:",
+        slideMode: "Slayd",
+        listMode: "Siyahı",
+        prevBtn: "« Əvvəlki",
+        nextBtn: "Növbəti »",
+        gridTitle: "Sual şəbəkəsi:",
+        slideInfo: "Sual ",
+        placeholder: "Cavabı daxil edin..."
+      },
+      ru: {
+        title: "Натуральные числа",
+        subtitle: "Математический тест — Все 113 Вопросов и Подробные Решения",
+        scoreLabel: "Результат:",
+        submit: "Проверить",
+        correctFeedback: "Правильно!",
+        incorrectFeedback: "Неправильно! Правильный ответ: ",
+        explanationTitle: "💡 Подробное решение задачи:",
+        slideMode: "Слайд",
+        listMode: "Список",
+        prevBtn: "« Назад",
+        nextBtn: "Вперед »",
+        gridTitle: "Сетка вопросов:",
+        slideInfo: "Вопрос ",
+        placeholder: "Введите ответ..."
+      },
+      en: {
+        title: "Natural Numbers",
+        subtitle: "Mathematics Test — All 113 Questions & Detailed Solutions",
+        scoreLabel: "Score:",
+        submit: "Submit",
+        correctFeedback: "Correct!",
+        incorrectFeedback: "Incorrect! Correct answer: ",
+        explanationTitle: "💡 Detailed Solution:",
+        slideMode: "Slide",
+        listMode: "List",
+        prevBtn: "« Previous",
+        nextBtn: "Next »",
+        gridTitle: "Question Grid:",
+        slideInfo: "Question ",
+        placeholder: "Enter answer..."
+      }
+    };
+
+    // COMPLETE ALL 113 QUESTIONS DATABASE
+    const questionsData = [
+      { id: 1, type: 'mcq', correct: 3, question: { az: "Ədədi 17-yə böldükdə natamam qismətdə 3, qalıqda isə 16 alınır. Bu ədədi tapın.", ru: "При делении числа на 17 неполное частное равно 3, а остаток 16. Найдите это число.", en: "When a number is divided by 17, the quotient is 3 and the remainder is 16. Find the number." }, options: [{ az: "105", ru: "105", en: "105" }, { az: "57", ru: "57", en: "57" }, { az: "84", ru: "84", en: "84" }, { az: "67", ru: "67", en: "67" }, { az: "121", ru: "121", en: "121" }], explanation: { az: "Qalıqlı bölmə düsturuna əsasən: $a = b \\cdot q + r$. Burada $b=17, q=3, r=16 \\implies a = 17 \\cdot 3 + 16 = 51 + 16 = 67$.", ru: "По формуле деления с остатком: $a = b \\cdot q + r$. Подставляем значения: $a = 17 \\cdot 3 + 16 = 51 + 16 = 67$.", en: "Using division algorithm formula: $a = b \\cdot q + r$. Substituting values: $a = 17 \\cdot 3 + 16 = 51 + 16 = 67$." } },
+      { id: 2, type: 'mcq', correct: 4, question: { az: "Ədədi 19-a böldükdə natamam qismətdə 3, qalıqda isə 14 alınır. Bu ədədi tapın.", ru: "При делении числа на 19 неполное частное равно 3, а остаток 14. Найдите это число.", en: "When a number is divided by 19, the quotient is 3 and the remainder is 14. Find the number." }, options: [{ az: "73", ru: "73", en: "73" }, { az: "57", ru: "57", en: "57" }, { az: "61", ru: "61", en: "61" }, { az: "84", ru: "84", en: "84" }, { az: "71", ru: "71", en: "71" }], explanation: { az: "Qalıqlı bölmə düsturuna əsasən: $a = b \\cdot q + r$. $a = 19 \\cdot 3 + 14 = 57 + 14 = 71$.", ru: "По формуле деления с остатком: $a = 19 \\cdot 3 + 14 = 57 + 14 = 71$.", en: "Using division formula: $a = 19 \\cdot 3 + 14 = 57 + 14 = 71$." } },
+      { id: 3, type: 'mcq', correct: 2, question: { az: "Ədədlərdən hansı 18-ə qalıqsız bölünür?", ru: "Какое из чисел делится на 18 без остатка?", en: "Which number is divisible by 18 without remainder?" }, options: [{ az: "84111", ru: "84111", en: "84111" }, { az: "74374", ru: "74374", en: "74374" }, { az: "47754", ru: "47754", en: "47754" }, { az: "84335", ru: "84335", en: "84335" }, { az: "47235", ru: "47235", en: "47235" }], explanation: { az: "Ədədin 18-ə bölünməsi üçün o, həm cüt olmalı (2-yə bölünməli), həm də rəqəmlərinin cəmi 9-a bölünməlidir. $47754$ ədədi cütdür və rəqəmlərinin cəmi $4+7+7+5+4 = 27$ ədədi 9-a bölünür.", ru: "Число делится на 18, если оно четное и сумма его цифр делится на 9. $47754$ четное, а сумма цифр $27$ делится на 9.", en: "A number is divisible by 18 if it is even and its digit sum is divisible by 9. $47754$ is even and digit sum $27$ is divisible by 9." } },
+      { id: 4, type: 'mcq', correct: 3, question: { az: "Ədədlərdən hansı 15-ə qalıqsız bölünür?", ru: "Какое из чисел делится на 15 без остатка?", en: "Which number is divisible by 15 without remainder?" }, options: [{ az: "64370", ru: "64370", en: "64370" }, { az: "34670", ru: "34670", en: "34670" }, { az: "45625", ru: "45625", en: "45625" }, { az: "34740", ru: "34740", en: "34740" }, { az: "54245", ru: "54245", en: "54245" }], explanation: { az: "15-ə bölünmə əlaməti: sonu 0 və ya 5 ilə bitməli və rəqəmlərinin cəmi 3-ə bölünməlidir. $34740$ ədədinin sonu 0-dır və rəqəmlərinin cəmi $3+4+7+4+0 = 18$ ədədi 3-ə bölünür.", ru: "Признак делимости на 15: оканчивается на 0 или 5 и сумма цифр делится на 3. У числа $34740$ сумма цифр $18$.", en: "Divisibility by 15: ends in 0/5 and sum of digits is divisible by 3. $34740$ ends in 0 and digit sum $18$ is divisible by 3." } },
+      { id: 5, type: 'mcq', correct: 4, question: { az: "$x$-in hansı qiymətində $2x354$ ədədi 9-a qalıqsız bölünür?", ru: "При каком $x$ число $2x354$ делится на 9 без остатка?", en: "For which $x$ is the number $2x354$ divisible by 9?" }, options: [{ az: "7", ru: "7", en: "7" }, { az: "9", ru: "9", en: "9" }, { az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "9-a bölünmə əlaməti: rəqəmlərinin cəmi 9-a bölünməlidir. $2+x+3+5+4 = 14+x$. $14+x = 18 \\implies x = 4$.", ru: "Сумма цифр должна делиться на 9: $2+x+3+5+4 = 14+x \\implies x = 4$.", en: "Sum of digits must be divisible by 9: $2+x+3+5+4 = 14+x \\implies x = 4$." } },
+      { id: 6, type: 'mcq', correct: 1, question: { az: "Ədədi 8-ə böldükdə qalıq hansı ədəd ola bilməz?", ru: "Какое число не может быть остатком при делении на 8?", en: "Which number cannot be a remainder when dividing by 8?" }, options: [{ az: "7", ru: "7", en: "7" }, { az: "9", ru: "9", en: "9" }, { az: "5", ru: "5", en: "5" }, { az: "3", ru: "3", en: "3" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "Qalıqlı bölmədə qalıq həmişə böləndən kiçik olmalıdır ($r < b$). Bölən 8 olduğuna görə, qalıq 9 ola bilməz.", ru: "Остаток всегда строго меньше делителя ($r < b$). Так как делитель 8, остаток не может быть равен 9.", en: "The remainder must always be strictly less than the divisor ($r < b$). Since the divisor is 8, remainder 9 is impossible." } },
+      { id: 7, type: 'mcq', correct: 4, question: { az: "Ədədlərdən 2-yə və 5-ə tam bölünəni göstərin.", ru: "Укажите число, делящееся на 2 и на 5 без остатка.", en: "Select the number divisible by both 2 and 5." }, options: [{ az: "2368", ru: "2368", en: "2368" }, { az: "1925", ru: "1925", en: "1925" }, { az: "1472", ru: "1472", en: "1472" }, { az: "4295", ru: "4295", en: "4295" }, { az: "1690", ru: "1690", en: "1690" }], explanation: { az: "Ədəd həm 2-yə, həm də 5-ə bölünməsi üçün son rəqəmi 0 olmalıdır. $1690$ ədədinin sonu 0-dır.", ru: "Число делится на 2 и на 5, если оканчивается на 0: 1690.", en: "A number is divisible by 2 and 5 if its last digit is 0: 1690." } },
+      { id: 8, type: 'mcq', correct: 0, question: { az: "Ədədlərdən 2-yə və 3-ə tam bölünəni göstərin.", ru: "Укажите число, делящееся на 2 и на 3 без остатка.", en: "Select the number divisible by both 2 and 3." }, options: [{ az: "64452", ru: "64452", en: "64452" }, { az: "7562", ru: "7562", en: "7562" }, { az: "76773", ru: "76773", en: "76773" }, { az: "4006", ru: "4006", en: "4006" }, { az: "1675", ru: "1675", en: "1675" }], explanation: { az: "Ədəd cüt olmalı və rəqəmlərinin cəmi 3-ə bölünməlidir. $64452$ cütdür, rəqəmlərinin cəmi $6+4+4+5+2 = 21$ (3-ə bölünür).", ru: "Число четное и сумма его цифр делится на 3: $64452$ (сумма $21$).", en: "Number is even and digit sum is divisible by 3: $64452$ (sum $21$)." } },
+      { id: 9, type: 'mcq', correct: 4, question: { az: "Kitab, dəftər və qələmin birlikdə qiyməti 16 manatdır. Hər birinin qiyməti 2 manat artarsa, hər birindən bir ədəd almaq üçün nə qədər pul lazım olar?", ru: "Книга, тетрадь и ручка стоят 16 манат. Если цена каждого увеличится на 2 маната, сколько потребуется?", en: "A book, notebook, and pen cost 16 manats. If each price increases by 2 manats, how much money is needed?" }, options: [{ az: "23 manat", ru: "23 маната", en: "23 manats" }, { az: "19 manat", ru: "19 манат", en: "19 manats" }, { az: "20 manat", ru: "20 манат", en: "20 manats" }, { az: "21 manat", ru: "21 манат", en: "21 manats" }, { az: "22 manat", ru: "22 маната", en: "22 manats" }], explanation: { az: "3 əşyanın hər biri 2 manat bahalaşır: $3 \\cdot 2 = 6$ manat artım. Yekun məbləğ: $16 + 6 = 22$ manat.", ru: "3 предмета подорожали на 2 маната каждый: $16 + 3 \\cdot 2 = 22$ маната.", en: "3 items each increase by 2 manats: $16 + 3 \\cdot 2 = 22$ manats." } },
+      { id: 10, type: 'mcq', correct: 3, question: { az: "$22, 55, 63, 88, 100, 300, 303, 399$ ədədlərindən neçəsi təkdir?", ru: "Сколько нечетных чисел среди данных?", en: "How many odd numbers are among these?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }, { az: "6", ru: "6", en: "6" }], explanation: { az: "Tək rəqəmlə bitən ədədlər təkdir: $55, 63, 303, 399$. Sayı: 4.", ru: "Нечетные числа оканчиваются на нечетную цифру: $55, 63, 303, 399$ (всего 4).", en: "Odd numbers end in odd digits: $55, 63, 303, 399$ (total 4)." } },
+      { id: 11, type: 'mcq', correct: 1, question: { az: "Ədədi 7-yə böldükdə qalıq hansı ədəd ola bilməz?", ru: "Какое число не может быть остатком при делении на 7?", en: "Which number cannot be a remainder when dividing by 7?" }, options: [{ az: "6", ru: "6", en: "6" }, { az: "8", ru: "8", en: "8" }, { az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "Qalıq həmişə böləndən kiçik olmalıdır ($r < 7$). Qalıq 8 ola bilməz.", ru: "Остаток всегда строго меньше делителя ($r < 7$). 8 не может быть остатком.", en: "Remainder must be less than divisor ($r < 7$). 8 is impossible." } },
+      { id: 12, type: 'mcq', correct: 2, question: { az: "$*-un$ əvəzinə hansı rəqəm olmalıdır ki, $643*$ ədədi 9-a qalıqsız bölünsün?", ru: "Какая цифра должна быть вместо $*$, чтобы $643*$ делилось на 9?", en: "Which digit should replace $*$ so that $643*$ is divisible by 9?" }, options: [{ az: "6", ru: "6", en: "6" }, { az: "8", ru: "8", en: "8" }, { az: "5", ru: "5", en: "5" }, { az: "7", ru: "7", en: "7" }, { az: "9", ru: "9", en: "9" }], explanation: { az: "Rəqəmlərin cəmi 9-a bölünməlidir: $6+4+3+* = 13+*$. Ən yaxın 9-a bölünən cəm 18-dir $\\implies * = 18-13 = 5$.", ru: "Сумма цифр должна делиться на 9: $13+* = 18 \\implies * = 5$.", en: "Digit sum must be divisible by 9: $13+* = 18 \\implies * = 5$." } },
+      { id: 13, type: 'mcq', correct: 4, question: { az: "$*-un$ əvəzinə hansı rəqəm olmalıdır ki, $5*62$ ədədi 9-a tam bölünsün?", ru: "Какая цифра должна быть вместо $*$, чтобы $5*62$ делилось на 9?", en: "Which digit should replace $*$ so that $5*62$ is divisible by 9?" }, options: [{ az: "1", ru: "1", en: "1" }, { az: "9", ru: "9", en: "9" }, { az: "2", ru: "2", en: "2" }, { az: "0", ru: "0", en: "0" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "Rəqəmlərin cəmi: $5+*+6+2 = 13+* \\implies * = 5$.", ru: "Сумма цифр: $13+* = 18 \\implies * = 5$.", en: "Sum of digits: $13+* = 18 \\implies * = 5$." } },
+      { id: 14, type: 'mcq', correct: 2, question: { az: "630 ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа 630?", en: "How many distinct prime factors does 630 have?" }, options: [{ az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }], explanation: { az: "$630 = 2 \\cdot 3^2 \\cdot 5 \\cdot 7$. Müxtəlif sadə vuruqlar: 2, 3, 5, 7 (sayı: 4).", ru: "Разложение: $630 = 2 \\cdot 3^2 \\cdot 5 \\cdot 7$. Различные простые множители: 2, 3, 5, 7 (всего 4).", en: "Prime factorization: $630 = 2 \\cdot 3^2 \\cdot 5 \\cdot 7$. Distinct prime factors: 2, 3, 5, 7 (count: 4)." } },
+      { id: 15, type: 'mcq', correct: 4, question: { az: "$38 \\cdot 57 + 42 \\cdot 57 - 38 \\cdot 37 - 42 \\cdot 37$ ifadesinin qiymətini hesablayın.", ru: "Вычислите значение выражения $38 \\cdot 57 + 42 \\cdot 57 - 38 \\cdot 37 - 42 \\cdot 37$.", en: "Calculate $38 \\cdot 57 + 42 \\cdot 57 - 38 \\cdot 37 - 42 \\cdot 37$." }, options: [{ az: "1800", ru: "1800", en: "1800" }, { az: "2000", ru: "2000", en: "2000" }, { az: "1500", ru: "1500", en: "1500" }, { az: "2100", ru: "2100", en: "2100" }, { az: "1600", ru: "1600", en: "1600" }], explanation: { az: "Ortaq vuruğu mötərizə xaricinə çıxarırıq: $57(38+42) - 37(38+42) = (57-37) \\cdot 80 = 20 \\cdot 80 = 1600$.", ru: "Выносим общие множители: $57(38+42) - 37(38+42) = (57-37) \\cdot 80 = 20 \\cdot 80 = 1600$.", en: "Factoring out common terms: $57(38+42) - 37(38+42) = (57-37) \\cdot 80 = 20 \\cdot 80 = 1600$." } },
+      { id: 16, type: 'mcq', correct: 2, question: { az: "$54 \\cdot 37 + 46 \\cdot 37 - 54 \\cdot 24 - 46 \\cdot 24$ ifadesinin qiymətini hesablayın.", ru: "Вычислите значение выражения.", en: "Calculate the expression." }, options: [{ az: "1800", ru: "1800", en: "1800" }, { az: "2000", ru: "2000", en: "2000" }, { az: "1300", ru: "1300", en: "1300" }, { az: "2400", ru: "2400", en: "2400" }, { az: "3700", ru: "3700", en: "3700" }], explanation: { az: "$37(54+46) - 24(54+46) = (37-24) \\cdot 100 = 13 \\cdot 100 = 1300$.", ru: "$37(100) - 24(100) = (37-24) \\cdot 100 = 1300$.", en: "$37(100) - 24(100) = (37-24) \\cdot 100 = 1300$." } },
+      { id: 17, type: 'mcq', correct: 1, question: { az: "ƏKOB(19; 38) - ƏBOB(12; 13) fərqini hesablayın.", ru: "Вычислите НОК(19; 38) - НОД(12; 13).", en: "Calculate LCM(19; 38) - GCD(12; 13)." }, options: [{ az: "18", ru: "18", en: "18" }, { az: "37", ru: "37", en: "37" }, { az: "63", ru: "63", en: "63" }, { az: "24", ru: "24", en: "24" }, { az: "36", ru: "36", en: "36" }], explanation: { az: "38 19-a bölündüyü üçün ƏKOB(19, 38) = 38. 12 və 13 qarşılıqlı sadədir $\\implies \\text{ƏBOB} = 1$. Fərq: $38 - 1 = 37$.", ru: "НОК(19, 38) = 38. НОД(12, 13) = 1. Разность: $38 - 1 = 37$.", en: "LCM(19, 38) = 38. GCD(12, 13) = 1. Difference: $38 - 1 = 37$." } },
+      { id: 18, type: 'mcq', correct: 1, question: { az: "ƏKOB(30; 54) - ƏBOB(30; 54) fərqini tapın.", ru: "Найдите НОК(30; 54) - НОД(30; 54).", en: "Find LCM(30; 54) - GCD(30; 54)." }, options: [{ az: "282", ru: "282", en: "282" }, { az: "264", ru: "264", en: "264" }, { az: "284", ru: "284", en: "284" }, { az: "252", ru: "252", en: "252" }, { az: "262", ru: "262", en: "262" }], explanation: { az: "ƏKOB(30, 54) = 270, ƏBOB(30, 54) = 6. Fərq: $270 - 6 = 264$.", ru: "НОК(30, 54) = 270, НОД(30, 54) = 6. Разность: $270 - 6 = 264$.", en: "LCM(30, 54) = 270, GCD(30, 54) = 6. Difference: $270 - 6 = 264$." } },
+      { id: 19, type: 'mcq', correct: 3, question: { az: "Bölünəni 4 dəfə azaltdıqda, böleni necə dəyişmək lazımdır ki, qismət 3 dəfə artsın?", ru: "Как изменить делитель при уменьшении делимого в 4 раза, чтобы частное увеличилось в 3 раза?", en: "How to change the divisor if dividend is reduced 4 times so quotient increases 3 times?" }, options: [{ az: "10 dəfə artırmaq", ru: "увеличить в 10 раз", en: "increase 10 times" }, { az: "12 dəfə artırmaq", ru: "увеличить в 12 раз", en: "increase 12 times" }, { az: "dəyişməmək", ru: "не менять", en: "keep unchanged" }, { az: "12 dəfə azaltmaq", ru: "уменьшить в 12 раз", en: "decrease 12 times" }, { az: "4 dəfə artırmaq", ru: "увеличить в 4 раза", en: "increase 4 times" }], explanation: { az: "Düstur: $\\frac{a/4}{b/x} = 3 \\frac{a}{b} \\implies \\frac{x}{4} = 3 \\implies x = 12$. Böləni 12 dəfə azaltmaq lazımdır.", ru: "Из формулы $\\frac{a/4}{b/x} = 3 \\frac{a}{b} \\implies x = 12$. Делитель нужно уменьшить в 12 раз.", en: "From $\\frac{a/4}{b/x} = 3 \\frac{a}{b} \\implies x = 12$. Divisor must be decreased 12 times." } },
+      { id: 20, type: 'mcq', correct: 3, question: { az: "$n$-in hansı qiymətlərində ƏKOB($n$; 10) = 10 bərabərliyi doğrudur?", ru: "При каких $n$ верно НОК($n$; 10) = 10?", en: "For which $n$ is LCM($n$; 10) = 10?" }, options: [{ az: "1, 5, 8, 10", ru: "1, 5, 8, 10", en: "1, 5, 8, 10" }, { az: "3, 4, 6, 7", ru: "3, 4, 6, 7", en: "3, 4, 6, 7" }, { az: "2, 3, 7, 9", ru: "2, 3, 7, 9", en: "2, 3, 7, 9" }, { az: "1, 2, 5, 10", ru: "1, 2, 5, 10", en: "1, 2, 5, 10" }, { az: "2, 4, 6, 8", ru: "2, 4, 6, 8", en: "2, 4, 6, 8" }], explanation: { az: "$n$ ədədi 10-un böleni olmalıdır: 1, 2, 5, 10.", ru: "$n$ должно быть делителем 10: 1, 2, 5, 10.", en: "$n$ must be a divisor of 10: 1, 2, 5, 10." } },
+      { id: 21, type: 'mcq', correct: 2, question: { az: "$n$-in hansı qiymətlərində ƏBOB($n$; 10) = $n$ bərabərliyi doğrudur?", ru: "При каких $n$ верно НОД($n$; 10) = $n$?", en: "For which $n$ is GCD($n$; 10) = $n$?" }, options: [{ az: "2, 4, 6, 8", ru: "2, 4, 6, 8", en: "2, 4, 6, 8" }, { az: "1, 3, 6, 9", ru: "1, 3, 6, 9", en: "1, 3, 6, 9" }, { az: "1, 2, 5, 10", ru: "1, 2, 5, 10", en: "1, 2, 5, 10" }, { az: "1, 2, 5, 8", ru: "1, 2, 5, 8", en: "1, 2, 5, 8" }, { az: "1, 3, 7, 9", ru: "1, 3, 7, 9", en: "1, 3, 7, 9" }], explanation: { az: "$n$ ədədi 10-un böleni olmalıdır: 1, 2, 5, 10.", ru: "$n$ должно быть делителем 10: 1, 2, 5, 10.", en: "$n$ must be a divisor of 10: 1, 2, 5, 10." } },
+      { id: 22, type: 'mcq', correct: 2, question: { az: "Vaqifin addımı 80 sm, Sabirin addımı 70 sm-dir. Hansı en yaxın məsafədə onların hər ikisi tam sayda addım atar?", ru: "Шаг Вагифа 80 см, Сабира 70 см. На каком наименьшем расстоянии оба сделают целое число шагов?", en: "Vaqif's step is 80 cm, Sabir's is 70 cm. What is the shortest distance both take whole steps?" }, options: [{ az: "480 sm", ru: "480 см", en: "480 cm" }, { az: "600 sm", ru: "600 см", en: "600 cm" }, { az: "560 sm", ru: "560 см", en: "560 cm" }, { az: "420 sm", ru: "420 см", en: "420 cm" }, { az: "360 sm", ru: "360 см", en: "360 cm" }], explanation: { az: "Ənn yaxın məsafə onların ƏKOB-udur: $\\text{ƏKOB}(80, 70) = 560$ sm.", ru: "Наименьшее общее кратное: НОК(80, 70) = 560 см.", en: "Shortest distance is LCM(80, 70) = 560 cm." } },
+      { id: 23, type: 'mcq', correct: 3, question: { az: "$100 - 99 + 98 - 97 + \\dots + 2 - 1$ ifadesinin qiymətini hesablayın.", ru: "Вычислите $100 - 99 + 98 - 97 + \\dots + 2 - 1$.", en: "Calculate $100 - 99 + 98 - 97 + \\dots + 2 - 1$." }, options: [{ az: "100", ru: "100", en: "100" }, { az: "75", ru: "75", en: "75" }, { az: "25", ru: "25", en: "25" }, { az: "50", ru: "50", en: "50" }, { az: "0", ru: "0", en: "0" }], explanation: { az: "100-dən 1-ə qədər cütləşdiririk: $(100-99) + (98-97) + \\dots + (2-1) = 1 \\cdot 50 = 50$.", ru: "50 пар по 1: $50 \\cdot 1 = 50$.", en: "50 pairs of 1: $50 \\cdot 1 = 50$." } },
+      { id: 24, type: 'mcq', correct: 0, question: { az: "$n = 1 \\cdot 2 \\cdot 3 \\dots 10 + 27$ ədədinin 15-ə bölünməsindən alınan qalığı tapın.", ru: "Найдите остаток от деления числа на 15.", en: "Find remainder when the number is divided by 15." }, options: [{ az: "12", ru: "12", en: "12" }, { az: "14", ru: "14", en: "14" }, { az: "9", ru: "9", en: "9" }, { az: "13", ru: "13", en: "13" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "Birinci toplanan ($1 \\cdot 2 \\dots 10$) 15-ə ($3 \\cdot 5$) qalıqsız bölünür. Qalıq ikinci toplanandan alınır: $27 \\pmod{15} = 12$.", ru: "Первое слагаемое делится на 15 без остатка. $27 \\pmod{15} = 12$.", en: "First term is divisible by 15. Remainder comes from second term: $27 \\pmod{15} = 12$." } },
+      { id: 25, type: 'mcq', correct: 0, question: { az: "$n = 1 \\cdot 2 \\cdot 3 \\dots 10 + 32$ ədədinin 18-ə bölünməsindən alınan qalığı tapın.", ru: "Найдите остаток от деления числа на 18.", en: "Find remainder when the number is divided by 18." }, options: [{ az: "14", ru: "14", en: "14" }, { az: "13", ru: "13", en: "13" }, { az: "15", ru: "15", en: "15" }, { az: "1", ru: "1", en: "1" }, { az: "7", ru: "7", en: "7" }], explanation: { az: "$1 \\cdot 2 \\dots 10$ hasilində $2 \\cdot 9 = 18$ vuruğu var, yəni 18-ə bölünür. $32 \\pmod{18} = 14$.", ru: "Первое слагаемое кратно 18 ($2 \\cdot 9$). Остаток: $32 \\pmod{18} = 14$.", en: "First term is a multiple of 18. Remainder: $32 \\pmod{18} = 14$." } },
+      { id: 26, type: 'mcq', correct: 2, question: { az: "$4a5b7$ ədədi 3-ə tam bölünür. $a+b$ cəmi hansı ədəd ola bilməz?", ru: "Число $4a5b7$ делится на 3. Каким не может быть $a+b$?", en: "Number $4a5b7$ is divisible by 3. Which cannot be $a+b$?" }, options: [{ az: "8", ru: "8", en: "8" }, { az: "2", ru: "2", en: "2" }, { az: "9", ru: "9", en: "9" }, { az: "11", ru: "11", en: "11" }, { az: "17", ru: "17", en: "17" }], explanation: { az: "Rəqəmlərin cəmi: $4+a+5+b+7 = 16+(a+b)$. $16+(a+b)$ 3-ə bölünməlidir. $a+b = 9$ olduqda cəm 25 olur (3-ə bölünmür).", ru: "Сумма цифр $16+(a+b)$ должна делиться на 3. При $a+b = 9$ сумма равна 25 (не делится).", en: "Digit sum $16+(a+b)$ must be div by 3. If $a+b = 9$, sum is 25 (not div by 3)." } },
+      { id: 27, type: 'mcq', correct: 2, question: { az: "$2a3b8$ ədədi 3-ə tam bölünür. $a+b$ cəmi hansı ədəd ola bilməz?", ru: "Число $2a3b8$ делится на 3. Каким не может быть $a+b$?", en: "Number $2a3b8$ is divisible by 3. Which cannot be $a+b$?" }, options: [{ az: "8", ru: "8", en: "8" }, { az: "5", ru: "5", en: "5" }, { az: "7", ru: "7", en: "7" }, { az: "11", ru: "11", en: "11" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "Rəqəmlərin cəmi: $2+a+3+b+8 = 13+(a+b)$. $a+b = 7$ olduqda cəm 20 olur (3-ə bölünmür).", ru: "Сумма цифр $13+(a+b)$. При $a+b = 7$ сумма 20 (не делится).", en: "Digit sum $13+(a+b)$. If $a+b = 7$, sum is 20 (not div by 3)." } },
+      { id: 28, type: 'mcq', correct: 0, question: { az: "$a = 6 \\cdot 15 \\cdot 21$ ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа $a = 6 \\cdot 15 \\cdot 21$?", en: "How many distinct prime factors does $a = 6 \\cdot 15 \\cdot 21$ have?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "$a = (2 \\cdot 3) \\cdot (3 \\cdot 5) \\cdot (3 \\cdot 7) = 2 \\cdot 3^3 \\cdot 5 \\cdot 7 \\implies$ müxtəlif sadə vuruqlar: 2, 3, 5, 7 (sayı: 4).", ru: "Разложение: $2 \\cdot 3^3 \\cdot 5 \\cdot 7$. Различные простые множители: 2, 3, 5, 7 (всего 4).", en: "Prime decomposition: $2 \\cdot 3^3 \\cdot 5 \\cdot 7$. Distinct prime factors: 2, 3, 5, 7 (count: 4)." } },
+      { id: 29, type: 'mcq', correct: 4, question: { az: "$a = 6 \\cdot 8 \\cdot 35$ ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа?", en: "How many distinct prime factors?" }, options: [{ az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }], explanation: { az: "$a = (2 \\cdot 3) \\cdot 2^3 \\cdot (5 \\cdot 7) = 2^4 \\cdot 3 \\cdot 5 \\cdot 7 \\implies$ müxtəlif sadə vuruqlar: 2, 3, 5, 7 (sayı: 4).", ru: "Простые множители: 2, 3, 5, 7 (всего 4).", en: "Distinct prime factors: 2, 3, 5, 7 (count: 4)." } },
+      { id: 30, type: 'mcq', correct: 1, question: { az: "Bölünən 15 dəfə artırıldı. Qismətin 5 dəfə artması üçün böleni necə dəyişmək lazımdır?", ru: "Делимое увеличили в 15 раз. Как изменить делитель, чтобы частное увеличилось в 5 раз?", en: "Dividend increased 15 times. How to change divisor so quotient increases 5 times?" }, options: [{ az: "3 dəfə azaltmaq", ru: "уменьшить в 3 раза", en: "decrease 3 times" }, { az: "3 dəfə artırmaq", ru: "увеличить в 3 раза", en: "increase 3 times" }, { az: "75 dəfə artırmaq", ru: "увеличить в 75 раз", en: "increase 75 times" }, { az: "75 dəfə azaltmaq", ru: "уменьшить в 75 раз", en: "decrease 75 times" }, { az: "10 dəfə azaltmaq", ru: "уменьшить в 10 раз", en: "decrease 10 times" }], explanation: { az: "Düstur: $\\frac{15a}{b \\cdot x} = 5 \\frac{a}{b} \\implies \\frac{15}{x} = 5 \\implies x = 3$. Böləni 3 dəfə artırmaq lazımdır.", ru: "Из формулы $\\frac{15a}{b \\cdot x} = 5 \\frac{a}{b} \\implies x = 3$. Увеличить делитель в 3 раза.", en: "From $\\frac{15a}{b \\cdot x} = 5 \\frac{a}{b} \\implies x = 3$. Increase divisor 3 times." } },
+      { id: 31, type: 'mcq', correct: 1, question: { az: "$a$ ədədi $b$-nin böleni olarsa, ƏBOB($a; b$)-ni tapın.", ru: "Если $a$ — делитель $b$, найдите НОД($a; b$).", en: "If $a$ is a divisor of $b$, find GCD($a; b$)." }, options: [{ az: "1", ru: "1", en: "1" }, { az: "$a$", ru: "$a$", en: "$a$" }, { az: "$b$", ru: "$b$", en: "$b$" }, { az: "$ab$", ru: "$ab$", en: "$ab$" }, { az: "$\\frac{a}{b}$", ru: "$\\frac{a}{b}$", en: "$\\frac{a}{b}$" }], explanation: { az: "Əgər $a$ ədədi $b$-nin bölenidirsə, onların ən böyük ortaq böleni $a$-dır.", ru: "Так как $a$ делитель $b$, наибольший общий делитель равен $a$.", en: "Since $a$ divides $b$, their greatest common divisor is $a$." } },
+      { id: 32, type: 'mcq', correct: 2, question: { az: "$a$ və $b$ müxtəlif sadə ədədlər olarsa, ƏBOB($a; b$)-ni tapın.", ru: "Если $a$ и $b$ — различные простые числа, найдите НОД($a; b$).", en: "If $a$ and $b$ are distinct prime numbers, find GCD($a; b$)." }, options: [{ az: "$a+b$", ru: "$a+b$", en: "$a+b$" }, { az: "$b$", ru: "$b$", en: "$b$" }, { az: "1", ru: "1", en: "1" }, { az: "$ab$", ru: "$ab$", en: "$ab$" }, { az: "$a$", ru: "$a$", en: "$a$" }], explanation: { az: "Müxtəlif sadə ədədlər qarşılıqlı sadədir, onların ƏBOB-u 1-ə bərabərdir.", ru: "Различные простые числа взаимно просты, их НОД равен 1.", en: "Distinct prime numbers are coprime, their GCD is 1." } },
+      { id: 33, type: 'mcq', correct: 1, question: { az: "$a$ ədədi $b$-nin böleni olarsa, ƏKOB($a; b$)-ni tapın.", ru: "Если $a$ — делитель $b$, найдите НОК($a; b$).", en: "If $a$ is a divisor of $b$, find LCM($a; b$)." }, options: [{ az: "1", ru: "1", en: "1" }, { az: "$b$", ru: "$b$", en: "$b$" }, { az: "$a$", ru: "$a$", en: "$a$" }, { az: "$ab$", ru: "$ab$", en: "$ab$" }, { az: "$\\frac{a}{b}$", ru: "$\\frac{a}{b}$", en: "$\\frac{a}{b}$" }], explanation: { az: "Əgər $a$ ədədi $b$-nin bölenidirsə, onların ən kiçik ortaq bölünəni $b$-dir.", ru: "НОК($a; b$) = $b$.", en: "LCM($a; b$) = $b$." } },
+      { id: 34, type: 'mcq', correct: 4, question: { az: "$a$ və $b$ qarşılıqlı sadə ədədlər olarsa, ƏKOB($a; b$)-ni tapın.", ru: "Если $a$ и $b$ взаимно простые, найдите НОК($a; b$).", en: "If $a$ and $b$ are coprime, find LCM($a; b$)." }, options: [{ az: "1", ru: "1", en: "1" }, { az: "$b$", ru: "$b$", en: "$b$" }, { az: "$a+b$", ru: "$a+b$", en: "$a+b$" }, { az: "$a$", ru: "$a$", en: "$a$" }, { az: "$ab$", ru: "$ab$", en: "$ab$" }], explanation: { az: "Qarşılıqlı sadə ədədlərin ƏKOB-u onların hasilinə bərabərdir: $ab$.", ru: "НОК взаимно простых чисел равен их произведению $ab$.", en: "LCM of coprime numbers equals their product $ab$." } },
+      { id: 35, type: 'mcq', correct: 0, question: { az: "Təkliflərdən hansı doğru deyil?", ru: "Какое утверждение неверно?", en: "Which statement is false?" }, options: [{ az: "Tək ədədlə cüt ədədin hasili tək ədəddir", ru: "Произведение нечетного и четного чисел нечетное", en: "Product of odd and even number is odd" }, { az: "İki tək ədədin hasili tək ədəddir", ru: "Произведение двух нечетных нечетное", en: "Product of two odd numbers is odd" }, { az: "İki cüt ədədin hasili cüt ədəddir", ru: "Произведение двух четных четное", en: "Product of two even numbers is even" }, { az: "İki sade ədədin hasili mürəkkəb ədəddir", ru: "Произведение двух простых составное", en: "Product of two prime numbers is composite" }, { az: "Sade ədədlə mürəkkəb ədədin hasili mürəkkəb ədəddir", ru: "Произведение простого и составного составное", en: "Product of prime and composite is composite" }], explanation: { az: "Tək $\\cdot$ Cüt = Cüt ədəddir. A təklifi səhvdir.", ru: "Произведение нечетного на четное всегда четное. A неверно.", en: "Product of odd and even is always even. Option A is false." } },
+      { id: 36, type: 'mcq', correct: 3, question: { az: "Təkliflərdən hansı həmişə doğru deyil?", ru: "Какое утверждение не всегда верно?", en: "Which statement is not always true?" }, options: [{ az: "Tək ədədlərin hasili tək ədəddir", ru: "Произведение нечетных чисел нечетно", en: "Product of odd numbers is odd" }, { az: "Cüt ədədlərin cəmi cüt ədəddir", ru: "Сумма четных чисел четна", en: "Sum of even numbers is even" }, { az: "Hər biri 5-ə bölünən natural ədədlərin cəmi də 5-ə bölünür", ru: "Сумма чисел, делящихся на 5, делится на 5", en: "Sum of numbers divisible by 5 is divisible by 5" }, { az: "Natural ədədlərin nisbəti natural ədəddir", ru: "Отношение натуральных чисел есть натуральное число", en: "Ratio of natural numbers is a natural number" }, { az: "İki tək ədədin cəmi cüt ədəddir", ru: "Сумма двух нечетных чисел четна", en: "Sum of two odd numbers is even" }], explanation: { az: "Natural ədədlərin nisbəti kəsr ədəd də ola bilər ($3 / 5 = 0,6$). D həmişə doğru deyil.", ru: "Отношение натуральных чисел может быть дробным ($3 / 5$). D не всегда верно.", en: "Ratio of natural numbers can be a fraction ($3 / 5$). Option D is not always true." } },
+      { id: 37, type: 'mcq', correct: 3, question: { az: "ƏKOB(60; 175)-i hesablayın.", ru: "Вычислите НОК(60; 175).", en: "Calculate LCM(60; 175)." }, options: [{ az: "3500", ru: "3500", en: "3500" }, { az: "5300", ru: "5300", en: "5300" }, { az: "10500", ru: "10500", en: "10500" }, { az: "2100", ru: "2100", en: "2100" }, { az: "1750", ru: "1750", en: "1750" }], explanation: { az: "$60 = 2^2 \\cdot 3 \\cdot 5, 175 = 5^2 \\cdot 7 \\implies \\text{ƏKOB} = 2^2 \\cdot 3 \\cdot 5^2 \\cdot 7 = 2100$.", ru: "Разложение: $60 = 2^2 \\cdot 3 \\cdot 5, 175 = 5^2 \\cdot 7 \\implies \\text{НОК} = 2100$.", en: "Decomposition: $60 = 2^2 \\cdot 3 \\cdot 5, 175 = 5^2 \\cdot 7 \\implies \\text{LCM} = 2100$." } },
+      { id: 38, type: 'mcq', correct: 0, question: { az: "Böləni 8 dəfə artırdıqda bölünəni necə dəyişmək lazımdır ki, qismət 3 dəfə artsın?", ru: "Как изменить делимое при увеличении делителя в 8 раз, чтобы частное увеличилось в 3 раза?", en: "How to change dividend if divisor is increased 8 times so quotient increases 3 times?" }, options: [{ az: "24 dəfə artırmaq", ru: "увеличить в 24 раза", en: "increase 24 times" }, { az: "24 dəfə azaltmaq", ru: "уменьшить в 24 раза", en: "decrease 24 times" }, { az: "5 dəfə artırmaq", ru: "увеличить в 5 раз", en: "increase 5 times" }, { az: "16 dəfə artırmaq", ru: "увеличить в 16 раз", en: "increase 16 times" }, { az: "16 dəfə azaltmaq", ru: "уменьшить в 16 раз", en: "decrease 16 times" }], explanation: { az: "Düstur: $\\frac{Ax}{8b} = 3 \\frac{A}{b} \\implies x = 8 \\cdot 3 = 24$ dəfə artırmaq.", ru: "Из пропорции: $x = 8 \\cdot 3 = 24$ раза увеличить.", en: "From ratio: $x = 8 \\cdot 3 = 24$ times increase." } },
+      { id: 39, type: 'mcq', correct: 1, question: { az: "$m$ və $n$ tək ədədlər olarsa, ifadələrdən hansının qiyməti cüt ədəddir?", ru: "Если $m$ и $n$ нечетные, какое выражение четное?", en: "If $m$ and $n$ are odd, which expression is even?" }, options: [{ az: "$mn$", ru: "$mn$", en: "$mn$" }, { az: "$m+n$", ru: "$m+n$", en: "$m+n$" }, { az: "$2n^2+m$", ru: "$2n^2+m$", en: "$2n^2+m$" }, { az: "$n+2m$", ru: "$n+2m$", en: "$n+2m$" }, { az: "$3n+2m$", ru: "$3n+2m$", en: "$3n+2m$" }], explanation: { az: "İki tək ədədin cəmi həmişə cüt ədəddir: $m+n$.", ru: "Сумма двух нечетных чисел всегда четна: $m+n$.", en: "Sum of two odd numbers is always even: $m+n$." } },
+      { id: 40, type: 'mcq', correct: 4, question: { az: "$m$ ədədinə 13 əlavə etdikdə alınan cəm 50-dən 27 vahid kiçik olarsa, $m$ ədədini tapın.", ru: "Если к $m$ прибавить 13, сумма на 27 меньше 50. Найдите $m$.", en: "If 13 is added to $m$, the sum is 27 less than 50. Find $m$." }, options: [{ az: "20", ru: "20", en: "20" }, { az: "64", ru: "64", en: "64" }, { az: "90", ru: "90", en: "90" }, { az: "23", ru: "23", en: "23" }, { az: "10", ru: "10", en: "10" }], explanation: { az: "$m + 13 = 50 - 27 \\implies m + 13 = 23 \\implies m = 10$.", ru: "$m + 13 = 50 - 27 \\implies m + 13 = 23 \\implies m = 10$.", en: "$m + 13 = 50 - 27 \\implies m + 13 = 23 \\implies m = 10$." } },
+      { id: 41, type: 'mcq', correct: 4, question: { az: "Hansı 2-yə, dəm də 3-ə bölünən ədədi göstərin.", ru: "Укажите число, делящееся и на 2, и на 3.", en: "Select the number divisible by both 2 and 3." }, options: [{ az: "6124", ru: "6124", en: "6124" }, { az: "650", ru: "650", en: "650" }, { az: "945", ru: "945", en: "945" }, { az: "3321", ru: "3321", en: "3321" }, { az: "1608", ru: "1608", en: "1608" }], explanation: { az: "$1608$ cütdür (2-yə bölünür) və rəqəmlərinin cəmi $1+6+0+8 = 15$ (3-ə bölünür).", ru: "$1608$ четное и сумма цифр $15$ делится на 3.", en: "$1608$ is even and sum of digits $15$ is divisible by 3." } },
+      { id: 42, type: 'mcq', correct: 0, question: { az: "Toğrulla Arifin 5 ildən sonra yaşlarının cəmi 29 olacaq. Onların indiki yaşlarının cəmi neçədir?", ru: "Через 5 лет сумма возрастов Тогрула и Арифа будет 29. Какова сумма сейчас?", en: "In 5 years, the sum of Togrul and Arif's ages will be 29. What is the sum now?" }, options: [{ az: "19", ru: "19", en: "19" }, { az: "24", ru: "24", en: "24" }, { az: "14", ru: "14", en: "14" }, { az: "22", ru: "22", en: "22" }, { az: "20", ru: "20", en: "20" }], explanation: { az: "5 ildən sonra hər birinin yaşı 5 il artacaq ($2 \\cdot 5 = 10$). İndiki cəm: $29 - 10 = 19$.", ru: "Через 5 лет оба вырастут на 5 лет ($2 \\cdot 5 = 10$). Текущая сумма: $29 - 10 = 19$.", en: "In 5 years both grow by 5 years ($2 \\cdot 5 = 10$). Current sum: $29 - 10 = 19$." } },
+      { id: 43, type: 'mcq', correct: 3, question: { az: "3 ildən sonra Anarla Kənanın yaşlarının cəmi 23 olacaq. Onların indiki yaşlarının cəmi neçədir?", ru: "Через 3 года сумма возрастов Анара и Кенана будет 23. Какова сумма сейчас?", en: "In 3 years, the sum of Anar and Kenan's ages will be 23. What is the sum now?" }, options: [{ az: "12", ru: "12", en: "12" }, { az: "20", ru: "20", en: "20" }, { az: "19", ru: "19", en: "19" }, { az: "17", ru: "17", en: "17" }, { az: "15", ru: "15", en: "15" }], explanation: { az: "İndiki cəm: $23 - 2 \\cdot 3 = 17$.", ru: "Текущая сумма: $23 - 6 = 17$.", en: "Current sum: $23 - 6 = 17$." } },
+      { id: 44, type: 'mcq', correct: 3, question: { az: "420 ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа 420?", en: "How many distinct prime factors does 420 have?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }, { az: "6", ru: "6", en: "6" }], explanation: { az: "$420 = 2^2 \\cdot 3 \\cdot 5 \\cdot 7 \\implies$ müxtəlif sadə vuruqlar: 2, 3, 5, 7 (sayı: 4).", ru: "$420 = 2^2 \\cdot 3 \\cdot 5 \\cdot 7 \\implies$ 4 различных множителя (2, 3, 5, 7).", en: "$420 = 2^2 \\cdot 3 \\cdot 5 \\cdot 7 \\implies$ 4 distinct factors (2, 3, 5, 7)." } },
+      { id: 45, type: 'mcq', correct: 0, question: { az: "$n$ tək, $m$ cüt natural ədədlər olarsa, ifadələrdən hansının qiyməti tək ədəddir?", ru: "Если $n$ нечетное, $m$ четное, какое выражение нечетное?", en: "If $n$ is odd and $m$ is even, which expression is odd?" }, options: [{ az: "$m+n$", ru: "$m+n$", en: "$m+n$" }, { az: "$m \\cdot n$", ru: "$m \\cdot n$", en: "$m \\cdot n$" }, { az: "$m(m+n)$", ru: "$m(m+n)$", en: "$m(m+n)$" }, { az: "$2n(m+n)$", ru: "$2n(m+n)$", en: "$2n(m+n)$" }, { az: "$3n+1$", ru: "$3n+1$", en: "$3n+1$" }], explanation: { az: "Cüt + Tək = Tək ədəd $\\implies m+n$.", ru: "Четное + Нечетное = Нечетное $\\implies m+n$.", en: "Even + Odd = Odd $\\implies m+n$." } },
+      { id: 46, type: 'mcq', correct: 0, question: { az: "11011 : 1001 nisbətini hesablayın.", ru: "Вычислите отношение 11011 : 1001.", en: "Calculate the ratio 11011 : 1001." }, options: [{ az: "11", ru: "11", en: "11" }, { az: "101", ru: "101", en: "101" }, { az: "1001", ru: "1001", en: "1001" }, { az: "1101", ru: "1101", en: "1101" }, { az: "1011", ru: "1011", en: "1011" }], explanation: { az: "$11011 / 1001 = 11$.", ru: "$11011 / 1001 = 11$.", en: "$11011 / 1001 = 11$." } },
+      { id: 47, type: 'mcq', correct: 3, question: { az: "$2; 23; 29; 46; 101; 119; 122$ ədədlərindən neçəsi sadədir?", ru: "Сколько простых чисел среди данных?", en: "How many prime numbers are among these?" }, options: [{ az: "3", ru: "3", en: "3" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "Sadə ədədlər: 2, 23, 29, 101 (sayı: 4). ($46 = 2 \\cdot 23, 119 = 7 \\cdot 17, 122 = 2 \\cdot 61$).", ru: "Простые числа: 2, 23, 29, 101 (всего 4).", en: "Prime numbers: 2, 23, 29, 101 (total 4)." } },
+      { id: 48, type: 'mcq', correct: 1, question: { az: "$n = 4 \\cdot 6 \\cdot 5$ ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа?", en: "How many distinct prime factors?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }, { az: "4", ru: "4", en: "4" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "$n = 2^2 \\cdot (2 \\cdot 3) \\cdot 5 = 2^3 \\cdot 3 \\cdot 5 \\implies$ müxtəlif sadə vuruqlar: 2, 3, 5 (sayı: 3).", ru: "$n = 2^3 \\cdot 3 \\cdot 5 \\implies$ 3 простых множителя (2, 3, 5).", en: "$n = 2^3 \\cdot 3 \\cdot 5 \\implies$ 3 prime factors (2, 3, 5)." } },
+      { id: 49, type: 'mcq', correct: 4, question: { az: "$60423; 32034; 33206; 24036; 40265$ ədədlərindən neçəsi 6-ya tam bölünür?", ru: "Сколько чисел делятся на 6 без остатка?", en: "How many numbers are divisible by 6?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "3", ru: "3", en: "3" }, { az: "1", ru: "1", en: "1" }, { az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }], explanation: { az: "Ədəd 6-ya bölünməsi üçün cüt olmalı və rəqəmlərinin cəmi 3-ə bölünməlidir: $32034$ və $24036$ (sayı: 2).", ru: "Числа $32034$ и $24036$ четные и сумма цифр делится на 3 (всего 2).", en: "Numbers $32034$ and $24036$ are even and digit sum is divisible by 3 (total 2)." } },
+      { id: 50, type: 'mcq', correct: 0, question: { az: "ƏKOB(42; 68) - ƏBOB(42; 68) fərqini tapın.", ru: "Найдите НОК(42; 68) - НОД(42; 68).", en: "Find LCM(42; 68) - GCD(42; 68)." }, options: [{ az: "1426", ru: "1426", en: "1426" }, { az: "1246", ru: "1246", en: "1246" }, { az: "1248", ru: "1248", en: "1248" }, { az: "1420", ru: "1420", en: "1420" }, { az: "1428", ru: "1428", en: "1428" }], explanation: { az: "ƏKOB(42, 68) = 1428, ƏBOB(42, 68) = 2. Fərq: $1428 - 2 = 1426$.", ru: "НОК = 1428, НОД = 2. Разность: $1428 - 2 = 1426$.", en: "LCM = 1428, GCD = 2. Difference: $1428 - 2 = 1426$." } },
+      { id: 51, type: 'mcq', correct: 4, question: { az: "Bölünəni 6 dəfə artırdıqda, böleni necə dəyişmək lazımdır ki, qismət 3 dəfə azalsın?", ru: "Как изменить делитель при увеличении делимого в 6 раз, чтобы частное уменьшилось в 3 раза?", en: "How to change divisor if dividend is increased 6 times so quotient decreases 3 times?" }, options: [{ az: "2 dəfə azaltmaq", ru: "уменьшить в 2 раза", en: "decrease 2 times" }, { az: "18 dəfə azaltmaq", ru: "уменьшить в 18 раз", en: "decrease 18 times" }, { az: "dəyişməmək", ru: "не менять", en: "keep unchanged" }, { az: "2 dəfə artırmaq", ru: "увеличить в 2 раза", en: "increase 2 times" }, { az: "18 dəfə artırmaq", ru: "увеличить в 18 раз", en: "increase 18 times" }], explanation: { az: "Düstur: $\\frac{6A}{B \\cdot x} = \\frac{1}{3} \\frac{A}{B} \\implies x = 6 \\cdot 3 = 18$ dəfə artırmaq.", ru: "Из формулы $\\frac{6A}{Bx} = \\frac{1}{3}\\frac{A}{B} \\implies x = 18$ раз увеличить.", en: "From formula $\\frac{6A}{Bx} = \\frac{1}{3}\\frac{A}{B} \\implies x = 18$ times increase." } },
+      { id: 52, type: 'mcq', correct: 2, question: { az: "22022 : 2002 nisbətini hesablayın.", ru: "Вычислите 22022 : 2002.", en: "Calculate 22022 : 2002." }, options: [{ az: "1001", ru: "1001", en: "1001" }, { az: "101", ru: "101", en: "101" }, { az: "11", ru: "11", en: "11" }, { az: "1101", ru: "1101", en: "1101" }, { az: "1110", ru: "1110", en: "1110" }], explanation: { az: "$22022 / 2002 = 11$.", ru: "$22022 / 2002 = 11$.", en: "$22022 / 2002 = 11$." } },
+      { id: 53, type: 'mcq', correct: 4, question: { az: "Abbasın addımı 90 sm, Eldarın addımı 80 sm-dir. Hansı en yaxın məsafədə onların hər ikisi tam sayda addım atar?", ru: "Шаг Аббаса 90 см, Эльдара 80 см. На каком наименьшем расстоянии оба сделают целое число шагов?", en: "Abbas's step is 90 cm, Eldar's is 80 cm. What is the shortest distance both take whole steps?" }, options: [{ az: "300 sm", ru: "300 см", en: "300 cm" }, { az: "900 sm", ru: "900 см", en: "900 cm" }, { az: "800 sm", ru: "800 см", en: "800 cm" }, { az: "360 sm", ru: "360 см", en: "360 cm" }, { az: "720 sm", ru: "720 см", en: "720 cm" }], explanation: { az: "ƏKOB(90, 80) = $10 \\cdot \\text{ƏKOB}(9, 8) = 10 \\cdot 72 = 720$ sm.", ru: "НОК(90, 80) = 720 см.", en: "LCM(90, 80) = 720 cm." } },
+      { id: 54, type: 'mcq', correct: 2, question: { az: "$9; 11; 21; 29; 32; 95; 127$ ədədlərindən neçəsi sadədir?", ru: "Сколько простых чисел среди данных?", en: "How many prime numbers are among these?" }, options: [{ az: "5", ru: "5", en: "5" }, { az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "4", ru: "4", en: "4" }, { az: "1", ru: "1", en: "1" }], explanation: { az: "Sadə ədədlər: 11, 29, 127 (sayı: 3). ($9=3^2, 21=3 \\cdot 7, 32=2^5, 95=5 \\cdot 19$).", ru: "Простые числа: 11, 29, 127 (всего 3).", en: "Prime numbers: 11, 29, 127 (total 3)." } },
+      { id: 55, type: 'mcq', correct: 4, question: { az: "530070-də neçə minlik var?", ru: "Сколько всего тысяч в числе 530070?", en: "How many thousands are in 530070?" }, options: [{ az: "3007", ru: "3007", en: "3007" }, { az: "5", ru: "5", en: "5" }, { az: "53", ru: "53", en: "53" }, { az: "5300", ru: "5300", en: "5300" }, { az: "530", ru: "530", en: "530" }], explanation: { az: "Tam minliklərin sayı: $\\lfloor 530070 / 1000 \\rfloor = 530$.", ru: "Всего полных тысяч: $\\lfloor 530070 / 1000 \\rfloor = 530$.", en: "Whole thousands: $\\lfloor 530070 / 1000 \\rfloor = 530$." } },
+      { id: 56, type: 'mcq', correct: 0, question: { az: "Təkliflərdən hansı həmişə doğrudur?", ru: "Какое утверждение всегда верно?", en: "Which statement is always true?" }, options: [{ az: "Tək ədədlə cüt ədədin cəmi tək ədəddir", ru: "Сумма нечетного и четного чисел нечетна", en: "Sum of odd and even numbers is odd" }, { az: "Tək ədədlə cüt ədədin hasili tək ədəddir", ru: "Произведение нечетного и четного чисел нечетно", en: "Product of odd and even numbers is odd" }, { az: "İki sadə ədədin hasili sadə ədəddir", ru: "Произведение двух простых чисел простое", en: "Product of two prime numbers is prime" }, { az: "Sada ədədlə mürəkkəb ədədin hasili sadə ədəddir", ru: "Произведение простого и составного простое", en: "Product of prime and composite is prime" }, { az: "İki tək ədədin cəmi tək ədəddir", ru: "Сумма двух нечетных чисел нечетна", en: "Sum of two odd numbers is odd" }], explanation: { az: "Tək + Cüt = Tək. A təklifi həmişə doğrudur.", ru: "Нечетное + Четное = Нечетное. A всегда верно.", en: "Odd + Even = Odd. A is always true." } },
+      { id: 57, type: 'mcq', correct: 0, question: { az: "Bölən 5 olarsa, alına bilən qalıqların cəmini tapın.", ru: "Найдите сумму всех возможных остатков при делении на 5.", en: "Find the sum of all possible remainders when dividing by 5." }, options: [{ az: "10", ru: "10", en: "10" }, { az: "5", ru: "5", en: "5" }, { az: "9", ru: "9", en: "9" }, { az: "8", ru: "8", en: "8" }, { az: "11", ru: "11", en: "11" }], explanation: { az: "Qalıqlar 5-dən kiçik olmalıdır: $1 + 2 + 3 + 4 = 10$.", ru: "Возможные остатки: $1 + 2 + 3 + 4 = 10$.", en: "Possible remainders: $1 + 2 + 3 + 4 = 10$." } },
+      { id: 58, type: 'mcq', correct: 1, question: { az: "7805-də neçə onlar var?", ru: "Сколько всего десятков в числе 7805?", en: "How many tens are in 7805?" }, options: [{ az: "7", ru: "7", en: "7" }, { az: "780", ru: "780", en: "780" }, { az: "78", ru: "78", en: "78" }, { az: "5", ru: "5", en: "5" }, { az: "80", ru: "80", en: "80" }], explanation: { az: "Tam onlarin sayı: $\\lfloor 7805 / 10 \\rfloor = 780$.", ru: "Всего полных десятков: $\\lfloor 7805 / 10 \\rfloor = 780$.", en: "Whole tens: $\\lfloor 7805 / 10 \\rfloor = 780$." } },
+      { id: 59, type: 'mcq', correct: 2, question: { az: "Təkliflərdən hansı doğru deyil?", ru: "Какое утверждение неверно?", en: "Which statement is false?" }, options: [{ az: "İki cüt natural ədədin cəmi həmişə cüt ədəddir", ru: "Сумма двух четных всегда четная", en: "Sum of two even numbers is always even" }, { az: "Natural ədədlərin cəmi həmişə natural ədəddir", ru: "Сумма натуральных всегда натуральная", en: "Sum of natural numbers is always natural" }, { az: "Natural ədədlərin fərqi həmişə natural ədəddir", ru: "Разность натуральных всегда натуральная", en: "Difference of natural numbers is always natural" }, { az: "Natural ədədlərin hasili həmişə natural ədəddir", ru: "Произведение натуральных всегда натуральное", en: "Product of natural numbers is always natural" }, { az: "İki tək natural ədədin cəmi həmişə cüt ədəddir", ru: "Сумма двух нечетных всегда четная", en: "Sum of two odd numbers is always even" }], explanation: { az: "Natural ədədlərin fərqi mənfi və ya sıfır ola bilər (məsələn $3 - 5 = -2$). C səhvdir.", ru: "Разность натуральных может быть меньше или равна нулю (например $3 - 5 = -2$).", en: "Difference of natural numbers can be negative or zero (e.g. $3 - 5 = -2$)." } },
+      { id: 60, type: 'mcq', correct: 2, question: { az: "Bölən 7 olarsa, alına bilən qalıqların cəmini tapın.", ru: "Найдите сумму всех возможных остатков при делении на 7.", en: "Find the sum of all possible remainders when dividing by 7." }, options: [{ az: "20", ru: "20", en: "20" }, { az: "19", ru: "19", en: "19" }, { az: "21", ru: "21", en: "21" }, { az: "18", ru: "18", en: "18" }, { az: "22", ru: "22", en: "22" }], explanation: { az: "Qalıqlar: $1 + 2 + 3 + 4 + 5 + 6 = 21$.", ru: "Остатки: $1 + 2 + 3 + 4 + 5 + 6 = 21$.", en: "Remainders: $1 + 2 + 3 + 4 + 5 + 6 = 21$." } },
+      { id: 61, type: 'mcq', correct: 2, question: { az: "23-ə böldükdə qalıqda 15 olan ədəd hansıdır?", ru: "Какое число при делении на 23 дает остаток 15?", en: "Which number gives a remainder of 15 when divided by 23?" }, options: [{ az: "345", ru: "345", en: "345" }, { az: "1005", ru: "1005", en: "1005" }, { az: "705", ru: "705", en: "705" }, { az: "230", ru: "230", en: "230" }, { az: "445", ru: "445", en: "445" }], explanation: { az: "$705 = 23 \\cdot 30 + 15$. Qalıq 15-dir.", ru: "$705 = 23 \\cdot 30 + 15$. Остаток 15.", en: "$705 = 23 \\cdot 30 + 15$. Remainder 15." } },
+      { id: 62, type: 'mcq', correct: 4, question: { az: "$n = 9 \\cdot 2 \\cdot 7$ ədədinin neçə müxtəlif sadə vuruğu var?", ru: "Сколько различных простых множителей у числа?", en: "How many distinct prime factors?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }, { az: "6", ru: "6", en: "6" }, { az: "3", ru: "3", en: "3" }], explanation: { az: "$n = 2 \\cdot 3^2 \\cdot 7 \\implies$ müxtəlif sadə vuruqlar: 2, 3, 7 (sayı: 3).", ru: "Простые множители: 2, 3, 7 (количество: 3).", en: "Prime factors: 2, 3, 7 (count: 3)." } },
+      { id: 63, type: 'mcq', correct: 1, question: { az: "19-a böldükdə qalıqda 4 olan ədəd hansıdır?", ru: "Какое число при делении на 19 дает остаток 4?", en: "Which number gives a remainder of 4 when divided by 19?" }, options: [{ az: "1111", ru: "1111", en: "1111" }, { az: "1030", ru: "1030", en: "1030" }, { az: "952", ru: "952", en: "952" }, { az: "879", ru: "879", en: "879" }, { az: "782", ru: "782", en: "782" }], explanation: { az: "$1030 = 19 \\cdot 54 + 4$. Qalıq 4-dür.", ru: "$1030 = 19 \\cdot 54 + 4$. Остаток 4.", en: "$1030 = 19 \\cdot 54 + 4$. Remainder 4." } },
+      { id: 64, type: 'mcq', correct: 3, question: { az: "Bölünəni 18 dəfə artırdıqda böleni necə dəyişmək lazımdır ki, qismət 3 dəfə artsın?", ru: "Как изменить делитель при увеличении делимого в 18 раз, чтобы частное увеличилось в 3 раза?", en: "How to change divisor if dividend is increased 18 times so quotient increases 3 times?" }, options: [{ az: "54 dəfə azaltmaq", ru: "уменьшить в 54 раза", en: "decrease 54 times" }, { az: "3 dəfə artırmaq", ru: "увеличить в 3 раза", en: "increase 3 times" }, { az: "54 dəfə artırmaq", ru: "увеличить в 54 раза", en: "increase 54 times" }, { az: "6 dəfə artırmaq", ru: "увеличить в 6 раз", en: "increase 6 times" }, { az: "6 dəfə azaltmaq", ru: "уменьшить в 6 раз", en: "decrease 6 times" }], explanation: { az: "Düstur: $\\frac{18A}{Bx} = 3 \\frac{A}{B} \\implies x = 18 / 3 = 6$ dəfə artırmaq.", ru: "Делитель нужно увеличить в $18 / 3 = 6$ раз.", en: "Divisor must be increased $18 / 3 = 6$ times." } },
+      { id: 65, type: 'mcq', correct: 1, question: { az: "2, 0 və 5 rəqəmlərindən düzələn bütün ikirəqəmli ədədlərin cəmini tapın.", ru: "Найдите сумму всех двузначных чисел из цифр 2, 0 и 5.", en: "Find the sum of all two-digit numbers made from digits 2, 0, and 5." }, options: [{ az: "154", ru: "154", en: "154" }, { az: "224", ru: "224", en: "224" }, { az: "231", ru: "231", en: "231" }, { az: "150", ru: "150", en: "150" }, { az: "147", ru: "147", en: "147" }], explanation: { az: "İkirəqəmli ədədlər: 20, 22, 25, 50, 52, 55. Cəm = $20+22+25+50+52+55 = 224$.", ru: "Числа: 20, 22, 25, 50, 52, 55. Сумма = 224.", en: "Numbers: 20, 22, 25, 50, 52, 55. Sum = 224." } },
+      { id: 66, type: 'mcq', correct: 3, question: { az: "Çən 3 vedrədən 5 dəfə çox su tutur. Bir vedrə 5 litr su tutursa, çən neçə litr su tutur?", ru: "Бак вмещает в 5 раз больше воды, чем 3 ведра. Одно ведро вмещает 5 литров. Сколько вмещает бак?", en: "A tank holds 5 times more water than 3 buckets. A bucket holds 5 liters. How much does the tank hold?" }, options: [{ az: "20 l", ru: "20 л", en: "20 l" }, { az: "15 l", ru: "15 л", en: "15 l" }, { az: "25 l", ru: "25 л", en: "25 l" }, { az: "75 l", ru: "75 л", en: "75 l" }, { az: "50 l", ru: "50 л", en: "50 l" }], explanation: { az: "3 vedrə = $3 \\cdot 5 = 15$ litr. Çən = $15 \\cdot 5 = 75$ litr.", ru: "3 ведра = 15 л. Бак = $15 \\cdot 5 = 75$ л.", en: "3 buckets = 15 l. Tank = $15 \\cdot 5 = 75$ l." } },
+      { id: 67, type: 'mcq', correct: 1, question: { az: "Tir ən azı hansı uzunluqda olmalıdır ki, onu 60 sm və ya 50 sm-lik hissələrə itkisiz bölmək mümkün olsun?", ru: "Какова наименьшая длина бруса, чтобы разрезать его на части по 60 см или 50 см без отходов?", en: "What is the shortest beam length to cut into 60 cm or 50 cm pieces without waste?" }, options: [{ az: "240 sm", ru: "240 см", en: "240 cm" }, { az: "300 sm", ru: "300 см", en: "300 cm" }, { az: "280 sm", ru: "280 см", en: "280 cm" }, { az: "360 sm", ru: "360 см", en: "360 cm" }, { az: "320 sm", ru: "320 см", en: "320 cm" }], explanation: { az: "Ənn azı məsafə ƏKOB(60, 50) = 300 sm.", ru: "НОК(60, 50) = 300 см.", en: "LCM(60, 50) = 300 cm." } },
+      { id: 68, type: 'mcq', correct: 0, question: { az: "ƏKOB(60; 80) : ƏBOB(60; 80) ifadesinin qiymətini tapın.", ru: "Найдите значение НОК(60; 80) : НОД(60; 80).", en: "Find the value of LCM(60; 80) : GCD(60; 80)." }, options: [{ az: "12", ru: "12", en: "12" }, { az: "3/4", ru: "3/4", en: "3/4" }, { az: "10", ru: "10", en: "10" }, { az: "4/3", ru: "4/3", en: "4/3" }, { az: "24", ru: "24", en: "24" }], explanation: { az: "ƏKOB(60, 80) = 240, ƏBOB(60, 80) = 20. Nisbət: $240 / 20 = 12$.", ru: "НОК = 240, НОД = 20. Отношение: $240 / 20 = 12$.", en: "LCM = 240, GCD = 20. Ratio: $240 / 20 = 12$." } },
+      { id: 69, type: 'mcq', correct: 2, question: { az: "62 oğlan və 93 qız idman yarışlarında tərkibləri eyni olan komandalarda iştirak edirlər. Hər komandada neçə qız var?", ru: "62 мальчика и 93 девочки участвуют в командах одинакового состава. Сколько девочек в каждой команде?", en: "62 boys and 93 girls participate in teams of identical composition. How many girls in each team?" }, options: [{ az: "4", ru: "4", en: "4" }, { az: "7", ru: "7", en: "7" }, { az: "3", ru: "3", en: "3" }, { az: "2", ru: "2", en: "2" }, { az: "5", ru: "5", en: "5" }], explanation: { az: "Komandaların max sayı: ƏBOB(62, 93) = 31. Hər komandada qızlar: $93 / 31 = 3$.", ru: "Число команд: НОД(62, 93) = 31. Девочек в команде: $93 / 31 = 3$.", en: "Number of teams: GCD(62, 93) = 31. Girls per team: $93 / 31 = 3$." } },
+      { id: 70, type: 'mcq', correct: 1, question: { az: "123 oğlan və 82 qız idman yarışlarında tərkibləri eyni olan komandalarda iştirak edirlər. Hər komandada neçə oğlan var?", ru: "123 мальчика и 82 девочки участвуют в командах одинакового состава. Сколько мальчиков в каждой?", en: "123 boys and 82 girls participate in teams of identical composition. How many boys in each team?" }, options: [{ az: "2", ru: "2", en: "2" }, { az: "3", ru: "3", en: "3" }, { az: "5", ru: "5", en: "5" }, { az: "4", ru: "4", en: "4" }, { az: "7", ru: "7", en: "7" }], explanation: { az: "Komandaların sayı: ƏBOB(123, 82) = 41. Oğlanların sayı: $123 / 41 = 3$.", ru: "Число команд: НОД(123, 82) = 41. Мальчиков в команде: $123 / 41 = 3$.", en: "Teams: GCD(123, 82) = 41. Boys per team: $123 / 41 = 3$." } },
+      { id: 71, type: 'mcq', correct: 3, question: { az: "İdmançıları əvvəlcə 6 nəfər, sonra 15 nəfər olmaqla sıraya düzdülər. Sayı 110 ilə 145 arasındadırsa, idmançıların sayını tapın.", ru: "Спортсменов построили по 6, затем по 15. Их число от 110 до 145. Найдите число спортсменов.", en: "Athletes are arranged in rows of 6, then 15. Count is between 110 and 145. Find the count." }, options: [{ az: "125", ru: "125", en: "125" }, { az: "130", ru: "130", en: "130" }, { az: "115", ru: "115", en: "115" }, { az: "120", ru: "120", en: "120" }, { az: "135", ru: "135", en: "135" }], explanation: { az: "ƏKOB(6, 15) = 30. (110; 145) aralığında 30-a bölünən yeganə ədəd 120-dir.", ru: "НОК(6, 15) = 30. Единственное число от 110 до 145, кратное 30 — это 120.", en: "LCM(6, 15) = 30. The only multiple of 30 between 110 and 145 is 120." } },
+      { id: 72, type: 'mcq', correct: 0, question: { az: "Məktəbliləri əvvəlcə 9, sonra 15 nəfər olmaqla sıraya düzdülər. Sayı 120 ilə 150 arasındadırsa, onların sayını tapın.", ru: "Учеников построили по 9, затем по 15. Их число от 120 до 150. Найдите число учеников.", en: "Students are arranged in rows of 9, then 15. Count is between 120 and 150. Find the count." }, options: [{ az: "135", ru: "135", en: "135" }, { az: "125", ru: "125", en: "125" }, { az: "145", ru: "145", en: "145" }, { az: "130", ru: "130", en: "130" }, { az: "140", ru: "140", en: "140" }], explanation: { az: "ƏKOB(9, 15) = 45. (120; 150) aralığında 45-ə bölünən ədəd: 135.", ru: "НОК(9, 15) = 45. В интервале от 120 до 150 число 135.", en: "LCM(9, 15) = 45. In interval (120; 150), the number is 135." } },
+      { id: 73, type: 'mcq', correct: 4, question: { az: "Təkliflərdən hansılar doğrudur?\n1. Rəqəmlərinin cəmi 9-a bölünən natural ədəd 9-a tam bölünür.\n2. Qarşılıqlı sadə ədədlərin ƏKOB-u onların hasilinə bərabərdir.\n3. İki ədədin ortaq bölünəni ƏKOB-a bölünür.\n4. İki tək ədədin cəmi tək ədəddir.", ru: "Какие утверждения верны?\n1. Сумма цифр делится на 9 $\\implies$ число делится на 9.\n2. НОК взаимно простых равен их произведению.", en: "Which statements are true?\n1. Sum of digits div by 9 $\\implies$ div by 9.\n2. LCM of coprime numbers equals product." }, options: [{ az: "yalnız 1", ru: "только 1", en: "only 1" }, { az: "yalnız 3", ru: "только 3", en: "only 3" }, { az: "2, 3, 4", ru: "2, 3, 4", en: "2, 3, 4" }, { az: "1, 2, 4", ru: "1, 2, 4", en: "1, 2, 4" }, { az: "1, 2", ru: "1, 2", en: "1, 2" }], explanation: { az: "1 və 2 doğrudur (3 səhvdir: ƏKOB ortaq bölünənə bölünür, əksinə; 4 səhvdir: tək+tək=cüt).", ru: "1 и 2 верны.", en: "1 and 2 are true." } },
+      { id: 74, type: 'mcq', correct: 4, question: { az: "Təkliflərdən hansılar doğrudur?\n1. Rəqəmlərinin cəmi 3-ə bölünən natural ədəd 3-ə tam bölünür.\n2. Qarşılıqlı sadə ədədlərin ƏBOB-u hasilə bərabərdir.\n3. İki sadə ədədin hasili mürəkkəb ədəddir.\n4. İki ədədin ƏBOB-u ortaq bölenə tam bölünür.", ru: "Какие утверждения верны?\n1. Сумма цифр делится на 3 $\\implies$ число делится на 3.\n3. Произведение двух простых — составное.\n4. НОД делится на общий делитель.", en: "Which statements are true?\n1, 3, 4." }, options: [{ az: "yalnız 1", ru: "только 1", en: "only 1" }, { az: "1, 2, 3", ru: "1, 2, 3", en: "1, 2, 3" }, { az: "2, 3, 4", ru: "2, 3, 4", en: "2, 3, 4" }, { az: "yalnız 4", ru: "только 4", en: "only 4" }, { az: "1, 3, 4", ru: "1, 3, 4", en: "1, 3, 4" }], explanation: { az: "1, 3 və 4 doğrudur (2 səhvdir: ƏBOB 1-ə bərabərdir).", ru: "Верны 1, 3 и 4.", en: "1, 3, and 4 are true." } },
+      { id: 75, type: 'input', correct: "7", question: { az: "Həm 2-yə, həm də 7-yə tam bölünən neçə ikirəqəmli ədəd var?", ru: "Сколько двузначных чисел делятся и на 2, и на 7?", en: "How many two-digit numbers are divisible by both 2 and 7?" }, explanation: { az: "ƏKOB(2, 7) = 14. 14-ə bölünən ikirəqəmli ədədlər: 14, 28, 42, 56, 70, 84, 98 (sayı: 7).", ru: "Числа, кратные 14: 14, 28, 42, 56, 70, 84, 98 (всего 7).", en: "Multiples of 14: 14, 28, 42, 56, 70, 84, 98 (total 7)." } },
+      { id: 76, type: 'input', correct: "4", question: { az: "Həm 3-ə, həm də 7-yə tam bölünən neçə ikirəqəmli ədəd var?", ru: "Сколько двузначных чисел делятся и на 3, и на 7?", en: "How many two-digit numbers are divisible by both 3 and 7?" }, explanation: { az: "ƏKOB(3, 7) = 21. 21-ə bölünən ikirəqəmli ədədlər: 21, 42, 63, 84 (sayı: 4).", ru: "Числа, кратные 21: 21, 42, 63, 84 (всего 4).", en: "Multiples of 21: 21, 42, 63, 84 (total 4)." } },
+      { id: 77, type: 'input', correct: "144", question: { az: "ƏKOB(54; 96) : ƏBOB(54; 96) nisbətini hesablayın.", ru: "Вычислите отношение НОК(54; 96) : НОД(54; 96).", en: "Calculate the ratio LCM(54; 96) : GCD(54; 96)." }, explanation: { az: "ƏKOB(54, 96) = 864, ƏBOB(54, 96) = 6. Nisbət: $864 / 6 = 144$.", ru: "НОК = 864, НОД = 6. Отношение: $864 / 6 = 144$.", en: "LCM = 864, GCD = 6. Ratio: $864 / 6 = 144$." } },
+      { id: 78, type: 'input', correct: "33", question: { az: "İki ardıcıl tək natural ədədin cəmi 68 olarsa, bu ədədlərin kiçiyini tapın.", ru: "Сумма двух последовательных нечетных натуральных чисел равна 68. Найдите меньшее.", en: "Sum of two consecutive odd natural numbers is 68. Find the smaller one." }, explanation: { az: "Ədədlər: $x$ və $x+2$. $2x + 2 = 68 \\implies 2x = 66 \\implies x = 33$.", ru: "$2x + 2 = 68 \\implies x = 33$.", en: "$2x + 2 = 68 \\implies x = 33$." } },
+      { id: 79, type: 'input', correct: "34", question: { az: "İki ardıcıl cüt natural ədədin cəmi 66 olarsa, bu ədədlərin böyüyünü tapın.", ru: "Сумма двух последовательных четных натуральных чисел равна 66. Найдите большее.", en: "Sum of two consecutive even natural numbers is 66. Find the larger one." }, explanation: { az: "$x + (x+2) = 66 \\implies 2x = 64 \\implies x = 32$. Böyüyü: $32 + 2 = 34$.", ru: "$2x = 64 \\implies x = 32$. Большее число: 34.", en: "$2x = 64 \\implies x = 32$. Larger number: 34." } },
+      { id: 80, type: 'input', correct: "140", question: { az: "Binada mərtəbələrarası pillələrin sayı 20-dir. Birinci və səkkizinci mərtəbələr arasında neçə pillə var?", ru: "Между этажами 20 ступеней. Сколько ступеней между 1-м и 8-м этажами?", en: "There are 20 steps between floors. How many steps between 1st and 8th floor?" }, explanation: { az: "1-ci və 8-ci mərtəbə arasında $8 - 1 = 7$ mərtəbə arası var. Pillələr sayı: $7 \\cdot 20 = 140$.", ru: "Между 1 и 8 этажами 7 пролетов: $7 \\cdot 20 = 140$ ступеней.", en: "Between 1st and 8th floors there are 7 flights: $7 \\cdot 20 = 140$ steps." } },
+      { id: 81, type: 'input', correct: "2522", question: { az: "7; 8; 9; 10 ədədlərinə böldükdə qalıqda 2 alınan ən kiçik çoxrəqəmli natural ədədi tapın.", ru: "Найдите наименьшее многозначное натуральное число с остатком 2 при делении на 7, 8, 9, 10.", en: "Find the smallest multi-digit natural number with remainder 2 when divided by 7, 8, 9, 10." }, explanation: { az: "ƏKOB(7, 8, 9, 10) = 2520. Axtarılan ədəd: $2520 + 2 = 2522$.", ru: "НОК(7, 8, 9, 10) = 2520. Число: $2520 + 2 = 2522$.", en: "LCM(7, 8, 9, 10) = 2520. Number: $2520 + 2 = 2522$." } },
+      { id: 82, type: 'input', correct: "75", question: { az: "$ab + ba = 66(a-b)$ şərtini ödəyən ikirəqəmli $ab$ ədədini tapın.", ru: "Найдите двузначное число $ab$, удовлетворяющее $ab + ba = 66(a-b)$.", en: "Find two-digit number $ab$ satisfying $ab + ba = 66(a-b)$." }, explanation: { az: "$10a+b + 10b+a = 66(a-b) \\implies 11(a+b) = 66(a-b) \\implies a+b = 6a-6b \\implies 7b = 5a \\implies a=7, b=5 \\implies ab = 75$.", ru: "$11(a+b) = 66(a-b) \\implies 7b = 5a \\implies a=7, b=5 \\implies ab = 75$.", en: "$11(a+b) = 66(a-b) \\implies 7b = 5a \\implies a=7, b=5 \\implies ab = 75$." } },
+      { id: 83, type: 'input', correct: "9", question: { az: "$a$-nın hansı ən böyük qiymətində $4a9b$ ədədi 45-ə tam bölünər?", ru: "При каком наибольшем $a$ число $4a9b$ делится на 45?", en: "For which largest $a$ is $4a9b$ divisible by 45?" }, explanation: { az: "45-ə bölünməsi üçün həm 5-ə, həm 9-a bölünməlidir. $a$-nın max qiyməti üçün $b=5$ seçirik. Rəqəmlərin cəmi $4+a+9+5 = 18+a \\implies a=9$.", ru: "Чтобы $a$ было наибольшим, берем $b=5$. Сумма цифр $18+a \\implies a=9$.", en: "For max $a$, take $b=5$. Digit sum $18+a \\implies a=9$." } },
+      { id: 84, type: 'input', correct: "28", question: { az: "$a = 3b$ və ƏKOB($a; b$) = 21 olarsa, $a+b$ cəmini tapın.", ru: "Найдите $a+b$, если $a = 3b$ и НОК($a; b$) = 21.", en: "Find $a+b$ if $a = 3b$ and LCM($a; b$) = 21." }, explanation: { az: "ƏKOB($3b, b$) = $3b = 21 \\implies b=7, a=21 \\implies a+b = 21+7 = 28$.", ru: "$3b = 21 \\implies b=7, a=21 \\implies a+b = 28$.", en: "$3b = 21 \\implies b=7, a=21 \\implies a+b = 28$." } },
+      { id: 85, type: 'input', correct: "24", question: { az: "$a = 7b$ və ƏKOB($a; b$) = 28 olarsa, $a-b$ fərqini tapın.", ru: "Найдите $a-b$, если $a = 7b$ и НОК($a; b$) = 28.", en: "Find $a-b$ if $a = 7b$ and LCM($a; b$) = 28." }, explanation: { az: "ƏKOB($7b, b$) = $7b = 28 \\implies b=4, a=28 \\implies a-b = 28-4 = 24$.", ru: "$7b = 28 \\implies b=4, a=28 \\implies a-b = 24$.", en: "$7b = 28 \\implies b=4, a=28 \\implies a-b = 24$." } },
+      { id: 86, type: 'input', correct: "32", question: { az: "$a : b = 3 : 5$ və ƏBOB($a, b$) = 4 olarsa, $a+b$ cəmini tapın.", ru: "Найдите $a+b$, если $a : b = 3 : 5$ и НОД($a, b$) = 4.", en: "Find $a+b$ if $a : b = 3 : 5$ and GCD($a, b$) = 4." }, explanation: { az: "$a = 3k, b = 5k$. ƏBOB = $k = 4 \\implies a = 12, b = 20 \\implies a+b = 32$.", ru: "$a = 3k, b = 5k \\implies k = 4 \\implies a+b = 12+20 = 32$.", en: "$a = 3k, b = 5k \\implies k = 4 \\implies a+b = 12+20 = 32$." } },
+      { id: 87, type: 'input', correct: "4", question: { az: "$a, b$ natural ədədlər və $a \\cdot b + 3b = 20$ olarsa, $a$-nın ala biləcəyi qiymətlərin sayını tapın.", ru: "Найдите количество возможных значений $a$, если $a \\cdot b + 3b = 20$.", en: "Find the count of possible values of $a$ if $a \\cdot b + 3b = 20$." }, explanation: { az: "$b(a+3) = 20$. $a+3$ 20-nin 3-dən böyük bölenləridir: 4, 5, 10, 20 $\\implies a \\in \\{1, 2, 7, 17\\}$ (sayı: 4).", ru: "$b(a+3) = 20 \\implies a+3 \\in \\{4, 5, 10, 20\\} \\implies a \\in \\{1, 2, 7, 17\\}$ (всего 4).", en: "$b(a+3) = 20 \\implies a+3 \\in \\{4, 5, 10, 20\\} \\implies a \\in \\{1, 2, 7, 17\\}$ (count: 4)." } },
+      { id: 88, type: 'input', correct: "3", question: { az: "$a, b$ natural ədədlər və $a \\cdot b + 4b = 18$ olarsa, $a$-nın ala biləcəyi qiymətlərin sayını tapın.", ru: "Найдите количество возможных значений $a$, если $a \\cdot b + 4b = 18$.", en: "Find the count of possible values of $a$ if $a \\cdot b + 4b = 18$." }, explanation: { az: "$b(a+4) = 18 \\implies a+4 \\in \\{6, 9, 18\\} \\implies a \\in \\{2, 5, 14\\}$ (sayı: 3).", ru: "$b(a+4) = 18 \\implies a+4 \\in \\{6, 9, 18\\} \\implies a \\in \\{2, 5, 14\\}$ (всего 3).", en: "$b(a+4) = 18 \\implies a+4 \\in \\{6, 9, 18\\} \\implies a \\in \\{2, 5, 14\\}$ (count: 3)." } },
+      { id: 89, type: 'input', correct: "6", question: { az: "$abc - bac = 360$ olarsa, $a+b$ cəminin ən kiçik qiymətini tapın.", ru: "Найдите наименьшее $a+b$, если $abc - bac = 360$.", en: "Find the smallest $a+b$ if $abc - bac = 360$." }, explanation: { az: "$100a+10b+c - (100b+10a+c) = 90(a-b) = 360 \\implies a-b = 4$. Ən kiçik $a+b$ üçün $b=1, a=5 \\implies a+b = 6$.", ru: "$90(a-b) = 360 \\implies a-b = 4$. Наименьшая сумма при $b=1, a=5 \\implies a+b = 6$.", en: "$90(a-b) = 360 \\implies a-b = 4$. Minimum sum when $b=1, a=5 \\implies a+b = 6$." } },
+      { id: 90, type: 'input', correct: "26", question: { az: "$a, b$ qarşılıqlı sadə, ƏKOB($a; b$) = 390 və $a + \\frac{30}{b} = 28$ olarsa, $a$-nı tapın.", ru: "Найдите $a$, если $a, b$ взаимно простые, НОК($a; b$) = 390 и $a + \\frac{30}{b} = 28$.", en: "Find $a$ if $a, b$ are coprime, LCM($a; b$) = 390, and $a + \\frac{30}{b} = 28$." }, explanation: { az: "Qarşılıqlı sadə olduğu üçün $ab = 390 \\implies b = 390/a$. $a + \\frac{30a}{390} = a + \\frac{a}{13} = \\frac{14a}{13} = 28 \\implies a = 26$.", ru: "$ab = 390 \\implies a + \\frac{a}{13} = 28 \\implies \\frac{14a}{13} = 28 \\implies a = 26$.", en: "$ab = 390 \\implies a + \\frac{a}{13} = 28 \\implies \\frac{14a}{13} = 28 \\implies a = 26$." } },
+      { id: 91, type: 'input', correct: "36", question: { az: "ƏBOB($a; b$) = 6 və $a \\cdot b = 180$ olarsa, $a+b$ cəmini tapın.", ru: "Найдите $a+b$, если НОД($a; b$) = 6 и $a \\cdot b = 180$.", en: "Find $a+b$ if GCD($a; b$) = 6 and $a \\cdot b = 180$." }, explanation: { az: "$a = 6x, b = 6y$ (burada ƏBOB($x, y$) = 1). $36xy = 180 \\implies xy = 5 \\implies x=1, y=5 \\implies a=6, b=30 \\implies a+b = 36$.", ru: "$36xy = 180 \\implies xy = 5 \\implies a=6, b=30 \\implies a+b = 36$.", en: "$36xy = 180 \\implies xy = 5 \\implies a=6, b=30 \\implies a+b = 36$." } },
+      { id: 92, type: 'input', correct: "3", question: { az: "$a = (7219 \\cdot 35274)^2 + 3$ ədədinin 4-ə bölünməsindən alınan qalığı tapın.", ru: "Найдите остаток от деления числа на 4.", en: "Find the remainder when the number is divided by 4." }, explanation: { az: "$7219 \\equiv 3 \\pmod 4$, $35274 \\equiv 2 \\pmod 4$. $(3 \\cdot 2)^2 + 3 = 36 + 3 = 39 \\implies 39 \\pmod 4 = 3$.", ru: "$(3 \\cdot 2)^2 + 3 = 39 \\implies 39 \\pmod 4 = 3$.", en: "$(3 \\cdot 2)^2 + 3 = 39 \\implies 39 \\pmod 4 = 3$." } },
+      { id: 93, type: 'input', correct: "15", question: { az: "$a = (7506 \\cdot 16551)^2 + 4$ ədədinin 25-ə bölünməsindən alınan qalığı tapın.", ru: "Найдите остаток от деления числа на 25.", en: "Find the remainder when the number is divided by 25." }, explanation: { az: "$7506 \\equiv 6 \\pmod{25}$, $16551 \\equiv 1 \\pmod{25}$. $(6 \\cdot 1)^2 + 4 = 40 \\implies 40 \\pmod{25} = 15$.", ru: "$(6 \\cdot 1)^2 + 4 = 40 \\implies 40 \\pmod{25} = 15$.", en: "$(6 \\cdot 1)^2 + 4 = 40 \\implies 40 \\pmod{25} = 15$." } },
+      { id: 94, type: 'input', correct: "27", question: { az: "Akvariumlarda 2, 4 və 6 balıq var. Bütün balıqların sayı 60 olarsa, ən çox neçə akvarium ola bilər?", ru: "В аквариумах по 2, 4 и 6 рыбок. Всего 60 рыбок. Какое наибольшее количество аквариумов?", en: "Aquariums hold 2, 4, 6 fish. Total 60 fish. Maximum number of aquariums?" }, explanation: { az: "$2x + 4y + 6z = 60 \\implies x + 2y + 3z = 30$. Sayı max etmək üçün $y=1, z=1 \\implies x = 25 \\implies x+y+z = 27$.", ru: "$x + 2y + 3z = 30 \\implies x=25, y=1, z=1 \\implies 27$ аквариумов.", en: "$x + 2y + 3z = 30 \\implies x=25, y=1, z=1 \\implies 27$ aquariums." } },
+      { id: 95, type: 'input', correct: "96", question: { az: "ƏBOB($2m-1, 2m+1$) = $4m-7$ olarsa, ƏKOB($13m-2, 15m+2$)-ni tapın.", ru: "Найдите НОК($13m-2, 15m+2$), если НОД($2m-1, 2m+1$) = $4m-7$.", en: "Find LCM($13m-2, 15m+2$) if GCD($2m-1, 2m+1$) = $4m-7$." }, explanation: { az: "Ardıcıl tək ədədlərin ƏBOB-u 1-dir: $4m-7 = 1 \\implies m = 2 \\implies \\text{ƏKOB}(24, 32) = 96$.", ru: "НОД нечетных равен 1: $4m-7 = 1 \\implies m = 2 \\implies \\text{НОК}(24, 32) = 96$.", en: "GCD of consecutive odds is 1: $4m-7 = 1 \\implies m = 2 \\implies \\text{LCM}(24, 32) = 96$." } },
+      { id: 96, type: 'input', correct: "15", question: { az: "Qarşılıqlı sadə $a+5$ və $b$ üçün ƏKOB($a+5; b$) = 420, $a \\cdot b + 7b = 450$ olarsa, $b$-ni tapın.", ru: "Найдите $b$, если взаимно простые $a+5$ и $b$ имеют НОК 420.", en: "Find $b$ if coprime $a+5$ and $b$ have LCM 420." }, explanation: { az: "$b(a+5) = 420$. $b(a+7) = b(a+5) + 2b = 420 + 2b = 450 \\implies 2b = 30 \\implies b = 15$.", ru: "$420 + 2b = 450 \\implies 2b = 30 \\implies b = 15$.", en: "$420 + 2b = 450 \\implies 2b = 30 \\implies b = 15$." } },
+      { id: 97, type: 'input', correct: "2521", question: { az: "7; 8; 9; 10 ədədlərinə böldükdə qalıqda 1 alınan ən kiçik çoxrəqəmli natural ədədi tapın.", ru: "Найдите наименьшее многозначное число с остатком 1 при делении на 7, 8, 9, 10.", en: "Find the smallest multi-digit number with remainder 1 when divided by 7, 8, 9, 10." }, explanation: { az: "ƏKOB(7, 8, 9, 10) + 1 = $2520 + 1 = 2521$.", ru: "НОК(7, 8, 9, 10) + 1 = 2521.", en: "LCM(7, 8, 9, 10) + 1 = 2521." } },
+      { id: 98, type: 'input', correct: "440", question: { az: "Üç ardıcıl natural ədədin cəmi 63-dür. Ən kiçiyi ilə ən böyüyünün hasilini tapın.", ru: "Сумма 3 последовательных чисел равна 63. Найдите произведение наименьшего и наибольшего.", en: "Sum of 3 consecutive numbers is 63. Find product of smallest and largest." }, explanation: { az: "$n + (n+1) + (n+2) = 63 \\implies 3n+3 = 63 \\implies n = 20$. Ədədlər: 20, 21, 22. Hasil: $20 \\cdot 22 = 440$.", ru: "$3n+3 = 63 \\implies n = 20$. Числа: 20, 21, 22. Произведение: $20 \\cdot 22 = 440$.", en: "$3n+3 = 63 \\implies n = 20$. Numbers: 20, 21, 22. Product: $20 \\cdot 22 = 440$." } },
+      { id: 99, type: 'input', correct: "28", question: { az: "$a = \\frac{b}{7} = 2c$ olarsa, $abc$ hasilinin ən kiçik qiymətini tapın.", ru: "Найдите наименьшее $abc$, если $a = \\frac{b}{7} = 2c$.", en: "Find the minimum $abc$ if $a = \\frac{b}{7} = 2c$." }, explanation: { az: "$b = 7a, c = a/2$. $c$ natural olması üçün $a=2 \\implies b=14, c=1 \\implies abc = 2 \\cdot 14 \\cdot 1 = 28$.", ru: "Минимальное натуральное $a=2 \\implies b=14, c=1 \\implies abc = 28$.", en: "Minimum natural $a=2 \\implies b=14, c=1 \\implies abc = 28$." } },
+      { id: 100, type: 'input', correct: "45", question: { az: "$a = \\frac{b}{5} = 3c$ olarsa, $abc$ hasilinin ən kiçik qiymətini tapın.", ru: "Найдите наименьшее $abc$, если $a = \\frac{b}{5} = 3c$.", en: "Find the minimum $abc$ if $a = \\frac{b}{5} = 3c$." }, explanation: { az: "$b = 5a, c = a/3$. $c$ natural olması üçün $a=3 \\implies b=15, c=1 \\implies abc = 3 \\cdot 15 \\cdot 1 = 45$.", ru: "Минимальное натуральное $a=3 \\implies b=15, c=1 \\implies abc = 45$.", en: "Minimum natural $a=3 \\implies b=15, c=1 \\implies abc = 45$." } },
+      { id: 101, type: 'input', correct: "21", question: { az: "$7n+7$ və $8n+2$ ardıcıl cüt ədədlər olarsa, $n$-in qiymətləri hasilini tapın.", ru: "Найдите произведение $n$, если $7n+7$ и $8n+2$ — последовательные четные числа.", en: "Find product of $n$ if $7n+7$ and $8n+2$ are consecutive even numbers." }, explanation: { az: "1-ci hal: $(8n+2) - (7n+7) = 2 \\implies n - 5 = 2 \\implies n = 7$.\n2-ci hal: $(7n+7) - (8n+2) = 2 \\implies -n + 5 = 2 \\implies n = 3$.\nHasil: $7 \\cdot 3 = 21$.", ru: "Случай 1: $n=7$. Случай 2: $n=3$. Произведение: $7 \\cdot 3 = 21$.", en: "Case 1: $n=7$. Case 2: $n=3$. Product: $7 \\cdot 3 = 21$." } },
+      { id: 102, type: 'input', correct: "6", question: { az: "$4n+10$ və $5n+7$ ardıcıl cüt ədədlər olarsa, $n$-in qiymətləri cəmini tapın.", ru: "Найдите сумму $n$, если $4n+10$ и $5n+7$ — последовательные четные числа.", en: "Find sum of $n$ if $4n+10$ and $5n+7$ are consecutive even numbers." }, explanation: { az: "1-ci hal: $(5n+7) - (4n+10) = 2 \\implies n - 3 = 2 \\implies n = 5$.\n2-ci hal: $(4n+10) - (5n+7) = 2 \\implies -n + 3 = 2 \\implies n = 1$.\nCəm: $5 + 1 = 6$.", ru: "Случай 1: $n=5$. Случай 2: $n=1$. Сумма: $5 + 1 = 6$.", en: "Case 1: $n=5$. Case 2: $n=1$. Sum: $5 + 1 = 6$." } },
+      { id: 103, type: 'input', correct: "1", question: { az: "$x : y = 8$ (qalıq 3) və $y : z = 5$ (qalıq 6) olarsa, $x$ ədədinin son rəqəmini tapın.", ru: "Найдите последнюю цифру $x$, если $x : y = 8$ (ост 3) и $y : z = 5$ (ост 6).", en: "Find the last digit of $x$ if $x : y = 8$ (rem 3) and $y : z = 5$ (rem 6)." }, explanation: { az: "$y = 5z + 6 \\implies x = 8y + 3 = 8(5z+6) + 3 = 40z + 48 + 3 = 40z + 51$. Son rəqəm həmişə 1-dir.", ru: "$x = 40z + 51 \\implies$ последняя цифра всегда 1.", en: "$x = 40z + 51 \\implies$ last digit is always 1." } },
+      { id: 104, type: 'input', correct: "10", question: { az: "$ab$ ikirəqəmli ədədini $3a-2b$ ədədinə böldükdə qismət 4, qalıq 2 olur. $a+b$ cəmini tapın.", ru: "При делении $ab$ на $3a-2b$ частное 4, остаток 2. Найдите $a+b$.", en: "When $ab$ is divided by $3a-2b$, quotient is 4, remainder is 2. Find $a+b$." }, explanation: { az: "$10a + b = 4(3a - 2b) + 2 \\implies 10a + b = 12a - 8b + 2 \\implies 9b = 2a + 2 \\implies b=2, a=8 \\implies a+b = 10$.", ru: "$9b = 2a + 2 \\implies b=2, a=8 \\implies a+b = 10$.", en: "$9b = 2a + 2 \\implies b=2, a=8 \\implies a+b = 10$." } },
+      {
+  "id": 105,
+  "type": "input",
+  "correct": "14",
+  "image": "Natural_adedlar_Image0105.png",
+  "question": {
+    "az": "Diaqramda natural $a$ ədədinin müxtəlif sadə vuruqları və onların sayı verilmişdir. $a$ ədədini sadə vuruqlarının hasili şəklində yazın və onun sadə vuruqlarının sayını tapın.",
+    "ru": "На диаграмме приведены различные простые множители натурального числа $a$ и их количество. Запишите число $a$ в виде произведения простых множителей и найдите количество его простых множителей.",
+    "en": "The diagram shows the distinct prime factors of a natural number $a$ and their count. Write $a$ as a product of prime factors and find the total count of its prime factors."
+  },
+  "explanation": {
+    "az": "Diaqrama əsasən: $a = 2^3 \\cdot 3^7 \\cdot 5^4 \\implies$ sadə vuruqların sayı: $3 + 7 + 4 = 14$.",
+    "ru": "По диаграмме: $a = 2^3 \\cdot 3^7 \\cdot 5^4 \\implies$ количество простых множителей: $3 + 7 + 4 = 14$.",
+    "en": "From the diagram: $a = 2^3 \\cdot 3^7 \\cdot 5^4 \\implies$ count of prime factors: $3 + 7 + 4 = 14$."
+  }
+},
+      {
+  "id": 106,
+  "type": "input",
+  "correct": "...", 
+  "image": "Natural_adedlar_Image0106.png",
+  "question": {
+    "az": "Diaqramda natural $a$ ədədinin müxtəlif sadə vuruqları və onların sayı verilmişdir. $a$ ədədini sadə vuruqlarının hasili şəklində yazın və onun sadə vuruqlarının sayını tapın.",
+    "ru": "На диаграмме приведены различные простые множители натурального числа $a$ и их количество. Запишите число $a$ в виде произведения простых множителей и найдите количество его простых множителей.",
+    "en": "The diagram shows the distinct prime factors of a natural number $a$ and their count. Write $a$ as a product of prime factors and find the total count of its prime factors."
+  },
+  "explanation": {
+    "az": "Diaqrama əsasən: $a = ... \\implies$ sadə vuruqların sayı: ...",
+    "ru": "По диаграмме: $a = ... \\implies$ количество простых множителей: ...",
+    "en": "From the diagram: $a = ... \\implies$ count of prime factors: ..."
+  }
+},
+      { id: 107, type: 'input', correct: "63", image: "Natural_adedlar_Image0107.png", question: { az: "Diaqrama əsasən $\\frac{\\text{ƏKOB}(a; b)}{\\text{ƏBOB}(b; c)}$ nisbətini tapın.", ru: "По диаграмме найдите отношение $\\frac{\\text{НОК}(a; b)}{\\text{НОД}(b; c)}$.", en: "Find ratio $\\frac{\\text{LCM}(a; b)}{\\text{GCD}(b; c)}$ from diagram." }, explanation: { az: "Diaqramdan dərəcələr çıxarılır və nisbət 63 alınır.", ru: "Вычисляем по степеням из диаграммы: отношение = 63.", en: "Calculated from degrees in diagram: ratio = 63." } },
+      { id: 108, type: 'input', correct: "7", image: "Natural_adedlar_Image0108.png", question: { az: "Diaqrama əsasən ƏBOB($a; b$) = 441 olarsa, $k-n$-i tapın.", ru: "Найдите $k-n$, если НОД($a; b$) = 441.", en: "Find $k-n$ if GCD($a; b$) = 441." }, explanation: { az: "$441 = 3^2 \\cdot 7^2 \\implies k - n = 7$.", ru: "НОД $= 441 = 3^2 \\cdot 7^2 \\implies k - n = 7$.", en: "GCD $= 441 = 3^2 \\cdot 7^2 \\implies k - n = 7$." } },
+     {
+  "id": 109,
+  "type": "input",
+  "correct": "210",
+  "image": "Natural_adedlar_Image0109.png",
+  "question": {
+    "az": "$A$ və $B$ çoxluqlarının elementləri müəyyən sadə ədədlərdir və bu çoxluqların elementləri hasili uyğun olaraq $a$ və $b$ ədədlərinə bərabər olarsa, diaqrama əsasən $\\frac{ab}{(\\text{ƏBOB}(a;b))^2}$ ifadəsinin qiymətini tapın.",
+    "ru": "Элементами множеств $A$ и $B$ являются определенные простые числа, а произведения элементов этих множеств равны соответственно числам $a$ и $b$. На основе диаграммы найдите значение выражения $\\frac{ab}{(\\text{НОД}(a;b))^2}$.",
+    "en": "The elements of sets $A$ and $B$ are certain prime numbers, and the products of elements of these sets are equal to numbers $a$ and $b$ respectively. Based on the diagram, find the value of $\\frac{ab}{(\\text{GCD}(a;b))^2}$."
+  },
+  "explanation": {
+    "az": "Məlumdur ki, $\\frac{ab}{(\\text{ƏBOB}(a;b))^2} = c$, burada $c$ ortaq olmayan sadə vuruqların hasilidir. Diaqrama əsasən ortaq olmayan sadə vuruqlar 3, 5, 7 və 2-dir: $c = 3 \\cdot 5 \\cdot 7 \\cdot 2 = 210$.",
+    "ru": "Известно, что $\\frac{ab}{(\\text{НОД}(a;b))^2} = c$, где $c$ — произведение необщих простых множителей. По диаграмме необщие простые множители: 3, 5, 7 и 2. Следовательно, $c = 3 \\cdot 5 \\cdot 7 \\cdot 2 = 210$.",
+    "en": "It is known that $\\frac{ab}{(\\text{GCD}(a;b))^2} = c$, where $c$ is the product of non-common prime factors. From the diagram, the non-common prime factors are 3, 5, 7, and 2. Thus, $c = 3 \\cdot 5 \\cdot 7 \\cdot 2 = 210$."
+  }
+},
+      { id: 110, type: 'input', correct: "770", image: "Natural_adedlar_Image0110.png", question: { az: "Diaqrama əsasən $\\frac{ab}{(\\text{ƏBOB}(a; b))^2}$ ifadəsinin qiymətini tapın.", ru: "Найдите значение выражения $\\frac{ab}{(\\text{НОД}(a; b))^2}$.", en: "Find value of $\\frac{ab}{(\\text{GCD}(a; b))^2}$." }, explanation: { az: "Müstəqil vuruqların hasili: $770$.", ru: "Произведение независимых множителей: 770.", en: "Product of independent factors: 770." } },
+      {
+  "id": 111,
+  "type": "input",
+  "correct": "19",
+  "image": "Natural_adedlar_Image0111.png",
+  "question": {
+    "az": "Riyaziyyat fənnindən Gəncə şəhərində keçirilən olimpiadada Şəkidən 16, Şamaxıdan 24, Bakıdan 36 şagird iştirak edir. Mehmanxanada hər nömrəyə bu şəhərlərin yalnız birinin şagirdlərini və hər birində bərabər sayıda olmaqla yerləşdirmək üçün ən azı neçə nömrə lazımdır?",
+    "ru": "В олимпиаде по математике, проходившей в городе Гянджа, участвуют 16 учеников из Шеки, 24 из Шамахи и 36 из Баку. Какое минимальное количество номеров потребуется в гостинице, чтобы разместить учеников равными группами в каждом номере и так, чтобы в одном номере проживали ученики только из одного города?",
+    "en": "In a mathematics olympiad held in Ganja city, 16 students from Sheki, 24 from Shamakhi, and 36 from Baku participate. What is the minimum number of rooms required in a hotel to accommodate students in equal numbers per room, such that each room contains students from only one city?"
+  },
+  "explanation": {
+    "az": "Nömrələrin sayının ən az olması üçün hər nömrədəki şagirdlərin sayı mümkün qədər çox olmalıdır, yəni $\\text{ƏBOB}(16; 24; 36) = 4$. Nömrələrin sayı: $\\frac{16 + 24 + 36}{4} = 19$.",
+    "ru": "Чтобы количество номеров было минимальным, число учеников в каждом номере должно быть максимально возможным, то есть $\\text{НОД}(16; 24; 36) = 4$. Количество номеров: $\\frac{16 + 24 + 36}{4} = 19$.",
+    "en": "To minimize the number of rooms, the number of students per room should be maximized, which is $\\text{GCD}(16; 24; 36) = 4$. Number of rooms: $\\frac{16 + 24 + 36}{4} = 19$."
+  }
+},
+      { id: 112, type: 'input', correct: "12", question: { az: "Eni 18 dm, uzunluğu 24 dm olan divara kvadrat kafellərdən ən az neçəsini düzmək olar?", ru: "Какое наименьшее количество квадратных плиток нужно для стены 18x24 дм?", en: "Smallest number of square tiles needed for a 18x24 dm wall?" }, explanation: { az: "Kafelin max tərəfi = $\\text{ƏBOB}(18, 24) = 6$ dm. Kafellər sayı: $(18/6) \\cdot (24/6) = 3 \\cdot 4 = 12$.", ru: "Сторона плитки = НОД(18, 24) = 6 дм. Плиток: $(18/6) \\cdot (24/6) = 12$.", en: "Tile side = GCD(18, 24) = 6 dm. Tiles: $(18/6) \\cdot (24/6) = 12$." } },
+     { 
+  id: 113, 
+  type: 'input', 
+  correct: "6", 
+  image: "Natural_adedlar_Image0113.png", 
+  question: { 
+    az: "Oyun meydançasındakı dairəvi yolların radiusları uyğun olaraq 40 m, 30 m və 20 m-dir. Sürətləri 60 m/dəq olan velosipedlər hərəkətə başlanma nöqtələri eyni düz xətt üzərində olan A, B və C nöqtələrindən dairəvi yollarla hərəkətə başladılar. Hər üç velosipedçi hərəkətə başladıqdan sonra ilk dəfə neçənci dəqiqədə yenə eyni düz xətt üzərində olarlar ($\\pi = 3$)?", 
+    ru: "Радиусы круговых дорожек на игровой площадке соответственно равны 40 м, 30 м и 20 м. Велосипедисты со скоростью 60 м/мин начали движение по круговым дорожкам из точек A, B и C, начальные точки которых находятся на одной прямой. На какой минуте после начала движения все три велосипедиста впервые снова окажутся на одной прямой ($\\pi = 3$)?", 
+    en: "The radii of the circular tracks on the playground are 40 m, 30 m, and 20 m, respectively. Cyclists with a speed of 60 m/min started moving along the circular tracks from points A, B, and C, whose starting points lie on the same straight line. In which minute after starting the movement will all three cyclists be on the same straight line again for the first time ($\\pi = 3$)?" 
+  }, 
+  explanation: { 
+    az: "Çevrə uzunluqları: $C_1 = 240$ m ($t_1 = 4$ dəq), $C_2 = 180$ m ($t_2 = 3$ dəq), $C_3 = 120$ m ($t_3 = 2$ dəq). Yarım-dövrə xətti üzərində ilk dəfə 6-cı dəqiqədə görüşürlər.", 
+    ru: "Время одного круга: 4, 3, 2 мин. На одной прямой (включая диаметр) впервые оказываются на 6-й минуте.", 
+    en: "Lap times: 4, 3, 2 min. First aligned on the same straight diameter line at minute 6." 
+  } 
+}
+    ];
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      document.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.innerText.toLowerCase() === lang);
+      });
+
+      const t = translations[lang];
+      document.getElementById('app-title').innerText = t.title;
+      document.getElementById('app-subtitle').innerText = t.subtitle;
+      document.getElementById('score-label').innerText = t.scoreLabel;
+      document.getElementById('grid-title-text').innerText = t.gridTitle;
+      document.getElementById('btn-mode-slide').innerText = t.slideMode;
+      document.getElementById('btn-mode-list').innerText = t.listMode;
+      document.getElementById('prev-btn').innerText = t.prevBtn;
+      document.getElementById('next-btn').innerText = t.nextBtn;
+
+      renderGrid();
+      renderContent();
+    }
+
+    function setMode(mode) {
+      currentMode = mode;
+      document.getElementById('btn-mode-slide').classList.toggle('active', mode === 'slide');
+      document.getElementById('btn-mode-list').classList.toggle('active', mode === 'list');
+      document.getElementById('slide-nav-box').style.display = (mode === 'slide') ? 'flex' : 'none';
+
+      renderGrid();
+      renderContent();
+    }
+
+    function renderGrid() {
+      const grid = document.getElementById('question-grid');
+      grid.innerHTML = '';
+
+      questionsData.forEach((q, idx) => {
+        const btn = document.createElement('button');
+        let cls = 'grid-btn';
+
+        if (userAnswers[q.id] !== undefined) {
+          if (checkIsCorrect(q, userAnswers[q.id])) cls += ' correct';
+          else cls += ' incorrect';
+        }
+
+        if (currentMode === 'slide' && idx === currentSlide) {
+          cls += ' active';
+        }
+
+        btn.className = cls;
+        btn.innerText = q.id;
+        btn.onclick = () => {
+          if (currentMode === 'slide') {
+            currentSlide = idx;
+            renderContent();
+            renderGrid();
+          } else {
+            const el = document.getElementById(`q-card-${q.id}`);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          }
+        };
+
+        grid.appendChild(btn);
+      });
+    }
+
+    function prevSlide() {
+      if (currentSlide > 0) {
+        currentSlide--;
+        renderContent();
+        renderGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function nextSlide() {
+      if (currentSlide < questionsData.length - 1) {
+        currentSlide++;
+        renderContent();
+        renderGrid();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    }
+
+    function renderContent() {
+      const container = document.getElementById('questions-list');
+      container.innerHTML = '';
+
+      const t = translations[currentLang];
+
+      if (currentMode === 'slide') {
+        document.getElementById('slide-info').innerText = `${t.slideInfo} ${currentSlide + 1} / ${questionsData.length}`;
+        document.getElementById('prev-btn').disabled = (currentSlide === 0);
+        document.getElementById('next-btn').disabled = (currentSlide === questionsData.length - 1);
+
+        const q = questionsData[currentSlide];
+        container.appendChild(buildQuestionCard(q));
+      } else {
+        questionsData.forEach(q => {
+          container.appendChild(buildQuestionCard(q));
+        });
+      }
+
+      updateScore();
+
+      if (window.renderMathInElement) {
+        renderMathInElement(document.body, {
+          delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false}
+          ],
+          throwOnError: false
+        });
+      }
+    }
+
+    function buildQuestionCard(q) {
+      const card = document.createElement('div');
+      card.className = 'question-card';
+      card.id = `q-card-${q.id}`;
+
+      const t = translations[currentLang];
+      const qText = q.question[currentLang] || q.question['az'];
+
+      // Safe image rendering with onerror fallback
+      let imageHtml = '';
+      if (q.image && String(q.image).trim() !== '') {
+        imageHtml = `
+          <div class="question-image-box">
+            <img src="${q.image}" 
+                 alt="Sual #${q.id} İllüstrasiyası" 
+                 onerror="this.onerror=null; this.parentElement.innerHTML='<div style=\\'color:#94a3b8; font-size:0.85rem; font-style:italic; padding:6px;\\'>[Şəkil tapılmadı: ${q.image}]</div>';" />
+          </div>
+        `;
+      }
+
+      let bodyHtml = '';
+
+      if (q.type === 'mcq') {
+        const optsHtml = q.options.map((opt, idx) => {
+          const optText = opt[currentLang] || opt['az'];
+          const prefix = String.fromCharCode(65 + idx) + ') ';
+
+          let btnClass = 'option-btn';
+          let isChecked = userAnswers[q.id] !== undefined;
+          if (isChecked) {
+            if (idx === q.correct) btnClass += ' correct';
+            else if (userAnswers[q.id] === idx) btnClass += ' incorrect';
+          }
+
+          return `
+            <button class="${btnClass}" ${isChecked ? 'disabled' : ''} onclick="selectMcq(${q.id}, ${idx})">
+              <span><b>${prefix}</b></span> <span>${optText}</span>
+            </button>
+          `;
+        }).join('');
+
+        bodyHtml = `<div class="options-grid">${optsHtml}</div>`;
+      } else {
+        const isChecked = userAnswers[q.id] !== undefined;
+        const userVal = isChecked ? userAnswers[q.id] : '';
+
+        bodyHtml = `
+          <div class="input-area">
+            <input type="text" id="input-${q.id}" class="text-input" value="${userVal}" ${isChecked ? 'disabled' : ''} placeholder="${t.placeholder}">
+            <button class="submit-btn" ${isChecked ? 'disabled' : ''} onclick="submitInput(${q.id})">${t.submit}</button>
+          </div>
+        `;
+      }
+
+      let feedbackHtml = '';
+      let explHtml = '';
+
+      if (userAnswers[q.id] !== undefined) {
+        const isCorrect = checkIsCorrect(q, userAnswers[q.id]);
+        const fbClass = isCorrect ? 'correct' : 'incorrect';
+        const corrAnsText = q.type === 'mcq' ? String.fromCharCode(65 + q.correct) : q.correct;
+        const fbText = isCorrect
+          ? t.correctFeedback
+          : t.incorrectFeedback + `<b>${corrAnsText}</b>`;
+
+        feedbackHtml = `<div class="feedback ${fbClass}">${fbText}</div>`;
+
+        const explText = q.explanation ? (q.explanation[currentLang] || q.explanation['az']) : '';
+        explHtml = `
+          <div class="explanation-box">
+            <div class="explanation-title">${t.explanationTitle}</div>
+            <div>${explText}</div>
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="question-header">
+          <span class="question-num">#${q.id}</span>
+          <div class="question-text">${qText}</div>
+        </div>
+        ${imageHtml}
+        ${bodyHtml}
+        ${feedbackHtml}
+        ${explHtml}
+      `;
+
+      return card;
+    }
+
+    function selectMcq(qId, idx) {
+      userAnswers[qId] = idx;
+      renderGrid();
+      renderContent();
+    }
+
+    function submitInput(qId) {
+      const val = document.getElementById(`input-${qId}`).value.trim();
+      if (!val) return;
+      userAnswers[qId] = val;
+      renderGrid();
+      renderContent();
+    }
+
+    function checkIsCorrect(q, answer) {
+      if (q.type === 'mcq') {
+        return answer === q.correct;
+      } else {
+        return String(answer).toLowerCase().replace(/\s+/g, '') === String(q.correct).toLowerCase().replace(/\s+/g, '');
+      }
+    }
+
+    function updateScore() {
+      let correctCount = 0;
+      questionsData.forEach(q => {
+        if (userAnswers[q.id] !== undefined && checkIsCorrect(q, userAnswers[q.id])) {
+          correctCount++;
+        }
+      });
+      document.getElementById('score-val').innerText = `${correctCount} / ${questionsData.length}`;
+    }
+
+    // App Initialization
+    setLanguage('az');
+    setMode('slide');
+  </script>
+</body>
+</html>
